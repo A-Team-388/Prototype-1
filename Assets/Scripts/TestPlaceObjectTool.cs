@@ -6,12 +6,11 @@ using UnityEngine;
 
 public class TestPlaceObjectTool : MonoBehaviour
 {
-    //toggle for if place object tool is in use
+    //toggle if place object tool is in use
     //toggled in DropDownMenuHandler function
     public bool toolInUse = false;
 
     //stored gameobjects that can be placed
-
     //small lines
     [SerializeField] GameObject selection1;
     //large lines
@@ -34,10 +33,6 @@ public class TestPlaceObjectTool : MonoBehaviour
     //selected gameobject
     [SerializeField] GameObject selectedGameObject;
 
-    public void Start()
-    {
-    }
-
     public void Update()
     {
         //if an object has been selected then the tool is active
@@ -53,14 +48,14 @@ public class TestPlaceObjectTool : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             //check to make sure grid is empty
-            if (Helper.isGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()))
+            if (GameManager.isGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()))
             {
                 //create object on location
                 Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
                 //fill grid space with object data
                 //CREATE A HELPER FUNCTION TO REMOVE OBJECT FROM GRID
                 //CREATE A TOOL TO REMOVE OBJECT FROM LEVEL/GRID
-                Helper.setGridSpace(selectedGameObject,Helper.getMousePositionFromWorldRounded());
+                GameManager.setGridSpace(selectedGameObject,Helper.getMousePositionFromWorldRounded());
             }
         }
     }
@@ -68,85 +63,78 @@ public class TestPlaceObjectTool : MonoBehaviour
     //determines what placeable object is selected on drop down menu
     public void DropDownMenuHandler(int selection)
     {
-        if (selection == 0)
+       switch(selection)
         {
-            //none
-            toolInUse = false;
+            case 0:
+                //none
+                toolInUse = false;
 
-            //set selected game object to the selected game object
-            selectedGameObject = null;
-        }
-        if (selection == 1)
-        {
-            //small lines
-            toolInUse = true;
+                //set selected game object to the selected game object
+                selectedGameObject = null;
+                break;
+            case 1:
+                //small lines
+                toolInUse = true;
 
-            //set selected game object to the selected game object
-            selectedGameObject = selection1;
-        }
-        else if (selection == 2)
-        {
-            //large lines
-            toolInUse = true;
+                //set selected game object to the selected game object
+                selectedGameObject = selection1;
+                break;
+            case 2:
+                //large lines
+                toolInUse = true;
 
-            //set selected game object to the selected game object
-            selectedGameObject = selection2;
-        }
-        else if (selection == 3)
-        {
-            //transformers
-            toolInUse = true;
+                //set selected game object to the selected game object
+                selectedGameObject = selection2;
+                break;
+            case 3:
+                //transformers
+                toolInUse = true;
 
-            //set selected game object to the selected game object
-            selectedGameObject = selection3;
-        }
-        else if (selection == 4)
-        {
-            //coal plant
-            toolInUse = true;
+                //set selected game object to the selected game object
+                selectedGameObject = selection3;
+                break;
+            case 4:
+                //coal plant
+                toolInUse = true;
 
-            //set selected game object to the selected game object
-            selectedGameObject = selection4;
-        }
-        else if (selection == 5)
-        {
-            //natural gas plant
-            toolInUse = true;
+                //set selected game object to the selected game object
+                selectedGameObject = selection4;
+                break;
+            case 5:
+                //natural gas plant
+                toolInUse = true;
 
-            //set selected game object to the selected game object
-            selectedGameObject = selection5;
-        }
-        else if (selection == 6)
-        {
-            //solar power
-            toolInUse = true;
+                //set selected game object to the selected game object
+                selectedGameObject = selection5;
+                break;
+            case 6:
+                //solar power
+                toolInUse = true;
 
-            //set selected game object to the selected game object
-            selectedGameObject = selection6;
-        }
-        else if (selection == 7)
-        {
-            //nuclear plant
-            toolInUse = true;
+                //set selected game object to the selected game object
+                selectedGameObject = selection6;
+                break;
+            case 7:
+                //nuclear plant
+                toolInUse = true;
 
-            //set selected game object to the selected game object
-            selectedGameObject = selection7;
-        }
-        else if (selection == 8)
-        {
-            //tree
-            toolInUse = true;
+                //set selected game object to the selected game object
+                selectedGameObject = selection7;
+                break;
+            case 8:
+                //tree
+                toolInUse = true;
 
-            //set selected game object to the selected game object
-            selectedGameObject = selection8;
-        }
-        else if (selection == 9)
-        {
-            //house
-            toolInUse = true;
+                //set selected game object to the selected game object
+                selectedGameObject = selection8;
+                break;
+            case 9:
+                //house
+                toolInUse = true;
 
-            //set selected game object to the selected game object
-            selectedGameObject = selection9;
+                //set selected game object to the selected game object
+                selectedGameObject = selection9;
+                break;
         }
 
     }

@@ -6,9 +6,6 @@ using UnityEngine;
 
 public static class Helper
 {
-    //creates a 2d grid spanning from 0,0 to 100,100
-    public static string[,] playArea = new string[101, 101];
-
     //Snap object to grid
     public static void SnapToGrid(Transform transform)
     {
@@ -48,27 +45,4 @@ public static class Helper
     {
         return Input.mousePosition;
     }
-
-    //checks array to see if space is null
-    public static bool isGridSpaceEmpty(Vector3 locationToCheck)
-    {
-        Debug.Log(playArea[(int)locationToCheck.x, (int)locationToCheck.y]);
-        if (playArea[(int)locationToCheck.x, (int)locationToCheck.y] == null)
-        {
-            //return true if object exists in location
-            return true;
-        }
-        else
-        {
-            //return false if object does not exist in location
-            return false;
-        }
-    }
-
-    //set a grid space
-    public static void setGridSpace(GameObject entry, Vector3 location)
-    {
-        playArea[(int)location.x, (int)location.y] = (string)entry.name;
-    }
- 
 }
