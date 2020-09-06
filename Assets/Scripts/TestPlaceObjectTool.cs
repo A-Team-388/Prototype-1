@@ -49,10 +49,8 @@ public class TestPlaceObjectTool : MonoBehaviour
     }
     public void PlaceObjectTool()
     {
-        //check for input and check if click is right of ui
-        //COME BACK HERE LATER AND IMPROVE THE UI DETECTION
-        //CURRENTLY THE TOOL JUST MAKES SURE YOUR LEFT OF THE UI
-        if (Input.GetMouseButtonDown(0)&& Helper.getMousePositionFromScreen().x > 350)
+        //check for input and check if click is not on ui
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             //check to make sure grid is empty
             if (Helper.isGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()))
