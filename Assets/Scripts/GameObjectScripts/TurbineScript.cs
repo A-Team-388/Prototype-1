@@ -5,6 +5,7 @@ using UnityEngine;
 public class TurbineScript : MonoBehaviour
 {
     // Start is called before the first frame update
+    public float power;
     void Start()
     {
         //snap to match grid

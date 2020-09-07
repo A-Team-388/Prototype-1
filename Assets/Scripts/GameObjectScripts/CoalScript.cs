@@ -5,6 +5,9 @@ using UnityEngine;
 public class CoalScript : MonoBehaviour
 {
     // Start is called before the first frame update
+    public float pollution;
+    public float power;
+
     void Start()
     {
         //snap to match grid
