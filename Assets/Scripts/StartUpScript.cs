@@ -4,41 +4,122 @@ using UnityEngine;
 
 public class StartUpScript : MonoBehaviour
 {
-    public uint startingNumberOfHouses = 10;
-    public uint startingNumberOfTrees = 10;
-    public uint startingHeight = 16;
-    public uint startingWidth = 28;
+    //obtain the camera being used
+    [SerializeField] public Camera mainCamera;
 
-    [SerializeField]public GameObject house;
+    //rate of gameobject spawns
+    public float startingNumberOfHouses = 1;
+    public float startingNumberOfTrees = 1.5f;
+
+    public uint objectSpawnRate;
+
+    //starting height and width of the array
+    public float startingHeight;
+    public float startingWidth;
+
+    //value used to offset spawning objects from side of grid
+    public int offsetDistance = 1;
+
+    //gameobjects to be created on startup
+    [SerializeField] public GameObject house;
     [SerializeField] public GameObject tree;
+
+    //variables used to determine where to place random objects
+    public int xPos = 0;
+    public int yPos = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        int xPos = 0;
-        int yPos = 0;
+        //makes startup one step later
+        Invoke("briefPause", .00001f);
+    }
+
+    //start but late
+    void briefPause()
+    {
+        //determine the starting amount of gridspaces
+        startingWidth = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, 0)).x-.5f;
+        startingHeight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, 0)).y-.5f;
+
+        //round down
+        startingHeight = Mathf.Floor(startingHeight);
+        startingWidth = Mathf.Floor(startingWidth);
+
+        //calculate the spawn rate using height width and a good number 16 is thick, 24 is medium, 30 is bare
+        objectSpawnRate = (uint)((startingHeight * startingWidth) / 30);
+
+        //determine the amount of trees and houses to create
+        startingNumberOfHouses = startingNumberOfHouses * objectSpawnRate;
+        startingNumberOfTrees = startingNumberOfTrees * objectSpawnRate;
+
+        //spawn houses
+        spawnHouses();
+
+        //spawn trees
+        spawnTrees();
+    }
+
+    void spawnHouses()
+    {
+        //spawn houses
         while (startingNumberOfHouses > 0)
         {
-            xPos = Random.Range(0 , (int)startingWidth);
-            yPos = Random.Range(0 , (int)startingHeight);
+            // Makes things more random APPARENTLY
+            Random.InitState((int)System.DateTime.Now.Ticks);
+
+            //assign x position a random number for spawn
+            xPos = Random.Range(offsetDistance, (int)startingWidth +1);
+
+            //assign y position a random number for spawn
+            yPos = Random.Range(offsetDistance, (int)startingHeight + 1);
+
+            //determine if generated position is empty
             if (GameManager.isGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
             {
-                Instantiate(house, new Vector3(xPos, yPos, 0), transform.rotation);
-                Debug.Log("house");
-                GameManager.setGridSpace(house, new Vector3(xPos, yPos, 0));
-                startingNumberOfHouses--;
+                //determine if position already has an instance next to it
+                if (GameManager.checkSurroundingGridSpaces(new Vector3(xPos, yPos, 0), house))
+                {
+                    //create instance
+                    Instantiate(house, new Vector3(xPos, yPos, 0), transform.rotation);
+
+                    //set space in grid
+                    GameManager.setGridSpace(house, new Vector3(xPos, yPos, 0));
+
+                    //decrement counter
+                    startingNumberOfHouses--;
+                }
             }
         }
+    }
+
+    void spawnTrees()
+    {
+        //spawn trees
         while (startingNumberOfTrees > 0)
         {
-            xPos = Random.Range(0, (int)startingWidth);
-            yPos = Random.Range(0, (int)startingHeight);
+            //assign x position a random number for spawn
+            xPos = Random.Range(offsetDistance, (int)startingWidth + 1);
+
+            //assign y position a random number for spawn
+            yPos = Random.Range(offsetDistance, (int)startingHeight + 1);
+
+            //determine if generated position is empty
             if (GameManager.isGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
             {
-                Instantiate(tree, new Vector3(xPos, yPos, 0), transform.rotation);
-                Debug.Log("tree");
-                GameManager.setGridSpace(tree, new Vector3(xPos, yPos, 0));
-                startingNumberOfTrees--;
+                //determine if position already has an instance next to it
+                if (GameManager.checkSurroundingGridSpaces(new Vector3(xPos, yPos, 0), tree))
+                {
+                    //create instance
+                    Instantiate(tree, new Vector3(xPos, yPos, 0), transform.rotation);
+
+                    //set space in grid
+                    GameManager.setGridSpace(tree, new Vector3(xPos, yPos, 0));
+
+                    //decrement counter
+                    startingNumberOfTrees--;
+                }
+
             }
         }
     }
