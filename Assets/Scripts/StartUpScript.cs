@@ -11,6 +11,7 @@ public class StartUpScript : MonoBehaviour
     public float startingNumberOfHouses = 1;
     public float startingNumberOfTrees = 1.5f;
 
+
     public uint objectSpawnRate;
 
     //starting height and width of the array
@@ -35,7 +36,7 @@ public class StartUpScript : MonoBehaviour
         Invoke("briefPause", .00001f);
     }
 
-    //start but late
+    //starts 1 frame after start this gives the camera time to run cameraScript
     void briefPause()
     {
         //determine the starting amount of gridspaces
@@ -60,6 +61,7 @@ public class StartUpScript : MonoBehaviour
         spawnTrees();
     }
 
+    //spawn houses
     void spawnHouses()
     {
         //spawn houses
@@ -75,16 +77,16 @@ public class StartUpScript : MonoBehaviour
             yPos = Random.Range(offsetDistance, (int)startingHeight + 1);
 
             //determine if generated position is empty
-            if (GameManager.isGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
+            if (BuildMenuFunctions.isGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
             {
                 //determine if position already has an instance next to it
-                if (GameManager.checkSurroundingGridSpaces(new Vector3(xPos, yPos, 0), house))
+                if (BuildMenuFunctions.checkSurroundingGridSpaces(new Vector3(xPos, yPos, 0), house))
                 {
                     //create instance
                     Instantiate(house, new Vector3(xPos, yPos, 0), transform.rotation);
 
                     //set space in grid
-                    GameManager.setGridSpace(house, new Vector3(xPos, yPos, 0));
+                    BuildMenuFunctions.setGridSpace(house, new Vector3(xPos, yPos, 0));
 
                     //decrement counter
                     startingNumberOfHouses--;
@@ -93,6 +95,7 @@ public class StartUpScript : MonoBehaviour
         }
     }
 
+    //spawn trees
     void spawnTrees()
     {
         //spawn trees
@@ -105,16 +108,16 @@ public class StartUpScript : MonoBehaviour
             yPos = Random.Range(offsetDistance, (int)startingHeight + 1);
 
             //determine if generated position is empty
-            if (GameManager.isGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
+            if (BuildMenuFunctions.isGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
             {
                 //determine if position already has an instance next to it
-                if (GameManager.checkSurroundingGridSpaces(new Vector3(xPos, yPos, 0), tree))
+                if (BuildMenuFunctions.checkSurroundingGridSpaces(new Vector3(xPos, yPos, 0), tree))
                 {
                     //create instance
                     Instantiate(tree, new Vector3(xPos, yPos, 0), transform.rotation);
 
                     //set space in grid
-                    GameManager.setGridSpace(tree, new Vector3(xPos, yPos, 0));
+                    BuildMenuFunctions.setGridSpace(tree, new Vector3(xPos, yPos, 0));
 
                     //decrement counter
                     startingNumberOfTrees--;

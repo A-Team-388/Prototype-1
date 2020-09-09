@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public static class Helper
 {
     //Snap object to grid
@@ -44,5 +42,22 @@ public static class Helper
     public static Vector3 getMousePositionFromScreen()
     {
         return Input.mousePosition;
+    }
+
+    //Draws a line
+    public static void DrawLine(Vector3 start, Vector3 end, Color color)
+    {
+        GameObject myLine = new GameObject();
+        myLine.transform.position = start;
+        myLine.AddComponent<LineRenderer>();
+        LineRenderer lr = myLine.GetComponent<LineRenderer>();
+        lr.material = new Material(Shader.Find("Sprites/Default"));
+        lr.startColor = Color.white;
+        lr.endColor = Color.white;
+        lr.startWidth = .02f;
+        lr.endWidth = .02f;
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
+        //GameObject.Destroy(myLine, duration);
     }
 }

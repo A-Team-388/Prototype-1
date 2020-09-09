@@ -17,6 +17,15 @@ public class CoalScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        checkIfDead();
+    }
+
+    void checkIfDead()
+    {
+        if (null == BuildMenuFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
+        {
+            Destroy(this.gameObject);
+            Debug.Log("Tree");
+        }
     }
 }
