@@ -934,6 +934,7 @@ MonoBehaviour:
   selection4: {fileID: 572443818696165632, guid: 86abe198aedf5304e9e907801f61e0c4, type: 3}
   selection5: {fileID: 7688663850787778803, guid: e8a719ab879e2df43a23771576fa419f, type: 3}
   treeObject: {fileID: 6414712969679935580, guid: 537dccef7c1a12047abacf84fb60e959, type: 3}
+  houseObject: {fileID: 2016714305020912277, guid: 949d7d331bfdd27478154fb4c0e41b7a, type: 3}
 --- !u!4 &1312398377
 Transform:
   m_ObjectHideFlags: 0
@@ -1911,6 +1912,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000005722046}
+  m_AnchoredPosition: {x: 0, y: 0.0000038146973}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}

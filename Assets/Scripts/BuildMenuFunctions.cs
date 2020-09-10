@@ -40,6 +40,9 @@ public class BuildMenuFunctions : MonoBehaviour
     //tree object
     [SerializeField] GameObject treeObject;
 
+    //house object
+    [SerializeField] GameObject houseObject;
+
     //selected gameobject
     [SerializeField] public static GameObject selectedGameObject;
 
@@ -101,6 +104,14 @@ public class BuildMenuFunctions : MonoBehaviour
         if (Input.GetMouseButtonDown(1)&&dropDown.value!=6)
         {
             dropDown.value = 0;
+        }
+        else if (Input.GetMouseButtonDown(1) && dropDown.value == 6&& position1 == new Vector2(0, 0))
+        {
+            dropDown.value = 0;
+
+        }else if (Input.GetMouseButtonDown(1) && dropDown.value == 6 && position1 != new Vector2(0, 0))
+        {
+            position1 = new Vector2(0, 0);
         }
     }
 
@@ -300,19 +311,24 @@ public class BuildMenuFunctions : MonoBehaviour
                 {
                     position2 = Helper.getMousePositionFromWorldRounded();
 
-                    SetHomeToPower(position1, position2);
+                    if (IsGridSpaceMatching(houseObject, new Vector3(position1.x, position1.y, 0)) && IsGridSpaceMatching(houseObject, new Vector3(position2.x, position2.y, 0)))
+                    {
+                        position1 = new Vector2(0, 0);
+                        position2 = new Vector2(0, 0);
+                    }
+                    else
+                    {
+                        SetHomeToPower(position1, position2);
 
-                    Helper.DrawLine(position1, position2, Color.white);
+                        Helper.DrawLine(position1, position2, Color.white);
 
-                    position1 = new Vector2(0, 0);
-                    position2 = new Vector2(0, 0);
+                        position1 = new Vector2(0, 0);
+                        position2 = new Vector2(0, 0);
+                    }
                 }
             }
         }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            position1 = new Vector2(0, 0);
-        }
+
     }
 
     //tool that remove things
