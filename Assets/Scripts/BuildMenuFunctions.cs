@@ -13,11 +13,14 @@ public class BuildMenuFunctions : MonoBehaviour
     //bool used to know when tool is in use
     public bool lineRunner = false;
 
-
+    //bool used to know when tool is in use
     public bool removerToolBool = false;
 
     //text that appears on bottom of the screen to tell player how to stop placeing object/using tool
-    public GameObject toolText;
+    public GameObject toolPromptObject;
+
+    //text component of toolprompt object
+    public Text toolPromptText;
 
     //dropdown ui
     public Dropdown dropDown;
@@ -43,7 +46,7 @@ public class BuildMenuFunctions : MonoBehaviour
     [SerializeField] GameObject selection9;
 
     //selected gameobject
-    [SerializeField] GameObject selectedGameObject;
+    [SerializeField] public static GameObject selectedGameObject;
 
     //positions used to lay lines in run lines tool
     public Vector2 position1 = new Vector2(0, 0);
@@ -65,14 +68,14 @@ public class BuildMenuFunctions : MonoBehaviour
 
     public void Start()
     {
-        //find and set the tool text
-        toolText = GameObject.Find("ToolPrompt");
+        //find and set the toolprompt object
+        toolPromptObject = GameObject.Find("ToolPrompt");
+
+        //find and set the toolprompt component
+        toolPromptText = toolPromptObject.GetComponent<Text>();
 
         //find and set the drop down object
         dropDown = GameObject.Find("Dropdown").GetComponent<Dropdown>();
-
-        //enable on screen text
-        toolText.SetActive(false);
     }
 
 
@@ -100,11 +103,10 @@ public class BuildMenuFunctions : MonoBehaviour
         {
             dropDown.value = 0;
         }
- 
     }
 
     //determines what placeable object is selected on drop down menu
-    //BIG BOY
+    //Genuine BIG BOY
     public void DropDownMenuHandler(int selection)
     {
        switch(selection)
@@ -114,7 +116,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 toolInUse = false;
 
                 //enable on screen text
-                toolText.SetActive(false);
+                toolPromptText.text = "";
 
                 //run lines tool
                 lineRunner = false;
@@ -130,7 +132,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 toolInUse = true;
 
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -146,7 +148,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 toolInUse = true;
 
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -162,7 +164,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 toolInUse = true;
 
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -178,7 +180,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 toolInUse = true;
 
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -194,7 +196,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 toolInUse = true;
 
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -210,7 +212,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 toolInUse = true;
 
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -226,7 +228,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 toolInUse = true;
 
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -242,7 +244,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 toolInUse = true;
 
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -258,7 +260,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 toolInUse = true;
 
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -275,23 +277,29 @@ public class BuildMenuFunctions : MonoBehaviour
                 Debug.Log("line Runner");
 
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click Stop To Stop Laying Cable";
 
                 //run lines tool
                 lineRunner = true;
+
+                //set selected game object to the selected game object
+                selectedGameObject = null;
 
                 //set remove tool bool
                 removerToolBool = false;
                 break;
             case 11:
-                //place lines tool
+                //place object tool
                 toolInUse = false;
-                
+
                 //enable on screen text
-                toolText.SetActive(true);
+                toolPromptText.text = "Right Click To Stop Removing Objects";
 
                 //run lines tool
                 lineRunner = false;
+
+                //set selected game object to the selected game object
+                selectedGameObject = null;
 
                 //set remove tool bool
                 removerToolBool = true;
@@ -322,7 +330,7 @@ public class BuildMenuFunctions : MonoBehaviour
 
 
                 //enable on screen text
-                toolText.SetActive(false);
+                toolPromptObject.SetActive(false);
 
                 //run lines tool
                 lineRunner = false;
@@ -366,7 +374,7 @@ public class BuildMenuFunctions : MonoBehaviour
 
 
             //enable on screen text
-            toolText.SetActive(false);
+            toolPromptObject.SetActive(false);
 
             //run lines tool
             lineRunner = false;
@@ -395,7 +403,7 @@ public class BuildMenuFunctions : MonoBehaviour
 
 
             //enable on screen text
-            toolText.SetActive(false);
+            toolPromptObject.SetActive(false);
 
             //run lines tool
             lineRunner = false;

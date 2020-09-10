@@ -11,7 +11,7 @@ public class StartUpScript : MonoBehaviour
     public float startingNumberOfHouses = 1;
     public float startingNumberOfTrees = 1.5f;
 
-
+    //rate of spawn for startup
     public uint objectSpawnRate;
 
     //starting height and width of the array
