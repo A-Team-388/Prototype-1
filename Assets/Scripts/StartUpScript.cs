@@ -77,16 +77,16 @@ public class StartUpScript : MonoBehaviour
             yPos = Random.Range(offsetDistance, (int)startingHeight + 1);
 
             //determine if generated position is empty
-            if (BuildMenuFunctions.isGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
+            if (BuildMenuFunctions.IsGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
             {
                 //determine if position already has an instance next to it
-                if (BuildMenuFunctions.checkSurroundingGridSpaces(new Vector3(xPos, yPos, 0), house))
+                if (BuildMenuFunctions.CheckSurroundingGridSpaces(new Vector3(xPos, yPos, 0), house))
                 {
                     //create instance
                     Instantiate(house, new Vector3(xPos, yPos, 0), transform.rotation);
 
                     //set space in grid
-                    BuildMenuFunctions.setGridSpace(house, new Vector3(xPos, yPos, 0));
+                    BuildMenuFunctions.SetGridSpace(house, new Vector3(xPos, yPos, 0));
 
                     //decrement counter
                     startingNumberOfHouses--;
@@ -108,16 +108,16 @@ public class StartUpScript : MonoBehaviour
             yPos = Random.Range(offsetDistance, (int)startingHeight + 1);
 
             //determine if generated position is empty
-            if (BuildMenuFunctions.isGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
+            if (BuildMenuFunctions.IsGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
             {
                 //determine if position already has an instance next to it
-                if (BuildMenuFunctions.checkSurroundingGridSpaces(new Vector3(xPos, yPos, 0), tree))
+                if (BuildMenuFunctions.CheckSurroundingGridSpaces(new Vector3(xPos, yPos, 0), tree))
                 {
                     //create instance
                     Instantiate(tree, new Vector3(xPos, yPos, 0), transform.rotation);
 
                     //set space in grid
-                    BuildMenuFunctions.setGridSpace(tree, new Vector3(xPos, yPos, 0));
+                    BuildMenuFunctions.SetGridSpace(tree, new Vector3(xPos, yPos, 0));
 
                     //decrement counter
                     startingNumberOfTrees--;

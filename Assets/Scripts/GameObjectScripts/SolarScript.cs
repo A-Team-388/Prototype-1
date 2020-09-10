@@ -23,7 +23,6 @@ public class SolarScript : MonoBehaviour
         if (null == BuildMenuFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
             Destroy(this.gameObject);
-            Debug.Log("Tree");
         }
     }
 }

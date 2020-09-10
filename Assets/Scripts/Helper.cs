@@ -48,6 +48,7 @@ public static class Helper
     public static void DrawLine(Vector3 start, Vector3 end, Color color)
     {
         GameObject myLine = new GameObject();
+        myLine.name = "powerLine";
         myLine.transform.position = start;
         myLine.AddComponent<LineRenderer>();
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
@@ -58,6 +59,32 @@ public static class Helper
         lr.endWidth = .02f;
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
-        //GameObject.Destroy(myLine, duration);
+        //GameObject.Destroy(myLine, duration);//useful but not what we are going for
+        BuildMenuFunctions.lineObjects[BuildMenuFunctions.lineNumber] = myLine;
+        Debug.Log(BuildMenuFunctions.lineNumber + "object");
+        BuildMenuFunctions.lineLocations[BuildMenuFunctions.lineNumber] = start;
+        Debug.Log(BuildMenuFunctions.lineNumber + "number 1");
+        BuildMenuFunctions.lineNumber += 1;
+        BuildMenuFunctions.lineLocations[BuildMenuFunctions.lineNumber] = end;
+        Debug.Log(BuildMenuFunctions.lineNumber + "number 2");
+    }
+
+    //get object 2d via raycast 2d 
+    //might require 2d collider on object
+    public static GameObject getObjectFromClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+            if (hit.collider != null)
+            {
+                return hit.collider.gameObject;
+            }
+            return null;
+        }
+        return null;
     }
 }

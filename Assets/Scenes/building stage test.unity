@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 653138880}
   - component: {fileID: 653138883}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -834,14 +834,10 @@ MonoBehaviour:
   toolPromptText: {fileID: 0}
   dropDown: {fileID: 1806769188}
   selection1: {fileID: 2404669415710288745, guid: 8acb8503cd4ad6149b03b7074d38ef3b, type: 3}
-  selection2: {fileID: 5448026507461769134, guid: ccaab3a2215f9a74ab49b2fa05cf9474, type: 3}
-  selection3: {fileID: 27588709232717115, guid: 14e6f854b2f9d4b4b8c296ff8c1d12f2, type: 3}
+  selection2: {fileID: 6603167316516251588, guid: d4b1fdae5d9bc5b4ba8cd66313f21653, type: 3}
+  selection3: {fileID: 4900880723872211217, guid: 76fc6c657e9a806439287e27bb097376, type: 3}
   selection4: {fileID: 572443818696165632, guid: 86abe198aedf5304e9e907801f61e0c4, type: 3}
   selection5: {fileID: 7688663850787778803, guid: e8a719ab879e2df43a23771576fa419f, type: 3}
-  selection6: {fileID: 6603167316516251588, guid: d4b1fdae5d9bc5b4ba8cd66313f21653, type: 3}
-  selection7: {fileID: 7924755445534424518, guid: 976a174fc3a8e644c8de2ad60a428c82, type: 3}
-  selection8: {fileID: 6414712969679935580, guid: 537dccef7c1a12047abacf84fb60e959, type: 3}
-  selection9: {fileID: 2016714305020912277, guid: 949d7d331bfdd27478154fb4c0e41b7a, type: 3}
   position1: {x: 0, y: 0}
   position2: {x: 0, y: 0}
 --- !u!4 &1312398377
@@ -1369,23 +1365,15 @@ MonoBehaviour:
     m_Options:
     - m_Text: 
       m_Image: {fileID: 0}
-    - m_Text: Small Lines
+    - m_Text: Power Line
       m_Image: {fileID: 0}
-    - m_Text: Large Lines
+    - m_Text: Solar Panel
       m_Image: {fileID: 0}
-    - m_Text: Transformers
+    - m_Text: Wind Turbine
       m_Image: {fileID: 0}
     - m_Text: Coal Plant
       m_Image: {fileID: 0}
     - m_Text: Natural Gas Plant
-      m_Image: {fileID: 0}
-    - m_Text: Solar Panel
-      m_Image: {fileID: 0}
-    - m_Text: Nuclear Plant
-      m_Image: {fileID: 0}
-    - m_Text: Tree
-      m_Image: {fileID: 0}
-    - m_Text: House
       m_Image: {fileID: 0}
     - m_Text: Line Runner
       m_Image: {fileID: 0}
@@ -1829,6 +1817,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000005722046}
+  m_AnchoredPosition: {x: 0, y: 0.0000038146973}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}

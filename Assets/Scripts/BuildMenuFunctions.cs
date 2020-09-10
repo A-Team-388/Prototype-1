@@ -26,24 +26,16 @@ public class BuildMenuFunctions : MonoBehaviour
     public Dropdown dropDown;
 
     //stored gameobjects that can be placed
-    //small lines
+    //power lines
     [SerializeField] GameObject selection1;
-    //large lines
+    //solar panel
     [SerializeField] GameObject selection2;
-    //transfomers
+    //wind turbine
     [SerializeField] GameObject selection3;
     //coal plant
     [SerializeField] GameObject selection4;
-    //natural gas plant
+    //natural gas
     [SerializeField] GameObject selection5;
-    //solar panel
-    [SerializeField] GameObject selection6;
-    //nuclear plant
-    [SerializeField] GameObject selection7;
-    //tree
-    [SerializeField] GameObject selection8;
-    //house
-    [SerializeField] GameObject selection9;
 
     //selected gameobject
     [SerializeField] public static GameObject selectedGameObject;
@@ -66,6 +58,10 @@ public class BuildMenuFunctions : MonoBehaviour
     //used to count up in setHomeToPower function
     public static int connectionNumber = 0;
 
+    public static uint lineNumber = 0;
+    public static Vector2[] lineLocations = new Vector2[200];
+    public static GameObject[] lineObjects = new GameObject[100];
+
     public void Start()
     {
         //find and set the toolprompt object
@@ -77,7 +73,6 @@ public class BuildMenuFunctions : MonoBehaviour
         //find and set the drop down object
         dropDown = GameObject.Find("Dropdown").GetComponent<Dropdown>();
     }
-
 
     public void Update()
     {
@@ -95,7 +90,7 @@ public class BuildMenuFunctions : MonoBehaviour
         }
         if (removerToolBool == true)
         {
-            removerTool();
+            RemoverTool();
         }
 
         //exit tool
@@ -128,7 +123,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 removerToolBool = false;
                 break;
             case 1:
-                //small lines
+                //power line
                 toolInUse = true;
 
                 //enable on screen text
@@ -144,7 +139,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 removerToolBool = false;
                 break;
             case 2:
-                //large lines
+                //solar power
                 toolInUse = true;
 
                 //enable on screen text
@@ -160,7 +155,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 removerToolBool = false;
                 break;
             case 3:
-                //transformers
+                //wind turbine
                 toolInUse = true;
 
                 //enable on screen text
@@ -208,73 +203,8 @@ public class BuildMenuFunctions : MonoBehaviour
                 removerToolBool = false;
                 break;
             case 6:
-                //solar power
-                toolInUse = true;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click To Stop Placing Objects";
-
-                //run lines tool
-                lineRunner = false;
-
-                //set selected game object to the selected game object
-                selectedGameObject = selection6;
-
-                //set remove tool bool
-                removerToolBool = false;
-                break;
-            case 7:
-                //nuclear plant
-                toolInUse = true;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click To Stop Placing Objects";
-
-                //run lines tool
-                lineRunner = false;
-
-                //set selected game object to the selected game object
-                selectedGameObject = selection7;
-
-                //set remove tool bool
-                removerToolBool = false;
-                break;
-            case 8:
-                //tree
-                toolInUse = true;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click To Stop Placing Objects";
-
-                //run lines tool
-                lineRunner = false;
-
-                //set selected game object to the selected game object
-                selectedGameObject = selection8;
-
-                //set remove tool bool
-                removerToolBool = false;
-                break;
-            case 9:
-                //house
-                toolInUse = true;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click To Stop Placing Objects";
-
-                //run lines tool
-                lineRunner = false;
-
-                //set selected game object to the selected game object
-                selectedGameObject = selection9;
-
-                //set remove tool bool
-                removerToolBool = false;
-                break;
-            case 10:
                 //place lines tool
                 toolInUse = false;
-                Debug.Log("line Runner");
 
                 //enable on screen text
                 toolPromptText.text = "Right Click Stop To Stop Laying Cable";
@@ -288,8 +218,8 @@ public class BuildMenuFunctions : MonoBehaviour
                 //set remove tool bool
                 removerToolBool = false;
                 break;
-            case 11:
-                //place object tool
+            case 7:
+                //remove object tool
                 toolInUse = false;
 
                 //enable on screen text
@@ -314,20 +244,18 @@ public class BuildMenuFunctions : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
             //check to make sure grid is empty
-            if (isGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()))
+            if (IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()))
             {
                 //create object on location
                 Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
-                //fill grid space with object data
-                //CREATE A HELPER FUNCTION TO REMOVE OBJECT FROM GRID
-                //CREATE A TOOL TO REMOVE OBJECT FROM LEVEL/GRID
-                setGridSpace(selectedGameObject,Helper.getMousePositionFromWorldRounded());
+
+                //determine how many and what extra spaces need to be filled
+                AddGridSpaces(selection1, selection2, selection3, selection4, selection5);
             }
             else if (Input.GetMouseButtonDown(1))
             {
                 //none
                 toolInUse = false;
-
 
                 //enable on screen text
                 toolPromptObject.SetActive(false);
@@ -335,6 +263,7 @@ public class BuildMenuFunctions : MonoBehaviour
                 //run lines tool
                 lineRunner = false;
 
+                //
                 removerToolBool = false;
             }
         }
@@ -346,19 +275,17 @@ public class BuildMenuFunctions : MonoBehaviour
 
         if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (!isGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()) && position1 == new Vector2(0,0))
+            if (!IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()) && position1 == new Vector2(0,0))
             {
                 position1 = Helper.getMousePositionFromWorldRounded();
-                Debug.Log(position1);
-                Debug.Log("pos 1");
+
             }
-            else if (!isGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()) && position1 != new Vector2(0, 0) && position1 != new Vector2(Helper.getMousePositionFromWorldRounded().x,Helper.getMousePositionFromWorldRounded().y))
+            else if (!IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()) && position1 != new Vector2(0, 0) && position1 != new Vector2(Helper.getMousePositionFromWorldRounded().x,Helper.getMousePositionFromWorldRounded().y))
             {
                 position2 = Helper.getMousePositionFromWorldRounded();
-                Debug.Log("pos 2");
-                Debug.Log(position2);
 
-                setHomeToPower(position1,position2);
+
+                SetHomeToPower(position1,position2);
 
                 Helper.DrawLine(position1, position2, Color.white);
 
@@ -384,23 +311,20 @@ public class BuildMenuFunctions : MonoBehaviour
     }
 
     //tool that remove things
-    public void removerTool()
+    public void RemoverTool()
     {
-        Debug.Log("removerTool");
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (!isGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()))
+            if (!IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()))
             {
-     
-                clearGridSpace(Helper.getMousePositionFromWorldRounded());
-                Debug.Log(playArea[(int)Helper.getMousePositionFromWorldRounded().x, (int)Helper.getMousePositionFromWorldRounded().y]);
+                //remove grid spaces
+                RemoveExtraGridSpaces(Helper.getObjectFromClick(), selection1, selection2, selection3, selection4, selection5);
             }
         }
         else if (Input.GetMouseButtonDown(1))
         {
             //none
             toolInUse = false;
-
 
             //enable on screen text
             toolPromptObject.SetActive(false);
@@ -413,13 +337,13 @@ public class BuildMenuFunctions : MonoBehaviour
     }
 
     //determines if a position contains an instance of a specific game object
-    public static bool isGridSpaceMatching(GameObject objectToCompare, Vector3 location)
+    public static bool IsGridSpaceMatching(GameObject objectToCompare, Vector3 location)
     {
         return (objectToCompare == playArea[(int)location.x, (int)location.y]);
     }
 
     //checks array to see if space is null
-    public static bool isGridSpaceEmpty(Vector3 locationToCheck)
+    public static bool IsGridSpaceEmpty(Vector3 locationToCheck)
     {
         if (playArea[(int)locationToCheck.x, (int)locationToCheck.y] == null)
         {
@@ -434,13 +358,13 @@ public class BuildMenuFunctions : MonoBehaviour
     }
 
     //set a grid space
-    public static void setGridSpace(GameObject entry, Vector3 location)
+    public static void SetGridSpace(GameObject entry, Vector3 location)
     {
         playArea[(int)location.x, (int)location.y] = entry;
     }
 
     //check surrounding grid spaces for specific object
-    public static bool checkSurroundingGridSpaces(Vector3 PositionToCheck, GameObject objectToCheckFor)
+    public static bool CheckSurroundingGridSpaces(Vector3 PositionToCheck, GameObject objectToCheckFor)
     {
         for (int x = -1; x <= 1; x++)
         {
@@ -448,7 +372,7 @@ public class BuildMenuFunctions : MonoBehaviour
             {
                 if (!(x == 0 && y == 0))
                 {
-                    if (isGridSpaceMatching(objectToCheckFor, new Vector3(PositionToCheck.x + x, PositionToCheck.y + y, 0)))
+                    if (IsGridSpaceMatching(objectToCheckFor, new Vector3(PositionToCheck.x + x, PositionToCheck.y + y, 0)))
                     {
                         return false;
                     }
@@ -459,18 +383,107 @@ public class BuildMenuFunctions : MonoBehaviour
     }
 
     //sets a position to the power grid
-    public static void setHomeToPower(Vector2 pos1, Vector2 pos2)
+    public static void SetHomeToPower(Vector2 pos1, Vector2 pos2)
     {
         connectionsGrid[0, connectionNumber] = pos1;
         connectionsGrid[1, connectionNumber] = pos2;
 
         connectionNumber++;
-        Debug.Log(connectionsGrid[0, 0] + "    " + connectionsGrid[1, 0]);
     }
 
     //empty a grid space
-    public static void clearGridSpace(Vector3 locationToClear)
+    public static void ClearGridSpace(Vector3 locationToClear)
     {
         playArea[(int)locationToClear.x, (int)locationToClear.y] = null;
+    }
+
+    //add objects spaces to grid
+    public static void AddGridSpaces(GameObject selection1, GameObject selection2, GameObject selection3, GameObject selection4, GameObject selection5)
+    {
+        if (selectedGameObject == selection1)
+        {
+            //fill grid space with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+        }
+        else if (selectedGameObject == selection2)
+        {
+            //fill grid space with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+        }
+        else if (selectedGameObject == selection3)
+        {
+            //turbine
+            //fill grid space with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 1, 0));
+        }
+        else if (selectedGameObject == selection4)
+        {
+            //fill grid space with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+        }
+        else if (selectedGameObject == selection5)
+        {
+            //fill grid space with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+        }
+    }
+
+    public static void RemoveExtraGridSpaces(GameObject objectToBeRemoved, GameObject selection1, GameObject selection2, GameObject selection3, GameObject selection4, GameObject selection5)
+    {
+        if (objectToBeRemoved.name == selection1.name + "(Clone)")
+        {
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+        }
+        else if (objectToBeRemoved.name == selection2.name + "(Clone)")
+        {
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+        }
+        else if (objectToBeRemoved.name == selection3.name + "(Clone)")
+        {
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y,0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+        }
+        else if (objectToBeRemoved.name == selection4.name + "(Clone)")
+        {
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+        }
+        else if (objectToBeRemoved.name == selection5.name + "(Clone)")
+        {
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+        }
+    }
+
+    public static void RemoveLines(Vector3 pointToCheck)
+    {
+        for(int count = 0 ; count <= lineNumber ; count++)
+        {
+
+            Debug.Log("point to check" + new Vector3(pointToCheck.x, pointToCheck.y, 0));
+            Debug.Log("array point to check" + new Vector3(lineLocations[count].x, lineLocations[count].y, 0));
+            if(new Vector3(pointToCheck.x,pointToCheck.y,0) == new Vector3(lineLocations[count].x,lineLocations[count].y,0))
+            {
+                Debug.Log("linenumber" + lineNumber);
+                if(lineNumber%2==0) 
+                {
+                    Object.DestroyImmediate(lineObjects[(lineNumber / 2)]);
+                    Debug.Log("even  works" );
+                  
+                }
+                else
+                {
+                    Object.DestroyImmediate(lineObjects[((lineNumber-1)/2)]);
+                    Debug.Log("odd works");
+                }
+                Debug.Log("asdfasdfasdfadfs");
+            }
+        }
     }
 }

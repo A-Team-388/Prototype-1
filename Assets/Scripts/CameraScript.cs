@@ -22,5 +22,7 @@ public class CameraScript : MonoBehaviour
         transform.position -= mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 30));
         //offset the position by half a unity measure
         transform.position += new Vector3(.5f,.5f,-30);
+
+        //Debug.Log(Helper.getObjectFromClick());
     }
 }
