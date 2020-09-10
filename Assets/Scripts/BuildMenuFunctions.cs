@@ -37,12 +37,15 @@ public class BuildMenuFunctions : MonoBehaviour
     //natural gas
     [SerializeField] GameObject selection5;
 
+    //tree object
+    [SerializeField] GameObject treeObject;
+
     //selected gameobject
     [SerializeField] public static GameObject selectedGameObject;
 
     //positions used to lay lines in run lines tool
-    public Vector2 position1 = new Vector2(0, 0);
-    public Vector2 position2 = new Vector2(0, 0);
+    public static Vector2 position1 = new Vector2(0, 0);
+    public static Vector2 position2 = new Vector2(0, 0);
 
     //this is a 2d grid used to store locations of objects on the game board
     //[0,0] in the array = (0,0) in the game world
@@ -60,7 +63,7 @@ public class BuildMenuFunctions : MonoBehaviour
 
     public static uint lineNumber = 0;
     public static Vector2[] lineLocations = new Vector2[200];
-    public static GameObject[] lineObjects = new GameObject[100];
+    public static GameObject[] lineObjects = new GameObject[200];
 
     public void Start()
     {
@@ -71,7 +74,7 @@ public class BuildMenuFunctions : MonoBehaviour
         toolPromptText = toolPromptObject.GetComponent<Text>();
 
         //find and set the drop down object
-        dropDown = GameObject.Find("Dropdown").GetComponent<Dropdown>();
+        dropDown = GameObject.Find("Dropdown").GetComponent<Dropdown>();     
     }
 
     public void Update()
@@ -83,18 +86,19 @@ public class BuildMenuFunctions : MonoBehaviour
             PlaceObjectTool();
             
         }
+
         if (lineRunner == true)
         {
             RunLinesTool();
-            
         }
+
         if (removerToolBool == true)
         {
             RemoverTool();
         }
 
         //exit tool
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1)&&dropDown.value!=6)
         {
             dropDown.value = 0;
         }
@@ -272,41 +276,42 @@ public class BuildMenuFunctions : MonoBehaviour
     //run lines tool
     public void RunLinesTool()
     {
-
-        if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (position1 == new Vector2(0, 0))
         {
-            if (!IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()) && position1 == new Vector2(0,0))
+            //enable on screen text
+            toolPromptText.text = "Right Click Stop To Stop Laying Cable";
+        }
+        else if (position1 != new Vector2(0, 0))
+        {
+            //enable on screen text
+            toolPromptText.text = "Right Click To Deselect Current Position";
+        }
+
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        {
+            if (!IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()) && position1 == new Vector2(0,0) && !IsGridSpaceMatching(treeObject, Helper.getMousePositionFromWorldRounded()))
             {
                 position1 = Helper.getMousePositionFromWorldRounded();
 
             }
-            else if (!IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()) && position1 != new Vector2(0, 0) && position1 != new Vector2(Helper.getMousePositionFromWorldRounded().x,Helper.getMousePositionFromWorldRounded().y))
+            else if (!IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()) && position1 != new Vector2(0, 0) && position1 != new Vector2(Helper.getMousePositionFromWorldRounded().x,Helper.getMousePositionFromWorldRounded().y) && !IsGridSpaceMatching(treeObject, Helper.getMousePositionFromWorldRounded()))
             {
-                position2 = Helper.getMousePositionFromWorldRounded();
+                if (Helper.getDistanceFromPosition(new Vector3(position1.x,position1.y,0), new Vector3(Helper.getMousePositionFromWorldRounded().x, Helper.getMousePositionFromWorldRounded().y,0)) <= 3.5)
+                {
+                    position2 = Helper.getMousePositionFromWorldRounded();
 
+                    SetHomeToPower(position1, position2);
 
-                SetHomeToPower(position1,position2);
+                    Helper.DrawLine(position1, position2, Color.white);
 
-                Helper.DrawLine(position1, position2, Color.white);
-
-                position1 = new Vector2(0, 0);
-                position2 = new Vector2(0, 0);
-
+                    position1 = new Vector2(0, 0);
+                    position2 = new Vector2(0, 0);
+                }
             }
         }
         else if (Input.GetMouseButtonDown(1))
         {
-            //none
-            toolInUse = false;
-
-
-            //enable on screen text
-            toolPromptObject.SetActive(false);
-
-            //run lines tool
-            lineRunner = false;
-
-            removerToolBool = false;
+            position1 = new Vector2(0, 0);
         }
     }
 
@@ -465,24 +470,9 @@ public class BuildMenuFunctions : MonoBehaviour
     {
         for(int count = 0 ; count <= lineNumber ; count++)
         {
-
-            Debug.Log("point to check" + new Vector3(pointToCheck.x, pointToCheck.y, 0));
-            Debug.Log("array point to check" + new Vector3(lineLocations[count].x, lineLocations[count].y, 0));
-            if(new Vector3(pointToCheck.x,pointToCheck.y,0) == new Vector3(lineLocations[count].x,lineLocations[count].y,0))
+            if (new Vector3(pointToCheck.x,pointToCheck.y,0) == new Vector3(lineLocations[count].x,lineLocations[count].y,0))
             {
-                Debug.Log("linenumber" + lineNumber);
-                if(lineNumber%2==0) 
-                {
-                    Object.DestroyImmediate(lineObjects[(lineNumber / 2)]);
-                    Debug.Log("even  works" );
-                  
-                }
-                else
-                {
-                    Object.DestroyImmediate(lineObjects[((lineNumber-1)/2)]);
-                    Debug.Log("odd works");
-                }
-                Debug.Log("asdfasdfasdfadfs");
+                Object.DestroyImmediate(lineObjects[count]);
             }
         }
     }

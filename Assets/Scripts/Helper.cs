@@ -21,12 +21,9 @@ public static class Helper
     }
 
     //gets distance between two points
-    public static float getDistanceFromPosition(float x1, float y1, float x2, float y2)
+    public static float getDistanceFromPosition(Vector3 object1,Vector3 object2)
     {
-        float deltaX = x2 - x1;
-        float deltaY = y2 - y1;
-
-        return Mathf.Sqrt(deltaX * deltaX + deltaY * deltaY);
+       return Vector3.Distance(object1, object2);
     }
 
     //gets the in world mouse position
@@ -61,12 +58,18 @@ public static class Helper
         lr.SetPosition(1, end);
         //GameObject.Destroy(myLine, duration);//useful but not what we are going for
         BuildMenuFunctions.lineObjects[BuildMenuFunctions.lineNumber] = myLine;
-        Debug.Log(BuildMenuFunctions.lineNumber + "object");
+        Debug.Log("lineObject" + BuildMenuFunctions.lineObjects[BuildMenuFunctions.lineNumber]);
         BuildMenuFunctions.lineLocations[BuildMenuFunctions.lineNumber] = start;
-        Debug.Log(BuildMenuFunctions.lineNumber + "number 1");
+        Debug.Log("linelocation" + BuildMenuFunctions.lineLocations[BuildMenuFunctions.lineNumber]);
+        Debug.Log(BuildMenuFunctions.lineNumber);
         BuildMenuFunctions.lineNumber += 1;
+        BuildMenuFunctions.lineObjects[BuildMenuFunctions.lineNumber] = myLine;
+        Debug.Log("lineObject" + BuildMenuFunctions.lineObjects[BuildMenuFunctions.lineNumber]);
         BuildMenuFunctions.lineLocations[BuildMenuFunctions.lineNumber] = end;
-        Debug.Log(BuildMenuFunctions.lineNumber + "number 2");
+        Debug.Log("linelocation" + BuildMenuFunctions.lineLocations[BuildMenuFunctions.lineNumber]);
+        Debug.Log(BuildMenuFunctions.lineNumber);
+        BuildMenuFunctions.lineNumber ++;
+
     }
 
     //get object 2d via raycast 2d 

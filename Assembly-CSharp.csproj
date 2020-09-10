@@ -71,11 +71,12 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Helper.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\TurbineScript.cs" />
+    <Compile Include="Assets\Scripts\MouseScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\SolarScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\CoalScript.cs" />
     <Compile Include="Assets\Scripts\BuildMenuFunctions.cs" />
-    <Compile Include="Assets\Scripts\MouseScript.cs" />
+    <Compile Include="Assets\Scripts\LineCircleScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
