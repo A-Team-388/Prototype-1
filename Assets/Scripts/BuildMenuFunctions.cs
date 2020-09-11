@@ -23,7 +23,7 @@ public class BuildMenuFunctions : MonoBehaviour
     public Text toolPromptText;
 
     //dropdown ui
-    public Dropdown dropDown;
+    public TMPro.TMP_Dropdown dropDown;
 
     //stored gameobjects that can be placed
     //power lines
@@ -77,7 +77,7 @@ public class BuildMenuFunctions : MonoBehaviour
         toolPromptText = toolPromptObject.GetComponent<Text>();
 
         //find and set the drop down object
-        dropDown = GameObject.Find("Dropdown").GetComponent<Dropdown>();     
+        dropDown = GameObject.Find("Dropdown").GetComponent<TMPro.TMP_Dropdown>();     
     }
 
     public void Update()
@@ -112,6 +112,12 @@ public class BuildMenuFunctions : MonoBehaviour
         }else if (Input.GetMouseButtonDown(1) && dropDown.value == 6 && position1 != new Vector2(0, 0))
         {
             position1 = new Vector2(0, 0);
+        }
+
+        //Reset draw line circle
+        if(dropDown.value != 6)
+        {
+            position1 = new Vector3(0, 0);
         }
     }
 
