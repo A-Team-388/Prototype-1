@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da23ad2526dbd9f488b4b81988da4d7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pollution: 5
+  power: 15
 --- !u!50 &5590570350156441752
 Rigidbody2D:
   serializedVersion: 4

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Phase2Manager : MonoBehaviour
 {
@@ -53,20 +54,20 @@ public class Phase2Manager : MonoBehaviour
     public float solarTotal;
     public float previousPopulation;
     public float previousPollution;
-    public Text currencyAmount;
-    public Text populationAmount;
-    public Text environmentThing;
-    public Text totalPower;
-    public Text gasPower;
-    public Text gasPowerPercentage;
-    public Text coalPower;
-    public Text coalPowerPercentage;
-    public Text windPower;
-    public Text windPowerPercentage;
-    public Text solarPower;
-    public Text solarPowerPercentage;
-    public Text previousPollutionText;
-    public Text previousPopulationText;
+    public TextMeshProUGUI currencyAmount;
+    public TextMeshProUGUI populationAmount;
+    public TextMeshProUGUI environmentThing;
+    public TextMeshProUGUI totalPower;
+    public TextMeshProUGUI gasPower;
+    public TextMeshProUGUI gasPowerPercentage;
+    public TextMeshProUGUI coalPower;
+    public TextMeshProUGUI coalPowerPercentage;
+    public TextMeshProUGUI windPower;
+    public TextMeshProUGUI windPowerPercentage;
+    public TextMeshProUGUI solarPower;
+    public TextMeshProUGUI solarPowerPercentage;
+    public TextMeshProUGUI previousPollutionText;
+    public TextMeshProUGUI previousPopulationText;
 
     public enum allRandomEvents { smog };
     public allRandomEvents currentEvent;
@@ -77,8 +78,10 @@ public class Phase2Manager : MonoBehaviour
     {
         coal = coalReference.GetComponent<CoalScript>();
         turbine = turbineReference.GetComponent<TurbineScript>();
-        //gas = gasReference.GetComponent<gasScript>();
+        gas = gasReference.GetComponent<NaturalGasScript>();
         solar = solarReference.GetComponent<SolarScript>();
+
+        TriggerEvent();
     }
     /*
      * Powered Houses
@@ -114,6 +117,8 @@ public class Phase2Manager : MonoBehaviour
         windPercentage = windTotal / currentPower;
         solarPercentage = solarTotal / currentPower;
         gasPercentage = gasTotal / currentPower;
+
+        /*
         solarPower.text = solarTotal.ToString();
         coalPower.text = coalTotal.ToString();
         windPower.text = windTotal.ToString();
@@ -123,7 +128,7 @@ public class Phase2Manager : MonoBehaviour
         coalPowerPercentage.text = coalPercentage.ToString();
         windPowerPercentage.text = windPercentage.ToString();
         gasPowerPercentage.text = gasPercentage.ToString();
-
+        */
         while(currentPower > powerNeeded)
         {
             happiness++;
