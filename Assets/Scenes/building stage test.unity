@@ -1513,7 +1513,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1227915874}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1312398379}
+        m_TargetAssemblyTypeName: Phase2Manager, Assembly-CSharp
+        m_MethodName: TriggerEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1227915874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1638,6 +1650,7 @@ GameObject:
   - component: {fileID: 1312398377}
   - component: {fileID: 1312398376}
   - component: {fileID: 1312398378}
+  - component: {fileID: 1312398379}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1703,6 +1716,66 @@ MonoBehaviour:
   offsetDistance: 1
   house: {fileID: 2016714305020912277, guid: 949d7d331bfdd27478154fb4c0e41b7a, type: 3}
   tree: {fileID: 6414712969679935580, guid: 537dccef7c1a12047abacf84fb60e959, type: 3}
+--- !u!114 &1312398379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312398375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3c5b3736a2705b4e9dd2cc9e601424a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coalReference: {fileID: 572443818696165632, guid: 86abe198aedf5304e9e907801f61e0c4, type: 3}
+  coal: {fileID: 0}
+  turbineReference: {fileID: 4900880723872211217, guid: 76fc6c657e9a806439287e27bb097376, type: 3}
+  turbine: {fileID: 0}
+  gasReference: {fileID: 7688663850787778803, guid: e8a719ab879e2df43a23771576fa419f, type: 3}
+  gas: {fileID: 0}
+  solarReference: {fileID: 6603167316516251588, guid: d4b1fdae5d9bc5b4ba8cd66313f21653, type: 3}
+  solar: {fileID: 0}
+  happiness: 0
+  pollutionLevels: 0
+  pollutionTollerance: 0
+  pollutionTicks: 0
+  population: 10
+  currencyPerPerson: 100
+  powerNeeded: 0
+  currentPower: 0
+  excessPowerGrowth: 0
+  powerNeededPerPerson: 1
+  coalMultiplier: 1
+  gasMultiplier: 1
+  windMultiplier: 1
+  solarMultiplier: 1
+  coalPercentage: 0
+  coalTotal: 0
+  gasPercentage: 0
+  gasTotal: 0
+  windPercentage: 0
+  windTotal: 0
+  solarPercentage: 0
+  solarTotal: 0
+  previousPopulation: 0
+  previousPollution: 0
+  currencyAmount: {fileID: 0}
+  populationAmount: {fileID: 0}
+  environmentThing: {fileID: 0}
+  totalPower: {fileID: 0}
+  gasPower: {fileID: 0}
+  gasPowerPercentage: {fileID: 0}
+  coalPower: {fileID: 0}
+  coalPowerPercentage: {fileID: 0}
+  windPower: {fileID: 0}
+  windPowerPercentage: {fileID: 0}
+  solarPower: {fileID: 0}
+  solarPowerPercentage: {fileID: 0}
+  previousPollutionText: {fileID: 0}
+  previousPopulationText: {fileID: 0}
+  currentEvent: 0
+  smogSolarEffect: 0.9
 --- !u!1 &1383608968
 GameObject:
   m_ObjectHideFlags: 0

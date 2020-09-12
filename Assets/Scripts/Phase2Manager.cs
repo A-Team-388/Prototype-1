@@ -85,15 +85,20 @@ public class Phase2Manager : MonoBehaviour
      * Unpowered Houses
      * Start Random Events
      */
+     public void TriggerEvent()
+    {
+        StartUpScript start = FindObjectOfType<StartUpScript>();
+        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, start.houseAmount); 
+    }
 
-    public void RunSimulation(int coalAmount, int turbineAmount, int gasAmount, int solarAmount, int houseAmount, int poweredHouses)
+    public void RunSimulation(int coalAmount, int turbineAmount, int gasAmount, int solarAmount, int houseAmount)
     {
         previousPopulation = population;
         previousPopulationText.text = previousPopulation.ToString();
         previousPollution = pollutionLevels;
         previousPollutionText.text = previousPollution.ToString();
-        int unpoweredHouses = houseAmount - poweredHouses;
-        powerNeeded = poweredHouses * powerNeededPerPerson;
+        //int unpoweredHouses = houseAmount - poweredHouses;
+        powerNeeded = houseAmount * powerNeededPerPerson;
         pollutionLevels += coal.pollution * coalAmount;
         pollutionLevels += gas.pollution * gasAmount;
 
@@ -117,7 +122,7 @@ public class Phase2Manager : MonoBehaviour
         windPowerPercentage.text = windPercentage.ToString();
         gasPowerPercentage.text = gasPercentage.ToString();
 
-        while(currentPower > powerNeeded && unpoweredHouses == 0)
+        while(currentPower > powerNeeded)
         {
             happiness++;
             currentPower -= excessPowerGrowth;
