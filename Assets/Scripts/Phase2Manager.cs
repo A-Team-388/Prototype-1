@@ -88,6 +88,7 @@ public class Phase2Manager : MonoBehaviour
      public void TriggerEvent()
     {
         StartUpScript start = FindObjectOfType<StartUpScript>();
+
         RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, start.houseAmount); 
     }
 
@@ -101,6 +102,7 @@ public class Phase2Manager : MonoBehaviour
         powerNeeded = houseAmount * powerNeededPerPerson;
         pollutionLevels += coal.pollution * coalAmount;
         pollutionLevels += gas.pollution * gasAmount;
+
 
         currentPower = 0;
         coalTotal += coalAmount * coal.power * coalMultiplier;

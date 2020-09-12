@@ -279,6 +279,23 @@ public class BuildMenuFunctions : MonoBehaviour
                 //create object on location
                 Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
 
+                if (selectedGameObject == selection2)
+                {
+                    solarAmount++;
+                }
+                else if (selectedGameObject == selection3)
+                {
+                    turbineAmount++;
+                }
+                else if (selectedGameObject == selection4)
+                {
+                    coalAmount++;
+                }
+                else if(selectedGameObject == selection5)
+                {
+                    gasAmount++;
+                }
+
                 //determine how many and what extra spaces need to be filled
                 AddGridSpaces(selection1, selection2, selection3, selection4, selection5);
             }
