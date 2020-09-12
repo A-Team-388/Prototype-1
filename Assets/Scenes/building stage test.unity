@@ -1638,6 +1638,7 @@ GameObject:
   - component: {fileID: 1312398377}
   - component: {fileID: 1312398376}
   - component: {fileID: 1312398378}
+  - component: {fileID: 1312398379}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1707,6 +1708,65 @@ MonoBehaviour:
   tree: {fileID: 6414712969679935580, guid: 537dccef7c1a12047abacf84fb60e959, type: 3}
   xPos: 0
   yPos: 0
+--- !u!114 &1312398379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312398375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3c5b3736a2705b4e9dd2cc9e601424a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coalReference: {fileID: 0}
+  coal: {fileID: 0}
+  turbineReference: {fileID: 0}
+  turbine: {fileID: 0}
+  gasReference: {fileID: 0}
+  solarReference: {fileID: 0}
+  solar: {fileID: 0}
+  happiness: 0
+  pollutionLevels: 0
+  pollutionTollerance: 0
+  pollutionTicks: 0
+  population: 0
+  currencyPerPerson: 0
+  powerNeeded: 0
+  currentPower: 0
+  excessPowerGrowth: 0
+  powerNeededPerPerson: 0
+  coalMultiplier: 1
+  gasMultiplier: 1
+  windMultiplier: 1
+  solarMultiplier: 1
+  coalPercentage: 0
+  coalTotal: 0
+  gasPercentage: 0
+  gasTotal: 0
+  windPercentage: 0
+  windTotal: 0
+  solarPercentage: 0
+  solarTotal: 0
+  previousPopulation: 0
+  previousPollution: 0
+  currencyAmount: {fileID: 0}
+  populationAmount: {fileID: 0}
+  environmentThing: {fileID: 0}
+  totalPower: {fileID: 0}
+  gasPower: {fileID: 0}
+  gasPowerPercentage: {fileID: 0}
+  coalPower: {fileID: 0}
+  coalPowerPercentage: {fileID: 0}
+  windPower: {fileID: 0}
+  windPowerPercentage: {fileID: 0}
+  solarPower: {fileID: 0}
+  solarPowerPercentage: {fileID: 0}
+  previousPollutionText: {fileID: 0}
+  previousPopulationText: {fileID: 0}
+  currentEvent: 0
+  smogSolarEffect: 0.9
 --- !u!1 &1324457439
 GameObject:
   m_ObjectHideFlags: 0

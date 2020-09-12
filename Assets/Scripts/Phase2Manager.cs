@@ -10,7 +10,7 @@ public class Phase2Manager : MonoBehaviour
     public GameObject turbineReference;
     public TurbineScript turbine;
     public GameObject gasReference;
-    //public gasScript gas;
+    public NaturalGasScript gas;
     public GameObject solarReference;
     public SolarScript solar;
 
@@ -93,20 +93,20 @@ public class Phase2Manager : MonoBehaviour
         previousPollution = pollutionLevels;
         previousPollutionText.text = previousPollution.ToString();
         int unpoweredHouses = houseAmount - poweredHouses;
-        powerNeeded = houseAmount * powerNeededPerPerson;
+        powerNeeded = poweredHouses * powerNeededPerPerson;
         pollutionLevels += coal.pollution * coalAmount;
-        //pollutionLevels += gas.pollution * gasAmount;
+        pollutionLevels += gas.pollution * gasAmount;
 
         currentPower = 0;
         coalTotal += coalAmount * coal.power * coalMultiplier;
         windTotal += turbineAmount * turbine.power * windMultiplier;
-        //gasTotal += gasAmount * gas.power * gasMultiplier;
+        gasTotal += gasAmount * gas.power * gasMultiplier;
         solarTotal += solarAmount * solar.power * solarMultiplier;
         currentPower = coalTotal + windTotal + solarTotal;
         coalPercentage = coalTotal / currentPower;
         windPercentage = windTotal / currentPower;
         solarPercentage = solarTotal / currentPower;
-        //gasPercentage = gasTotal / currentPower;
+        gasPercentage = gasTotal / currentPower;
         solarPower.text = solarTotal.ToString();
         coalPower.text = coalTotal.ToString();
         windPower.text = windTotal.ToString();
@@ -117,7 +117,7 @@ public class Phase2Manager : MonoBehaviour
         windPowerPercentage.text = windPercentage.ToString();
         gasPowerPercentage.text = gasPercentage.ToString();
 
-        while(currentPower > powerNeeded)
+        while(currentPower > powerNeeded && unpoweredHouses == 0)
         {
             happiness++;
             currentPower -= excessPowerGrowth;
