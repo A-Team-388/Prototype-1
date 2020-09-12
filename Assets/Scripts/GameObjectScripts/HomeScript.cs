@@ -24,4 +24,23 @@ public class HomeScript : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    void checkIfPowered()
+    {
+
+    }
+    /*
+    GameObject findSelfInGrid()
+    {
+
+        Vector2 myLocation = new Vector2();
+        for(int i = 0;i <= BuildMenuFunctions.lineNumber;i++)
+        {
+            if()
+            {
+
+            }
+        }
+    }
+    */
 }

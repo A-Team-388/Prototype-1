@@ -65,18 +65,17 @@
     <Compile Include="Assets\Scripts\GameObjectScripts\NuclearScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\SmallLineScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\TreeScript.cs" />
-    <Compile Include="Assets\Scripts\StartUpScript.cs" />
+    <Compile Include="Assets\Scripts\Build Mode\StartUpScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\HomeScript.cs" />
     <Compile Include="Assets\Scripts\OldDefunct\TestTransformerScript.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Helper.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\TurbineScript.cs" />
-    <Compile Include="Assets\Scripts\MouseScript.cs" />
-    <Compile Include="Assets\Scripts\LineCircleScript.cs" />
+    <Compile Include="Assets\Scripts\Build Mode\LineCircleScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\SolarScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\CoalScript.cs" />
-    <Compile Include="Assets\Scripts\BuildMenuFunctions.cs" />
+    <Compile Include="Assets\Scripts\Build Mode\BuildMenuFunctions.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

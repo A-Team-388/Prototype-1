@@ -84,4 +84,15 @@ public static class Helper
         }
         return null;
     }
+
+    //get object from location 2d
+    public static GameObject GetObjectFromLocation2d(Vector2 locationToCheck)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(locationToCheck, Vector2.zero);
+        if (hit.collider != null)
+        {
+            return hit.collider.gameObject;
+        }
+        return null;
+    }
 }
