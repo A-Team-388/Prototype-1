@@ -2146,11 +2146,12 @@ MonoBehaviour:
   pollutionLevels: 0
   pollutionTollerance: 0
   pollutionTicks: 0
-  population: 10
+  startingCurrency: 500
+  population: 0
   currencyPerPerson: 100
   powerNeeded: 0
   currentPower: 0
-  excessPowerGrowth: 0
+  excessPowerGrowth: 10
   powerNeededPerPerson: 1
   coalMultiplier: 1
   gasMultiplier: 1

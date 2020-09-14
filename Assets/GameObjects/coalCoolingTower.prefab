@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pollution: 10
   power: 20
+  price: 10
 --- !u!50 &9176633349878050949
 Rigidbody2D:
   serializedVersion: 4

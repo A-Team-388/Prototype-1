@@ -77,6 +77,8 @@ public class BuildMenuFunctions : MonoBehaviour
     public static Vector2[] lineLocations = new Vector2[200];
     public static GameObject[] lineObjects = new GameObject[200];
 
+    public Phase2Manager phase2;
+
     public void Start()
     {
         //find and set the toolprompt object
@@ -86,7 +88,9 @@ public class BuildMenuFunctions : MonoBehaviour
         toolPromptText = toolPromptObject.GetComponent<Text>();
 
         //find and set the drop down object
-        dropDown = GameObject.Find("Dropdown").GetComponent<TMPro.TMP_Dropdown>();     
+        dropDown = GameObject.Find("Dropdown").GetComponent<TMPro.TMP_Dropdown>();
+
+        phase2 = GetComponent<Phase2Manager>();
     }
 
     public void Update()
@@ -277,23 +281,28 @@ public class BuildMenuFunctions : MonoBehaviour
             if (IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()))
             {
                 //create object on location
-                Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
 
-                if (selectedGameObject == selection2)
+
+                if (selectedGameObject == selection2 && Phase2Manager.currency >= SolarScript.cost)
                 {
                     solarAmount++;
+                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
                 }
-                else if (selectedGameObject == selection3)
+                else if (selectedGameObject == selection3 && Phase2Manager.currency > TurbineScript.cost)
                 {
                     turbineAmount++;
+                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
                 }
-                else if (selectedGameObject == selection4)
+                else if (selectedGameObject == selection4 && Phase2Manager.currency > CoalScript.cost)
                 {
                     coalAmount++;
+                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
                 }
-                else if(selectedGameObject == selection5)
+                else if(selectedGameObject == selection5 && Phase2Manager.currency > NaturalGasScript.cost)
                 {
                     gasAmount++;
+                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
+
                 }
 
                 //determine how many and what extra spaces need to be filled
