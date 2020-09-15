@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TurbineScript : MonoBehaviour
 {
+    public bool powered = true;
+
     // Start is called before the first frame update
     public float power;
     void Start()

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SolarScript : MonoBehaviour
 {
+    public bool powered = true;
+
     public float power;
     // Start is called before the first frame update
     void Start()

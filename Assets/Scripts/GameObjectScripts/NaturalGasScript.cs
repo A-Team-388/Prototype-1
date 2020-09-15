@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NaturalGasScript : MonoBehaviour
 {
+    public bool powered = true;
+
     public float pollution;
     public float power;
     // Start is called before the first frame update
