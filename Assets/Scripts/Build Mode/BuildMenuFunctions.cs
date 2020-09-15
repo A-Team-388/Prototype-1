@@ -8,7 +8,7 @@ public class BuildMenuFunctions : MonoBehaviour
 {
     //toggle if place object tool is in use
     //toggled in DropDownMenuHandler function
-    public bool toolInUse = false;
+    public bool toolInUse = true;
 
     //bool used to know when tool is in use
     public bool lineRunner = false;
@@ -77,8 +77,6 @@ public class BuildMenuFunctions : MonoBehaviour
     public static Vector2[] lineLocations = new Vector2[200];
     public static GameObject[] lineObjects = new GameObject[200];
 
-    public Phase2Manager phase2;
-
     public void Start()
     {
         //find and set the toolprompt object
@@ -90,7 +88,8 @@ public class BuildMenuFunctions : MonoBehaviour
         //find and set the drop down object
         dropDown = GameObject.Find("Dropdown").GetComponent<TMPro.TMP_Dropdown>();
 
-        phase2 = GetComponent<Phase2Manager>();
+        //set selected game object to the selected game object
+        selectedGameObject = selection1;
     }
 
     public void Update()
@@ -114,23 +113,20 @@ public class BuildMenuFunctions : MonoBehaviour
         }
 
         //exit tool
-        if (Input.GetMouseButtonDown(1)&&dropDown.value!=6)
-        {
-            dropDown.value = 0;
-        }
-        else if (Input.GetMouseButtonDown(1) && dropDown.value == 6&& position1 == new Vector2(0, 0))
-        {
-            dropDown.value = 0;
-
-        }else if (Input.GetMouseButtonDown(1) && dropDown.value == 6 && position1 != new Vector2(0, 0))
+if (Input.GetMouseButtonDown(1) && dropDown.value == 5 && position1 != new Vector2(0, 0))
         {
             position1 = new Vector2(0, 0);
+            //set text on screen blank
+            toolPromptText.text = "";
         }
 
         //Reset draw line circle
-        if(dropDown.value != 6)
+        if(dropDown.value != 5)
         {
             position1 = new Vector3(0, 0);
+
+            //set text on screen blank
+            toolPromptText.text = "";
         }
     }
 
@@ -141,27 +137,8 @@ public class BuildMenuFunctions : MonoBehaviour
        switch(selection)
         {
             case 0:
-                //none
-                toolInUse = false;
-
-                //enable on screen text
-                toolPromptText.text = "";
-
-                //run lines tool
-                lineRunner = false;
-
-                //set selected game object to the selected game object
-                selectedGameObject = null;
-
-                //set remove tool bool
-                removerToolBool = false;
-                break;
-            case 1:
                 //power line
                 toolInUse = true;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -172,12 +149,9 @@ public class BuildMenuFunctions : MonoBehaviour
                 //set remove tool bool
                 removerToolBool = false;
                 break;
-            case 2:
+            case 1:
                 //solar power
                 toolInUse = true;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -188,12 +162,9 @@ public class BuildMenuFunctions : MonoBehaviour
                 //set remove tool bool
                 removerToolBool = false;
                 break;
-            case 3:
+            case 2:
                 //wind turbine
                 toolInUse = true;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -204,12 +175,9 @@ public class BuildMenuFunctions : MonoBehaviour
                 //set remove tool bool
                 removerToolBool = false;
                 break;
-            case 4:
+            case 3:
                 //coal plant
                 toolInUse = true;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -220,12 +188,9 @@ public class BuildMenuFunctions : MonoBehaviour
                 //set remove tool bool
                 removerToolBool = false;
                 break;
-            case 5:
+            case 4:
                 //natural gas plant
                 toolInUse = true;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click To Stop Placing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -236,12 +201,9 @@ public class BuildMenuFunctions : MonoBehaviour
                 //set remove tool bool
                 removerToolBool = false;
                 break;
-            case 6:
+            case 5:
                 //place lines tool
                 toolInUse = false;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click Stop To Stop Laying Cable";
 
                 //run lines tool
                 lineRunner = true;
@@ -252,12 +214,9 @@ public class BuildMenuFunctions : MonoBehaviour
                 //set remove tool bool
                 removerToolBool = false;
                 break;
-            case 7:
+            case 6:
                 //remove object tool
                 toolInUse = false;
-
-                //enable on screen text
-                toolPromptText.text = "Right Click To Stop Removing Objects";
 
                 //run lines tool
                 lineRunner = false;
@@ -281,46 +240,34 @@ public class BuildMenuFunctions : MonoBehaviour
             if (IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()))
             {
                 //create object on location
+                Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
+                
 
-
-                if (selectedGameObject == selection2 && Phase2Manager.currency >= SolarScript.cost)
+                if (selectedGameObject == selection2)
                 {
                     solarAmount++;
-                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
+                    Phase2Manager.currency -= 20;
                 }
-                else if (selectedGameObject == selection3 && Phase2Manager.currency > TurbineScript.cost)
+                else if (selectedGameObject == selection3)
                 {
                     turbineAmount++;
-                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
+                    Phase2Manager.currency -= 15;
                 }
-                else if (selectedGameObject == selection4 && Phase2Manager.currency > CoalScript.cost)
+                else if (selectedGameObject == selection4)
                 {
                     coalAmount++;
-                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
+                    Phase2Manager.currency -= 10;
                 }
-                else if(selectedGameObject == selection5 && Phase2Manager.currency > NaturalGasScript.cost)
+                else if(selectedGameObject == selection5)
                 {
                     gasAmount++;
-                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
-
+                    Phase2Manager.currency -= 20;
                 }
+
+                GameObject.Find("GameManager").GetComponent<Phase2Manager>().UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);
 
                 //determine how many and what extra spaces need to be filled
                 AddGridSpaces(selection1, selection2, selection3, selection4, selection5);
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                //none
-                toolInUse = false;
-
-                //enable on screen text
-                toolPromptObject.SetActive(false);
-
-                //run lines tool
-                lineRunner = false;
-
-                //
-                removerToolBool = false;
             }
         }
     }
@@ -328,15 +275,10 @@ public class BuildMenuFunctions : MonoBehaviour
     //run lines tool
     public void RunLinesTool()
     {
-        if (position1 == new Vector2(0, 0))
+        if (position1 != new Vector2(0, 0))
         {
             //enable on screen text
-            toolPromptText.text = "Right Click Stop To Stop Laying Cable";
-        }
-        else if (position1 != new Vector2(0, 0))
-        {
-            //enable on screen text
-            toolPromptText.text = "Right Click To Deselect Current Position";
+            toolPromptText.text = "Right Click To Stop Placing Cable";
         }
 
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
@@ -381,19 +323,6 @@ public class BuildMenuFunctions : MonoBehaviour
                 RemoveExtraGridSpaces(Helper.getObjectFromClick(), selection1, selection2, selection3, selection4, selection5);
             }
         }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            //none
-            toolInUse = false;
-
-            //enable on screen text
-            toolPromptObject.SetActive(false);
-
-            //run lines tool
-            lineRunner = false;
-
-            removerToolBool = false;
-        }
     }
 
     //determines if a position contains an instance of a specific game object
@@ -415,6 +344,61 @@ public class BuildMenuFunctions : MonoBehaviour
             //return false if object does not exist in location
             return false;
         }
+
+        /*
+
+        if (selectedGameObject == selection1)
+        {
+            //fill grid space with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());         
+        }
+        else if (selectedGameObject == selection2)
+        {
+            //fill grid space with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+        }
+        else if (selectedGameObject == selection3)
+        {
+            //turbine
+            //fill grid space with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 1, 0));
+        }
+        else if (selectedGameObject == selection4)
+        {
+            //fill grid space with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 1, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 1, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 0, 0));
+            Phase2Manager.currency += 10;
+        }
+        else if (selectedGameObject == selection5)
+        {
+            //fill grid space with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 1, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 2, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 2, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 1, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 0, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-2, 2, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-2, 1, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-2, 0, 0));
+        }
+        */
     }
 
     //set a grid space
@@ -460,6 +444,7 @@ public class BuildMenuFunctions : MonoBehaviour
         {
             //fill grid space with object data
             SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+            Phase2Manager.currency -= 20;
         }
         else if (selectedGameObject == selection3)
         {
@@ -468,16 +453,42 @@ public class BuildMenuFunctions : MonoBehaviour
             SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
             //fill grid space above with object data
             SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 1, 0));
+
+            Phase2Manager.currency -= 15;
         }
         else if (selectedGameObject == selection4)
         {
             //fill grid space with object data
             SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 1, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 1, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 0, 0));
+            Phase2Manager.currency -= 10;
         }
         else if (selectedGameObject == selection5)
         {
             //fill grid space with object data
             SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded());
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 1, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 2, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 2, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 1, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 0, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-2, 2, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-2, 1, 0));
+            //fill grid space above with object data
+            SetGridSpace(selectedGameObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-2, 0, 0));
+            Phase2Manager.currency -= 20;
         }
     }
 
@@ -485,30 +496,73 @@ public class BuildMenuFunctions : MonoBehaviour
     {
         if (objectToBeRemoved.name == selection1.name + "(Clone)")
         {
+            //power pole
             ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
             RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
         }
         else if (objectToBeRemoved.name == selection2.name + "(Clone)")
         {
+            //solar panel
             ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
             RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            Phase2Manager.currency -= 10;
         }
         else if (objectToBeRemoved.name == selection3.name + "(Clone)")
         {
+            //turbine
             ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y,0));
             RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
             ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
             RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+            Phase2Manager.currency -= 8;
         }
         else if (objectToBeRemoved.name == selection4.name + "(Clone)")
         {
+            //coal
             ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
             RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+            Phase2Manager.currency -= 5;
         }
         else if (objectToBeRemoved.name == selection5.name + "(Clone)")
         {
+            //gas
             ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
             RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 2, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 2, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 2, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 2, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 1, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 0, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 0, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 2, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 2, 0));
+
+            Phase2Manager.currency += 10;
         }
     }
 

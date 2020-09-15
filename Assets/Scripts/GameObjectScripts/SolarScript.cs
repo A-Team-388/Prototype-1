@@ -7,18 +7,11 @@ public class SolarScript : MonoBehaviour
     public bool powered = true;
 
     public float power;
-    [SerializeField] public static int cost;
-    public int price;
-    public Phase2Manager phase2;
     // Start is called before the first frame update
     void Start()
     {
         //snap to match grid
-        phase2 = FindObjectOfType<Phase2Manager>();
         Helper.SnapToGrid(this.transform);
-        cost = price;
-        Phase2Manager.currency -= cost;
-        phase2.UpdateText();
     }
 
     // Update is called once per frame

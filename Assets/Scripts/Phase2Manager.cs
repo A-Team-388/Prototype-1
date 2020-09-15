@@ -16,7 +16,7 @@ public class Phase2Manager : MonoBehaviour
     public SolarScript solar;
 
     [Tooltip("The amount of happiness the population has")]
-    public int happiness;
+    public float happiness;
     [Tooltip("The levels of pollution currently existing")]
     public float pollutionLevels;
     [Tooltip("The multiples of pollution where if pollution beats it, will cause happiness to drop")]
@@ -25,10 +25,8 @@ public class Phase2Manager : MonoBehaviour
     public int pollutionTicks;
     [Tooltip("The amount of currency the player has")]
     public static float currency;
-    [Tooltip("The amount of currency the player starts with")]
-    public float startingCurrency;
     [Tooltip("The current population")]
-    public int population;
+    public float population;
     [Tooltip("The amount the player earns at the end of each turn per population amount")]
     public float currencyPerPerson;
 
@@ -37,10 +35,9 @@ public class Phase2Manager : MonoBehaviour
     [Tooltip("The currentPower")]
     public float currentPower;
     [Tooltip("The amount of excess power needed to grow the population")]
-    [Range(1, 100)]
     public float excessPowerGrowth;
     [Tooltip("The amount of power needed for every house")]
-    public float powerNeededPerPerson;
+    public float powerNeededPerPerson = 1f;
 
     [Header("Random Event Information and UI Display")]
     public float coalMultiplier = 1f;
@@ -77,15 +74,13 @@ public class Phase2Manager : MonoBehaviour
 
     public float smogSolarEffect = .9f;
 
-    StartUpScript start;
     private void Start()
     {
         coal = coalReference.GetComponent<CoalScript>();
         turbine = turbineReference.GetComponent<TurbineScript>();
         gas = gasReference.GetComponent<NaturalGasScript>();
         solar = solarReference.GetComponent<SolarScript>();
-        start = FindObjectOfType<StartUpScript>();
-        currency = startingCurrency;
+
         TriggerEvent();
     }
     /*
@@ -95,49 +90,77 @@ public class Phase2Manager : MonoBehaviour
      */
      public void TriggerEvent()
     {
-        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, start.houseAmount); 
+        StartUpScript start = FindObjectOfType<StartUpScript>();
+
+        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount); 
     }
 
-    public void RunSimulation(int coalAmount, int turbineAmount, int gasAmount, int solarAmount, int houseAmount)
+    
+    public void UpdateUi(int coalAmount, int turbineAmount, int gasAmount, int solarAmount)
     {
-        previousPopulation = population;
-        previousPopulationText.text = previousPopulation.ToString();
-        previousPollution = pollutionLevels;
-        previousPollutionText.text = previousPollution.ToString();
-        //int unpoweredHouses = houseAmount - poweredHouses;
-        powerNeeded = (houseAmount + population) * powerNeededPerPerson;
-        pollutionLevels += coal.pollution * coalAmount;
-        pollutionLevels += gas.pollution * gasAmount;
-
-        windTotal = 0;
-        coalTotal = 0;
-        solarTotal = 0;
-        gasTotal = 0;
         currentPower = 0;
         coalTotal += coalAmount * coal.power * coalMultiplier;
         windTotal += turbineAmount * turbine.power * windMultiplier;
         gasTotal += gasAmount * gas.power * gasMultiplier;
         solarTotal += solarAmount * solar.power * solarMultiplier;
-        currentPower = coalTotal + windTotal + solarTotal + gasTotal;
+        currentPower = coalTotal + windTotal + solarTotal;
+        totalPower.text = currentPower.ToString();
+        currencyAmount.text = currency.ToString();
+    }
+    
+
+    public void RunSimulation(int coalAmount, int turbineAmount, int gasAmount, int solarAmount, int houseAmount)
+    {
+        //previousPopulation = population;
+        //.text = previousPopulation.ToString();
+        //previousPollution = pollutionLevels;
+        //previousPollutionText.text = previousPollution.ToString();
+        //int unpoweredHouses = houseAmount - poweredHouses;
+        powerNeeded = houseAmount * powerNeededPerPerson;
+        pollutionLevels += coal.pollution * coalAmount;
+        pollutionLevels += gas.pollution * gasAmount;
+
+        currentPower = 0;
+        coalTotal += coalAmount * coal.power * coalMultiplier;
+        windTotal += turbineAmount * turbine.power * windMultiplier;
+        gasTotal += gasAmount * gas.power * gasMultiplier;
+        solarTotal += solarAmount * solar.power * solarMultiplier;
+        currentPower = coalTotal + windTotal + solarTotal;
         coalPercentage = coalTotal / currentPower;
         windPercentage = windTotal / currentPower;
         solarPercentage = solarTotal / currentPower;
         gasPercentage = gasTotal / currentPower;
 
+        /*
+        solarPower.text = solarTotal.ToString();
+        coalPower.text = coalTotal.ToString();
+        windPower.text = windTotal.ToString();
+        gasPower.text = gasTotal.ToString();
+        */
+        totalPower.text = currentPower.ToString();
+        /*
+        solarPowerPercentage.text = solarPercentage.ToString();
+        coalPowerPercentage.text = coalPercentage.ToString();
+        windPowerPercentage.text = windPercentage.ToString();
+        gasPowerPercentage.text = gasPercentage.ToString();
+        */
 
-        happiness = 0;
-        while(currentPower > powerNeeded)
+
+
+        
+        while (currentPower > powerNeeded)
         {
             happiness++;
+            currentPower --;
             currentPower -= excessPowerGrowth;
         }
+        
+        
 
         if(happiness > population)
         {
             population = happiness;
-
         }
-        //start.houseAmount = population;
 
         if(pollutionLevels > pollutionTollerance * pollutionTicks)
         {
@@ -148,8 +171,10 @@ public class Phase2Manager : MonoBehaviour
 
         currency += population * currencyPerPerson;
         //currency -= coal.coalUpkeep + gasAmount.
-        UpdateText();
 
+        currencyAmount.text = currency.ToString();
+        populationAmount.text = population.ToString();
+        environmentThing.text = pollutionLevels.ToString();
 
 
         //Random Events   
@@ -160,23 +185,5 @@ public class Phase2Manager : MonoBehaviour
     {
         currentEvent = allRandomEvents.smog;
         solarMultiplier = smogSolarEffect;
-    }
-
-    public void UpdateText()
-    {
-        currencyAmount.text = currency.ToString();
-        populationAmount.text = population.ToString();
-        environmentThing.text = pollutionLevels.ToString();
-        /*
-solarPower.text = solarTotal.ToString();
-coalPower.text = coalTotal.ToString();
-windPower.text = windTotal.ToString();
-gasPower.text = gasTotal.ToString();
-totalPower.text = currentPower.ToString();
-solarPowerPercentage.text = solarPercentage.ToString();
-coalPowerPercentage.text = coalPercentage.ToString();
-windPowerPercentage.text = windPercentage.ToString();
-gasPowerPercentage.text = gasPercentage.ToString();
-*/
     }
 }

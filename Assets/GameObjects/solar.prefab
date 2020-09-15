@@ -99,7 +99,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powered: 1
   power: 10
-  price: 20
 --- !u!50 &6159850269535652928
 Rigidbody2D:
   serializedVersion: 4
