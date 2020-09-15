@@ -23,6 +23,8 @@ public class Phase2Manager : MonoBehaviour
     public float pollutionTollerance;
     [Tooltip("The amount of times over pollution level beats pollution Tollerance.  Used to track negative events related to polution")]
     public int pollutionTicks;
+    [Tooltip("The starting amount of currency the player has")]
+    public int startingCurrency;
     [Tooltip("The amount of currency the player has")]
     public static float currency;
     [Tooltip("The current population")]
@@ -35,9 +37,11 @@ public class Phase2Manager : MonoBehaviour
     [Tooltip("The currentPower")]
     public float currentPower;
     [Tooltip("The amount of excess power needed to grow the population")]
+    [Range(1,100)]
     public float excessPowerGrowth;
+
     [Tooltip("The amount of power needed for every house")]
-    public float powerNeededPerPerson;
+    public float powerNeededPerPerson = 1f;
 
     [Header("Random Event Information and UI Display")]
     public float coalMultiplier = 1f;
@@ -76,6 +80,8 @@ public class Phase2Manager : MonoBehaviour
 
     private void Start()
     {
+        currency = startingCurrency;
+
         coal = coalReference.GetComponent<CoalScript>();
         turbine = turbineReference.GetComponent<TurbineScript>();
         gas = gasReference.GetComponent<NaturalGasScript>();
@@ -92,20 +98,33 @@ public class Phase2Manager : MonoBehaviour
     {
         StartUpScript start = FindObjectOfType<StartUpScript>();
 
-        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, start.houseAmount); 
+        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount); 
     }
+
+    
+    public void UpdateUi(int coalAmount, int turbineAmount, int gasAmount, int solarAmount)
+    {
+        currentPower = 0;
+        coalTotal += coalAmount * coal.power * coalMultiplier;
+        windTotal += turbineAmount * turbine.power * windMultiplier;
+        gasTotal += gasAmount * gas.power * gasMultiplier;
+        solarTotal += solarAmount * solar.power * solarMultiplier;
+        currentPower = coalTotal + windTotal + solarTotal;
+        totalPower.text = currentPower.ToString();
+        currencyAmount.text = currency.ToString();
+    }
+    
 
     public void RunSimulation(int coalAmount, int turbineAmount, int gasAmount, int solarAmount, int houseAmount)
     {
-        previousPopulation = population;
-        previousPopulationText.text = previousPopulation.ToString();
-        previousPollution = pollutionLevels;
-        previousPollutionText.text = previousPollution.ToString();
+        //previousPopulation = population;
+        //.text = previousPopulation.ToString();
+        //previousPollution = pollutionLevels;
+        //previousPollutionText.text = previousPollution.ToString();
         //int unpoweredHouses = houseAmount - poweredHouses;
         powerNeeded = houseAmount * powerNeededPerPerson;
         pollutionLevels += coal.pollution * coalAmount;
         pollutionLevels += gas.pollution * gasAmount;
-
 
         currentPower = 0;
         coalTotal += coalAmount * coal.power * coalMultiplier;
@@ -123,17 +142,26 @@ public class Phase2Manager : MonoBehaviour
         coalPower.text = coalTotal.ToString();
         windPower.text = windTotal.ToString();
         gasPower.text = gasTotal.ToString();
+        */
         totalPower.text = currentPower.ToString();
+        /*
         solarPowerPercentage.text = solarPercentage.ToString();
         coalPowerPercentage.text = coalPercentage.ToString();
         windPowerPercentage.text = windPercentage.ToString();
         gasPowerPercentage.text = gasPercentage.ToString();
         */
-        while(currentPower > powerNeeded)
+
+
+
+        
+        while (currentPower > powerNeeded)
         {
             happiness++;
+            currentPower --;
             currentPower -= excessPowerGrowth;
         }
+        
+        
 
         if(happiness > population)
         {

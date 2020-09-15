@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class CoalScript : MonoBehaviour
 {
+    public bool powered = true;
+
     // Start is called before the first frame update
     public float pollution;
     public float power;
+
+    public static int cost = 10;
 
     void Start()
     {
         //snap to match grid
         Helper.SnapToGrid(this.transform);
+
+        Phase2Manager.currency -= cost;
     }
 
     // Update is called once per frame

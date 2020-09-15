@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class NaturalGasScript : MonoBehaviour
 {
+    public bool powered = true;
+
     public float pollution;
     public float power;
+    public static int cost = 20;
     // Start is called before the first frame update
     void Start()
     {
         //snap to match grid
         Helper.SnapToGrid(this.transform);
+
+        Phase2Manager.currency -= cost;
     }
 
     // Update is called once per frame
