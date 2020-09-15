@@ -38,7 +38,10 @@ public class Phase2Manager : MonoBehaviour
     public float currentPower;
     [Tooltip("The amount of excess power needed to grow the population")]
 <<<<<<< HEAD
+<<<<<<< HEAD
     [Range(1,100)]
+=======
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
 =======
 >>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     public float excessPowerGrowth;
@@ -102,6 +105,7 @@ public class Phase2Manager : MonoBehaviour
         StartUpScript start = FindObjectOfType<StartUpScript>();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount); 
     }
 
@@ -117,6 +121,8 @@ public class Phase2Manager : MonoBehaviour
         totalPower.text = currentPower.ToString();
         currencyAmount.text = currency.ToString();
 =======
+=======
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
         RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, start.houseAmount); 
 >>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     }
@@ -134,6 +140,10 @@ public class Phase2Manager : MonoBehaviour
         pollutionLevels += gas.pollution * gasAmount;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
 =======
 
 >>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
@@ -154,9 +164,13 @@ public class Phase2Manager : MonoBehaviour
         windPower.text = windTotal.ToString();
         gasPower.text = gasTotal.ToString();
 <<<<<<< HEAD
+<<<<<<< HEAD
         */
         totalPower.text = currentPower.ToString();
         /*
+=======
+        totalPower.text = currentPower.ToString();
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
 =======
         totalPower.text = currentPower.ToString();
 >>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
@@ -166,12 +180,15 @@ public class Phase2Manager : MonoBehaviour
         gasPowerPercentage.text = gasPercentage.ToString();
         */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
         
         while (currentPower > powerNeeded)
 =======
+=======
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
         while(currentPower > powerNeeded)
 >>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
         {

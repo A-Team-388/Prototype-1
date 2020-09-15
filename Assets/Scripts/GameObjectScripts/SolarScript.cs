@@ -8,9 +8,12 @@ public class SolarScript : MonoBehaviour
 
     public float power;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     public static int cost = 20;
 
+=======
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
 =======
 >>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     // Start is called before the first frame update
@@ -19,8 +22,11 @@ public class SolarScript : MonoBehaviour
         //snap to match grid
         Helper.SnapToGrid(this.transform);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         Phase2Manager.currency -= cost;
+=======
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
 =======
 >>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     }

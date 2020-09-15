@@ -11,8 +11,11 @@ public class CoalScript : MonoBehaviour
     public float power;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public static int cost = 10;
 
+=======
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
 =======
 >>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     void Start()
@@ -20,8 +23,11 @@ public class CoalScript : MonoBehaviour
         //snap to match grid
         Helper.SnapToGrid(this.transform);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         Phase2Manager.currency -= cost;
+=======
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
 =======
 >>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     }

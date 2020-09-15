@@ -2143,8 +2143,13 @@ MonoBehaviour:
   pollutionLevels: 0
   pollutionTollerance: 0
   pollutionTicks: 0
+<<<<<<< HEAD
   population: 15
   currencyPerPerson: 20
+=======
+  population: 10
+  currencyPerPerson: 100
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
   powerNeeded: 0
   currentPower: 0
   excessPowerGrowth: 0

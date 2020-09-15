@@ -15,8 +15,11 @@ public class TurbineScript : MonoBehaviour
         //snap to match grid
         Helper.SnapToGrid(this.transform);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         Phase2Manager.currency -= cost;
+=======
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
 =======
 >>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     }
