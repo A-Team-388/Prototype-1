@@ -37,7 +37,10 @@ public class Phase2Manager : MonoBehaviour
     [Tooltip("The currentPower")]
     public float currentPower;
     [Tooltip("The amount of excess power needed to grow the population")]
+<<<<<<< HEAD
     [Range(1,100)]
+=======
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     public float excessPowerGrowth;
 
     [Tooltip("The amount of power needed for every house")]
@@ -98,6 +101,7 @@ public class Phase2Manager : MonoBehaviour
     {
         StartUpScript start = FindObjectOfType<StartUpScript>();
 
+<<<<<<< HEAD
         RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount); 
     }
 
@@ -112,6 +116,9 @@ public class Phase2Manager : MonoBehaviour
         currentPower = coalTotal + windTotal + solarTotal;
         totalPower.text = currentPower.ToString();
         currencyAmount.text = currency.ToString();
+=======
+        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, start.houseAmount); 
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     }
     
 
@@ -126,6 +133,10 @@ public class Phase2Manager : MonoBehaviour
         pollutionLevels += coal.pollution * coalAmount;
         pollutionLevels += gas.pollution * gasAmount;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
         currentPower = 0;
         coalTotal += coalAmount * coal.power * coalMultiplier;
         windTotal += turbineAmount * turbine.power * windMultiplier;
@@ -142,19 +153,27 @@ public class Phase2Manager : MonoBehaviour
         coalPower.text = coalTotal.ToString();
         windPower.text = windTotal.ToString();
         gasPower.text = gasTotal.ToString();
+<<<<<<< HEAD
         */
         totalPower.text = currentPower.ToString();
         /*
+=======
+        totalPower.text = currentPower.ToString();
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
         solarPowerPercentage.text = solarPercentage.ToString();
         coalPowerPercentage.text = coalPercentage.ToString();
         windPowerPercentage.text = windPercentage.ToString();
         gasPowerPercentage.text = gasPercentage.ToString();
         */
+<<<<<<< HEAD
 
 
 
         
         while (currentPower > powerNeeded)
+=======
+        while(currentPower > powerNeeded)
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
         {
             happiness++;
             currentPower --;

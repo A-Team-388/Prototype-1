@@ -86,10 +86,14 @@ public class BuildMenuFunctions : MonoBehaviour
         toolPromptText = toolPromptObject.GetComponent<Text>();
 
         //find and set the drop down object
+<<<<<<< HEAD
         dropDown = GameObject.Find("Dropdown").GetComponent<TMPro.TMP_Dropdown>();
 
         //set selected game object to the selected game object
         selectedGameObject = selection1;
+=======
+        dropDown = GameObject.Find("Dropdown").GetComponent<TMPro.TMP_Dropdown>();     
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     }
 
     public void Update()
@@ -241,6 +245,7 @@ if (Input.GetMouseButtonDown(1) && dropDown.value == 5 && position1 != new Vecto
             {
                 //create object on location
                 Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
+<<<<<<< HEAD
                 
 
                 if (selectedGameObject == selection2 && Phase2Manager.currency < SolarScript.cost)
@@ -256,6 +261,22 @@ if (Input.GetMouseButtonDown(1) && dropDown.value == 5 && position1 != new Vecto
                     coalAmount++;
                 }
                 else if(selectedGameObject == selection5 && Phase2Manager.currency < NaturalGasScript.cost)
+=======
+
+                if (selectedGameObject == selection2)
+                {
+                    solarAmount++;
+                }
+                else if (selectedGameObject == selection3)
+                {
+                    turbineAmount++;
+                }
+                else if (selectedGameObject == selection4)
+                {
+                    coalAmount++;
+                }
+                else if(selectedGameObject == selection5)
+>>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
                 {
                     gasAmount++;
                 }
