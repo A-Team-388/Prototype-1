@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CoalScript : MonoBehaviour
 {
-    public bool powered = true;
-
     // Start is called before the first frame update
     public float pollution;
     public float power;

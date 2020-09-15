@@ -11,15 +11,11 @@ public class SmallLineScript : MonoBehaviour
 
     public Vector2 connectedObjectLocation;
 
-    public bool powered = false;
-
     // Start is called before the first frame update
     void Start()
     {
         //snap to match grid
         Helper.SnapToGrid(this.transform);
-
-        powered = false;
     }
 
     // Update is called once per frame
@@ -27,13 +23,9 @@ public class SmallLineScript : MonoBehaviour
     {
         checkIfDead();
 
-        if(powered == false)
+        if(Input.GetKeyDown(KeyCode.A))
         {
             searchForConnections();
-            if (amountOfConnectedObjects != 0)
-            {
-                determineIfPowered();
-            }
         }
     }
 
@@ -45,66 +37,9 @@ public class SmallLineScript : MonoBehaviour
         }
     }
 
-    void determineIfPowered()
+    void searchForPowerSuppliers()
     {
-        for (int i = 0; i < amountOfConnectedObjects; i++)
-        {
-            if (connectedObjects[i].name == "smallllines(Clone)")
-            {
-                if (connectedObjects[i].GetComponent<SmallLineScript>().powered == true)
-                {
-                    powered = true;
-                }
-                else
-                {
-                    powered = false;
-                }
-            }
-            else if (connectedObjects[i].name == "solar(Clone)")
-            {
-                if (connectedObjects[i].GetComponent<SolarScript>().powered == true)
-                {
-                    powered = true;
-                }
-                else
-                {
-                    powered = false;
-                }
-            }
-            else if (connectedObjects[i].name == "turbine(Clone)")
-            {
-                if (connectedObjects[i].GetComponent<TurbineScript>().powered == true)
-                {
-                    powered = true;
-                }
-                else
-                {
-                    powered = false;
-                }
-            }
-            else if (connectedObjects[i].name == "coalCoolingTower(Clone)")
-            {
-                if (connectedObjects[i].GetComponent<CoalScript>().powered == true)
-                {
-                    powered = true;
-                }
-                else
-                {
-                    powered = false;
-                }
-            }
-            else if (connectedObjects[i].name ==  "NaturalGasPlant(Clone)")
-            {
-                if (connectedObjects[i].GetComponent<NaturalGasScript>().powered == true)
-                {
-                    powered = true;
-                }
-                else
-                {
-                    powered = false;
-                }
-            }
-        }
+
     }
 
     void searchForConnections()
@@ -113,27 +48,36 @@ public class SmallLineScript : MonoBehaviour
         Vector2 myLocation = new Vector2(transform.position.x,transform.position.y);
         for (int i = 0; i <= BuildMenuFunctions.lineNumber; i++)
         {
-
+            Debug.Log("my location = " + myLocation);
+            Debug.Log("location to check = " + BuildMenuFunctions.lineLocations[i]);
             if (myLocation == BuildMenuFunctions.lineLocations[i])
             {
+                Debug.Log("my location matching = " + myLocation);
+                Debug.Log("location to check matching = " + BuildMenuFunctions.lineLocations[i]);
+
                 //get location of other object
                 if(i%2 == 0)
                 {
-
+                    Debug.Log("myLocation is Even");
                     connectedObjectLocation = BuildMenuFunctions.lineLocations[i + 1];
-
+                    Debug.Log("location of connected object = " + BuildMenuFunctions.lineLocations[i - 1]);
                     connectedObjects[amountOfConnectedObjects] = Helper.GetObjectFromLocation2d(connectedObjectLocation);
-
+                    Debug.Log("connected object = " + connectedObjects[amountOfConnectedObjects]);
                     amountOfConnectedObjects++;
                 }
                 else if(i%2 != 0)
                 {
-
+                    Debug.Log("myLocation is Odd");
                     connectedObjectLocation = BuildMenuFunctions.lineLocations[i - 1];
 
                     Helper.GetObjectFromLocation2d(connectedObjectLocation);
                     connectedObjects[amountOfConnectedObjects] = Helper.GetObjectFromLocation2d(connectedObjectLocation);
+                    Debug.Log("connected object = " + connectedObjects[amountOfConnectedObjects]);
                     amountOfConnectedObjects++;
+                }
+                else
+                {
+                    Debug.Log("my location is neither odd nor even. Something has gone horribly wrong");
                 }
             }
         }

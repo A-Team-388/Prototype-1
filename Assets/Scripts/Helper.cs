@@ -78,9 +78,7 @@ public static class Helper
             RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
             if (hit.collider != null)
             {
-                Debug.Log(hit.collider.gameObject);
                 return hit.collider.gameObject;
-
             }
             return null;
         }

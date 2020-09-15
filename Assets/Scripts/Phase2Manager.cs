@@ -37,7 +37,7 @@ public class Phase2Manager : MonoBehaviour
     [Tooltip("The amount of excess power needed to grow the population")]
     public float excessPowerGrowth;
     [Tooltip("The amount of power needed for every house")]
-    public float powerNeededPerPerson = 1f;
+    public float powerNeededPerPerson;
 
     [Header("Random Event Information and UI Display")]
     public float coalMultiplier = 1f;
@@ -92,33 +92,20 @@ public class Phase2Manager : MonoBehaviour
     {
         StartUpScript start = FindObjectOfType<StartUpScript>();
 
-        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount); 
+        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, start.houseAmount); 
     }
-
-    
-    public void UpdateUi(int coalAmount, int turbineAmount, int gasAmount, int solarAmount)
-    {
-        currentPower = 0;
-        coalTotal += coalAmount * coal.power * coalMultiplier;
-        windTotal += turbineAmount * turbine.power * windMultiplier;
-        gasTotal += gasAmount * gas.power * gasMultiplier;
-        solarTotal += solarAmount * solar.power * solarMultiplier;
-        currentPower = coalTotal + windTotal + solarTotal;
-        totalPower.text = currentPower.ToString();
-        currencyAmount.text = currency.ToString();
-    }
-    
 
     public void RunSimulation(int coalAmount, int turbineAmount, int gasAmount, int solarAmount, int houseAmount)
     {
-        //previousPopulation = population;
-        //.text = previousPopulation.ToString();
-        //previousPollution = pollutionLevels;
-        //previousPollutionText.text = previousPollution.ToString();
+        previousPopulation = population;
+        previousPopulationText.text = previousPopulation.ToString();
+        previousPollution = pollutionLevels;
+        previousPollutionText.text = previousPollution.ToString();
         //int unpoweredHouses = houseAmount - poweredHouses;
         powerNeeded = houseAmount * powerNeededPerPerson;
         pollutionLevels += coal.pollution * coalAmount;
         pollutionLevels += gas.pollution * gasAmount;
+
 
         currentPower = 0;
         coalTotal += coalAmount * coal.power * coalMultiplier;
@@ -136,26 +123,17 @@ public class Phase2Manager : MonoBehaviour
         coalPower.text = coalTotal.ToString();
         windPower.text = windTotal.ToString();
         gasPower.text = gasTotal.ToString();
-        */
         totalPower.text = currentPower.ToString();
-        /*
         solarPowerPercentage.text = solarPercentage.ToString();
         coalPowerPercentage.text = coalPercentage.ToString();
         windPowerPercentage.text = windPercentage.ToString();
         gasPowerPercentage.text = gasPercentage.ToString();
         */
-
-
-
-        
-        while (currentPower > powerNeeded)
+        while(currentPower > powerNeeded)
         {
             happiness++;
-            currentPower --;
             currentPower -= excessPowerGrowth;
         }
-        
-        
 
         if(happiness > population)
         {
