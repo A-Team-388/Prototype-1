@@ -100,6 +100,7 @@ MonoBehaviour:
   powered: 1
   pollution: 10
   power: 20
+  price: 100
 --- !u!50 &9176633349878050949
 Rigidbody2D:
   serializedVersion: 4

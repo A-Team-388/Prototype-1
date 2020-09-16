@@ -8,26 +8,18 @@ public class NaturalGasScript : MonoBehaviour
 
     public float pollution;
     public float power;
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public static int cost = 20;
-=======
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
-=======
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
-    // Start is called before the first frame update
-    void Start()
+    public static int cost = 100;
+    public int price;
+
+    public Phase2Manager phase2;
+    void Awake()
     {
+        phase2 = FindObjectOfType<Phase2Manager>();
         //snap to match grid
         Helper.SnapToGrid(this.transform);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
+        cost = price;
         Phase2Manager.currency -= cost;
-=======
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
-=======
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
+        phase2.UpdateCurrency();
     }
 
     // Update is called once per frame

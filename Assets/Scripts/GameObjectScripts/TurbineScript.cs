@@ -6,22 +6,20 @@ public class TurbineScript : MonoBehaviour
 {
     public bool powered = true;
 
-    public static int cost = 15;
+    public static int cost = 100;
 
+    public int price;
     // Start is called before the first frame update
     public float power;
-    void Start()
+    public Phase2Manager phase2;
+    void Awake()
     {
+        phase2 = FindObjectOfType<Phase2Manager>();
         //snap to match grid
         Helper.SnapToGrid(this.transform);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
+        cost = price;
         Phase2Manager.currency -= cost;
-=======
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
-=======
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
+        phase2.UpdateCurrency();
     }
 
     // Update is called once per frame

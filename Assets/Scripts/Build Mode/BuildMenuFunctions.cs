@@ -86,18 +86,12 @@ public class BuildMenuFunctions : MonoBehaviour
         toolPromptText = toolPromptObject.GetComponent<Text>();
 
         //find and set the drop down object
-<<<<<<< HEAD
-<<<<<<< HEAD
         dropDown = GameObject.Find("Dropdown").GetComponent<TMPro.TMP_Dropdown>();
 
         //set selected game object to the selected game object
         selectedGameObject = selection1;
-=======
         dropDown = GameObject.Find("Dropdown").GetComponent<TMPro.TMP_Dropdown>();     
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
-=======
         dropDown = GameObject.Find("Dropdown").GetComponent<TMPro.TMP_Dropdown>();     
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
     }
 
     public void Update()
@@ -248,48 +242,27 @@ if (Input.GetMouseButtonDown(1) && dropDown.value == 5 && position1 != new Vecto
             if (IsGridSpaceEmpty(Helper.getMousePositionFromWorldRounded()))
             {
                 //create object on location
-                Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
-<<<<<<< HEAD
-<<<<<<< HEAD
                 
 
-                if (selectedGameObject == selection2 && Phase2Manager.currency < SolarScript.cost)
+                if (selectedGameObject == selection2 && Phase2Manager.currency >= SolarScript.cost)
                 {
                     solarAmount++;
+                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
                 }
-                else if (selectedGameObject == selection3 && Phase2Manager.currency < TurbineScript.cost)
+                else if (selectedGameObject == selection3 && Phase2Manager.currency >= TurbineScript.cost)
                 {
                     turbineAmount++;
+                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
                 }
-                else if (selectedGameObject == selection4 && Phase2Manager.currency < CoalScript.cost)
+                else if (selectedGameObject == selection4 && Phase2Manager.currency >= CoalScript.cost)
                 {
                     coalAmount++;
+                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
                 }
-                else if(selectedGameObject == selection5 && Phase2Manager.currency < NaturalGasScript.cost)
-=======
-
-=======
-
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
-                if (selectedGameObject == selection2)
-                {
-                    solarAmount++;
-                }
-                else if (selectedGameObject == selection3)
-                {
-                    turbineAmount++;
-                }
-                else if (selectedGameObject == selection4)
-                {
-                    coalAmount++;
-                }
-                else if(selectedGameObject == selection5)
-<<<<<<< HEAD
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
-=======
->>>>>>> parent of fe2c9607... Fixed Crash, Placing Objects now cost currency, currency UI updates with placing objects.
-                {
+                else if(selectedGameObject == selection5 && Phase2Manager.currency >= NaturalGasScript.cost)
+                { 
                     gasAmount++;
+                    Instantiate(selectedGameObject, Helper.getMousePositionFromWorld(), transform.rotation);
                 }
 
                 GameObject.Find("GameManager").GetComponent<Phase2Manager>().UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);
