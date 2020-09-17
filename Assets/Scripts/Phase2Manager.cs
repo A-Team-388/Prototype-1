@@ -88,6 +88,10 @@ public class Phase2Manager : MonoBehaviour
         solar = solarReference.GetComponent<SolarScript>();
 
         TriggerEvent();
+        if (excessPowerGrowth < 1)
+        {
+            excessPowerGrowth = 1;
+        }
     }
     /*
      * Powered Houses
@@ -104,10 +108,10 @@ public class Phase2Manager : MonoBehaviour
     public void UpdateUi(int coalAmount, int turbineAmount, int gasAmount, int solarAmount)
     {
         currentPower = 0;
-        coalTotal += coalAmount * coal.power * coalMultiplier;
-        windTotal += turbineAmount * turbine.power * windMultiplier;
-        gasTotal += gasAmount * gas.power * gasMultiplier;
-        solarTotal += solarAmount * solar.power * solarMultiplier;
+        coalTotal = coalAmount * coal.power * coalMultiplier;
+        windTotal = turbineAmount * turbine.power * windMultiplier;
+        gasTotal = gasAmount * gas.power * gasMultiplier;
+        solarTotal = solarAmount * solar.power * solarMultiplier;
         currentPower = coalTotal + windTotal + solarTotal;
         totalPower.text = currentPower.ToString();
 
@@ -128,16 +132,16 @@ public class Phase2Manager : MonoBehaviour
         //previousPollution = pollutionLevels;
         //previousPollutionText.text = previousPollution.ToString();
         //int unpoweredHouses = houseAmount - poweredHouses;
-        powerNeeded = houseAmount * powerNeededPerPerson;
+        powerNeeded = population * powerNeededPerPerson;
         pollutionLevels += coal.pollution * coalAmount;
         pollutionLevels += gas.pollution * gasAmount;
 
         currentPower = 0;
-        coalTotal += coalAmount * coal.power * coalMultiplier;
-        windTotal += turbineAmount * turbine.power * windMultiplier;
-        gasTotal += gasAmount * gas.power * gasMultiplier;
-        solarTotal += solarAmount * solar.power * solarMultiplier;
-        currentPower = coalTotal + windTotal + solarTotal;
+        coalTotal = coalAmount * coal.power * coalMultiplier;
+        windTotal = turbineAmount * turbine.power * windMultiplier;
+        gasTotal = gasAmount * gas.power * gasMultiplier;
+        solarTotal = solarAmount * solar.power * solarMultiplier;
+        currentPower = coalTotal + windTotal + solarTotal + gasTotal;
         coalPercentage = coalTotal / currentPower;
         windPercentage = windTotal / currentPower;
         solarPercentage = solarTotal / currentPower;
