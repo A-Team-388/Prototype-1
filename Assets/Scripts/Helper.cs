@@ -97,4 +97,10 @@ public static class Helper
         }
         return null;
     }
+    public static bool IsMouseOnScreen()
+    {
+        Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
+        return (screenRect.Contains(Input.mousePosition));
+    }
+
 }

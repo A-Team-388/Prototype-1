@@ -92,7 +92,7 @@ public class BuildFunctions : MonoBehaviour
     public void PlaceObjectFunction(GameObject selectedObject)
     {
         //check for input and check for click not on ui                             //might need to check if click is on game window here
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && Helper.IsMouseOnScreen())
         {
 
             //check if gridspaces needed are empty
@@ -147,7 +147,7 @@ public class BuildFunctions : MonoBehaviour
     }
 
     //checks to make sure grid spaces are empty
-    public bool areGridSpacesEmpty(Vector2 position)
+    public static bool areGridSpacesEmpty(Vector2 position)
     {
         switch (menuSelection)
         {

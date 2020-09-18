@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Build Mode\BuildFunctions.cs" />
      <Compile Include="Assets\Scripts\GameObjectScripts\TransformerScript.cs" />
      <Compile Include="Assets\Scripts\OldDefunct\TestCreateLineTool.cs" />
      <Compile Include="Assets\Scripts\GameObjectScripts\LargeLineScript.cs" />
@@ -76,7 +77,8 @@
      <Compile Include="Assets\Scripts\GameObjectScripts\SolarScript.cs" />
      <Compile Include="Assets\Scripts\GameObjectScripts\CoalScript.cs" />
      <Compile Include="Assets\Scripts\Build Mode\BuildMenuFunctions.cs" />
-     <Compile Include="Assets\Scripts\Build Mode\BuildFunctions.cs" />
+     <Compile Include="Assets\Scripts\MainMenuHandler.cs" />
+     <Compile Include="Assets\Scripts\Build Mode\MouseScript.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

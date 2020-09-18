@@ -28,7 +28,6 @@ public class HomeScript : MonoBehaviour
     {
         checkIfDead();
 
-        /*
         if (powered == false)
         {
 
@@ -37,8 +36,7 @@ public class HomeScript : MonoBehaviour
             {
                 determineIfPowered();
             }
-        }
-        */
+        } 
     }
 
     void checkIfDead()
@@ -116,23 +114,23 @@ public class HomeScript : MonoBehaviour
     {
         amountOfConnectedObjects = 0;
         Vector2 myLocation = new Vector2(transform.position.x, transform.position.y);
-        for (int i = 0; i <= BuildMenuFunctions.lineNumber; i++)
+        for (int i = 0; i <= BuildFunctions.lineNumber; i++)
         {
 
-            if (myLocation == BuildMenuFunctions.lineLocations[i])
+            if (myLocation == BuildFunctions.lineLocations[i])
             {
  
 
                 //get location of other object
                 if (i % 2 == 0)
                 {
-                    connectedObjectLocation = BuildMenuFunctions.lineLocations[i + 1];
+                    connectedObjectLocation = BuildFunctions.lineLocations[i + 1];
                     connectedObjects[amountOfConnectedObjects] = Helper.GetObjectFromLocation2d(connectedObjectLocation);
                     amountOfConnectedObjects++;
                 }
                 else if (i % 2 != 0)
                 {
-                    connectedObjectLocation = BuildMenuFunctions.lineLocations[i - 1];
+                    connectedObjectLocation = BuildFunctions.lineLocations[i - 1];
 
                     Helper.GetObjectFromLocation2d(connectedObjectLocation);
                     connectedObjects[amountOfConnectedObjects] = Helper.GetObjectFromLocation2d(connectedObjectLocation);

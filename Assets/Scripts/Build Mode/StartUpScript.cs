@@ -74,10 +74,10 @@ public class StartUpScript : MonoBehaviour
             Random.InitState((int)System.DateTime.Now.Ticks);
 
             //assign x position a random number for spawn
-            xPos = Random.Range(offsetDistance, (int)startingWidth +1);
+            xPos = Random.Range(offsetDistance + 2, (int)startingWidth +1);
 
             //assign y position a random number for spawn
-            yPos = Random.Range(offsetDistance +1, (int)startingHeight);
+            yPos = Random.Range(offsetDistance + 3, (int)startingHeight);
 
             //determine if generated position is empty
             if (BuildFunctions.IsGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
@@ -107,10 +107,10 @@ public class StartUpScript : MonoBehaviour
         while (startingNumberOfTrees > 0)
         {
             //assign x position a random number for spawn
-            xPos = Random.Range(offsetDistance, (int)startingWidth + 1);
+            xPos = Random.Range(offsetDistance + 2, (int)startingWidth + 1);
 
             //assign y position a random number for spawn
-            yPos = Random.Range(offsetDistance +1, (int)startingHeight);
+            yPos = Random.Range(offsetDistance + 3, (int)startingHeight);
 
             //determine if generated position is empty
             if (BuildFunctions.IsGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
