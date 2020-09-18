@@ -19,7 +19,7 @@ public class NuclearScript : MonoBehaviour
 
     void checkIfDead()
     {
-        if (null == BuildMenuFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
+        if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
             Destroy(this.gameObject);
         }

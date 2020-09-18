@@ -57,12 +57,12 @@ public static class Helper
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
         //GameObject.Destroy(myLine, duration);//useful but not what we are going for
-        BuildMenuFunctions.lineObjects[BuildMenuFunctions.lineNumber] = myLine;
-        BuildMenuFunctions.lineLocations[BuildMenuFunctions.lineNumber] = start;
-        BuildMenuFunctions.lineNumber += 1;
-        BuildMenuFunctions.lineObjects[BuildMenuFunctions.lineNumber] = myLine;
-        BuildMenuFunctions.lineLocations[BuildMenuFunctions.lineNumber] = end;
-        BuildMenuFunctions.lineNumber ++;
+        BuildFunctions.lineObjects[BuildFunctions.lineNumber] = myLine;
+        BuildFunctions.lineLocations[BuildFunctions.lineNumber] = start;
+        BuildFunctions.lineNumber += 1;
+        BuildFunctions.lineObjects[BuildFunctions.lineNumber] = myLine;
+        BuildFunctions.lineLocations[BuildFunctions.lineNumber] = end;
+        BuildFunctions.lineNumber ++;
 
     }
 

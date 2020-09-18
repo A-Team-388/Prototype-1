@@ -6,7 +6,7 @@ public class TurbineScript : MonoBehaviour
 {
     public bool powered = true;
 
-    public static int cost = 100;
+    public static int cost = 15;
 
     public int price;
     // Start is called before the first frame update
@@ -17,7 +17,7 @@ public class TurbineScript : MonoBehaviour
         phase2 = FindObjectOfType<Phase2Manager>();
         //snap to match grid
         Helper.SnapToGrid(this.transform);
-        cost = price;
+        //cost = price;
         Phase2Manager.currency -= cost;
         phase2.UpdateCurrency();
     }
@@ -30,7 +30,7 @@ public class TurbineScript : MonoBehaviour
 
     void checkIfDead()
     {
-        if (null == BuildMenuFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
+        if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
             Destroy(this.gameObject);
         }

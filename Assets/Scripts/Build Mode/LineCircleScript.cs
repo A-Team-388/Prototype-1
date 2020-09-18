@@ -13,9 +13,9 @@ public class LineCircleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BuildMenuFunctions.position1 != new Vector2(0, 0))
+        if (BuildFunctions.position1 != new Vector2(0, 0))
         {
-            transform.position = new Vector3(BuildMenuFunctions.position1.x, BuildMenuFunctions.position1.y,.5f);
+            transform.position = new Vector3(BuildFunctions.position1.x, BuildFunctions.position1.y,.5f);
         }
         else
         {

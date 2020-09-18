@@ -28,19 +28,22 @@ public class HomeScript : MonoBehaviour
     {
         checkIfDead();
 
+        /*
         if (powered == false)
         {
+
             searchForConnections();
             if (amountOfConnectedObjects!=0)
             {
                 determineIfPowered();
             }
         }
+        */
     }
 
     void checkIfDead()
     {
-        if (null == BuildMenuFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
+        if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
             Destroy(this.gameObject);
         }

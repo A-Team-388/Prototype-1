@@ -8,7 +8,7 @@ public class NaturalGasScript : MonoBehaviour
 
     public float pollution;
     public float power;
-    public static int cost = 100;
+    public static int cost = 20;
     public int price;
 
     public Phase2Manager phase2;
@@ -17,7 +17,7 @@ public class NaturalGasScript : MonoBehaviour
         phase2 = FindObjectOfType<Phase2Manager>();
         //snap to match grid
         Helper.SnapToGrid(this.transform);
-        cost = price;
+        //cost = price;
         Phase2Manager.currency -= cost;
         phase2.UpdateCurrency();
     }
@@ -30,7 +30,7 @@ public class NaturalGasScript : MonoBehaviour
 
     void checkIfDead()
     {
-        if (null == BuildMenuFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
+        if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
             Destroy(this.gameObject);
         }

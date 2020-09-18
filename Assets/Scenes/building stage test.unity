@@ -1711,7 +1711,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1312398376}
-        m_TargetAssemblyTypeName: BuildMenuFunctions, Assembly-CSharp
+        m_TargetAssemblyTypeName: BuildFunctions, Assembly-CSharp
         m_MethodName: DropDownMenuHandler
         m_Mode: 0
         m_Arguments:
@@ -2052,9 +2052,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1312398377}
-  - component: {fileID: 1312398376}
   - component: {fileID: 1312398378}
   - component: {fileID: 1312398379}
+  - component: {fileID: 1312398376}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2071,22 +2071,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1312398375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29afaa3f8801b1f4db4ef15181729bc0, type: 3}
+  m_Script: {fileID: 11500000, guid: 91aa2270ddaedc840a49305428268ca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toolInUse: 1
-  lineRunner: 0
-  removerToolBool: 0
+  electricPole: {fileID: 2404669415710288745, guid: 8acb8503cd4ad6149b03b7074d38ef3b, type: 3}
+  solarPanel: {fileID: 6603167316516251588, guid: d4b1fdae5d9bc5b4ba8cd66313f21653, type: 3}
+  windTurbine: {fileID: 4900880723872211217, guid: 76fc6c657e9a806439287e27bb097376, type: 3}
+  coalPlant: {fileID: 572443818696165632, guid: 86abe198aedf5304e9e907801f61e0c4, type: 3}
+  gasPlant: {fileID: 7688663850787778803, guid: e8a719ab879e2df43a23771576fa419f, type: 3}
+  house: {fileID: 2016714305020912277, guid: 949d7d331bfdd27478154fb4c0e41b7a, type: 3}
+  tree: {fileID: 6414712969679935580, guid: 537dccef7c1a12047abacf84fb60e959, type: 3}
   toolPromptObject: {fileID: 0}
-  toolPromptText: {fileID: 129715875}
-  dropDown: {fileID: 0}
-  selection1: {fileID: 2404669415710288745, guid: 8acb8503cd4ad6149b03b7074d38ef3b, type: 3}
-  selection2: {fileID: 6603167316516251588, guid: d4b1fdae5d9bc5b4ba8cd66313f21653, type: 3}
-  selection3: {fileID: 4900880723872211217, guid: 76fc6c657e9a806439287e27bb097376, type: 3}
-  selection4: {fileID: 572443818696165632, guid: 86abe198aedf5304e9e907801f61e0c4, type: 3}
-  selection5: {fileID: 7688663850787778803, guid: e8a719ab879e2df43a23771576fa419f, type: 3}
-  treeObject: {fileID: 6414712969679935580, guid: 537dccef7c1a12047abacf84fb60e959, type: 3}
-  houseObject: {fileID: 2016714305020912277, guid: 949d7d331bfdd27478154fb4c0e41b7a, type: 3}
+  toolPromptText: {fileID: 0}
+  dropDown: {fileID: 1051443368}
 --- !u!4 &1312398377
 Transform:
   m_ObjectHideFlags: 0

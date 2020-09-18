@@ -27,6 +27,7 @@ public class SmallLineScript : MonoBehaviour
     {
         checkIfDead();
 
+        /*
         if(powered == false)
         {
             searchForConnections();
@@ -35,11 +36,12 @@ public class SmallLineScript : MonoBehaviour
                 determineIfPowered();
             }
         }
+        */
     }
 
     void checkIfDead()
     {
-        if (null == BuildMenuFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
+        if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
             Destroy(this.gameObject);
         }
