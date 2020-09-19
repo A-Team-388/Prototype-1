@@ -7,33 +7,43 @@ public class SmallLineScript : MonoBehaviour
     //locations of connected objects
     public GameObject[] connectedObjects = new GameObject[20];
 
+    //the amount of objects connected via lines
     public uint amountOfConnectedObjects = 0;
 
+    //the location of a connected object
     public Vector2 connectedObjectLocation;
 
+    //is true when powered or provides power
     public bool powered = false;
+
+    public uint heldPower = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         //snap to match grid
         Helper.SnapToGrid(this.transform);
-
-        powered = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //determine if ded
         checkIfDead();
 
-        if(powered == false)
+        searchForConnections();
+        if (amountOfConnectedObjects != 0)
         {
-            searchForConnections();
-            if (amountOfConnectedObjects != 0)
-            {
-                determineIfPowered();
-            }
+            determineIfPowered();
+        }
+        SimulationUpdate();
+    }
+
+    void SimulationUpdate()
+    {
+        if (heldPower < 1 && amountOfConnectedObjects != 0)
+        {
+            GrabHeldPower();
         }
     }
 
@@ -93,9 +103,20 @@ public class SmallLineScript : MonoBehaviour
                     powered = false;
                 }
             }
-            else if (connectedObjects[i].name ==  "NaturalGasPlant(Clone)")
+            else if (connectedObjects[i].name ==  "naturalgasplant(Clone)")
             {
                 if (connectedObjects[i].GetComponent<NaturalGasScript>().powered == true)
+                {
+                    powered = true;
+                }
+                else
+                {
+                    powered = false;
+                }
+            }
+            else if (connectedObjects[i].name == "house(Clone)")
+            {
+                if (connectedObjects[i].GetComponent<HomeScript>().powered == true)
                 {
                     powered = true;
                 }
@@ -135,6 +156,43 @@ public class SmallLineScript : MonoBehaviour
                     connectedObjects[amountOfConnectedObjects] = Helper.GetObjectFromLocation2d(connectedObjectLocation);
                     amountOfConnectedObjects++;
                 }
+            }
+        }
+    }
+
+    void GrabHeldPower()
+    {
+        for (int i = 0; i < amountOfConnectedObjects; i++)
+        {
+            if (connectedObjects[i].name == "smallllines(Clone)" && connectedObjects[i].GetComponent<SmallLineScript>().heldPower > 0)
+            {
+                connectedObjects[i].GetComponent<SmallLineScript>().heldPower--;
+                heldPower++;
+            }
+            else if (connectedObjects[i].name == "solar(Clone)" && connectedObjects[i].GetComponent<SolarScript>().power > 0)
+            {
+                connectedObjects[i].GetComponent<SolarScript>().power--;
+                heldPower++;
+            }
+            else if (connectedObjects[i].name == "turbine(Clone)" && connectedObjects[i].GetComponent<TurbineScript>().power > 0)
+            {
+                connectedObjects[i].GetComponent<TurbineScript>().power--;
+                heldPower++;
+            }
+            else if (connectedObjects[i].name == "coalCoolingTower(Clone)" && connectedObjects[i].GetComponent<CoalScript>().power > 0)
+            {
+                connectedObjects[i].GetComponent<CoalScript>().power--;
+                heldPower++;
+            }
+            else if (connectedObjects[i].name == "naturalgasplant(Clone)" && connectedObjects[i].GetComponent<NaturalGasScript>().power > 0)
+            {
+                connectedObjects[i].GetComponent<NaturalGasScript>().power--;
+                heldPower++;
+            }
+            else if (connectedObjects[i].name == "house(Clone)" && connectedObjects[i].GetComponent<HomeScript>().neededPower > 0)
+            {
+                connectedObjects[i].GetComponent<HomeScript>().neededPower--;
+                heldPower++;
             }
         }
     }

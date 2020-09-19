@@ -1240,6 +1240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c0656fa7a27ab4695242f3fdffbbf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transLevel: 0.45
   electricPole: {fileID: 2404669415710288745, guid: 8acb8503cd4ad6149b03b7074d38ef3b, type: 3}
   solarPanel: {fileID: 6603167316516251588, guid: d4b1fdae5d9bc5b4ba8cd66313f21653, type: 3}
   windTurbine: {fileID: 4900880723872211217, guid: 76fc6c657e9a806439287e27bb097376, type: 3}
@@ -2277,6 +2278,8 @@ MonoBehaviour:
   previousPopulationText: {fileID: 0}
   currentEvent: 0
   smogSolarEffect: 0.9
+  amountOfHousesPowered: 0
+  amountOfHousesUnpowered: 0
 --- !u!1 &1383608968
 GameObject:
   m_ObjectHideFlags: 0

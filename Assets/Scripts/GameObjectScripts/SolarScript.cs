@@ -4,22 +4,33 @@ using UnityEngine;
 
 public class SolarScript : MonoBehaviour
 {
+    //is true when powered or provides power
     public bool powered = true;
 
-    public float power;
-
+    //the cost of this item
     public static int cost = 20;
 
-    public int price;
+    //the max amount of providable power
+    public uint maxPower = 10;
+
+    //the current amount of providable power
+    public uint power = 10;
+
+    //phase 2 script
     public Phase2Manager phase2;
-    // Start is called before the first frame update
+
     void Awake()
     {
+        //find the phase 2 manager script
         phase2 = FindObjectOfType<Phase2Manager>();
+
         //snap to match grid
         Helper.SnapToGrid(this.transform);
-        //cost = price;
+
+        //remove the cost of this item from the total currency
         Phase2Manager.currency -= cost;
+
+        //update the currency ui element
         phase2.UpdateCurrency();
     }
 
@@ -29,6 +40,7 @@ public class SolarScript : MonoBehaviour
         checkIfDead();
     }
 
+    //Determine if this object should be deleted
     void checkIfDead()
     {
         if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])

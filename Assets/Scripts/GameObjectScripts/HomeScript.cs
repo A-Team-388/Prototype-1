@@ -13,6 +13,9 @@ public class HomeScript : MonoBehaviour
 
     public bool powered;
 
+    public uint MaxneededPower = 4;
+
+    public uint neededPower = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -28,15 +31,21 @@ public class HomeScript : MonoBehaviour
     {
         checkIfDead();
 
-        if (powered == false)
-        {
 
-            searchForConnections();
-            if (amountOfConnectedObjects!=0)
-            {
-                determineIfPowered();
-            }
-        } 
+        searchForConnections();
+        if (amountOfConnectedObjects != 0)
+        {
+            determineIfPowered();
+        }
+        SimulationUpdate();
+    }
+
+    void SimulationUpdate()
+    {
+        if (neededPower < MaxneededPower + 1 && amountOfConnectedObjects != 0)
+        {
+            GrabHeldPower();
+        }
     }
 
     void checkIfDead()
@@ -96,9 +105,20 @@ public class HomeScript : MonoBehaviour
                     powered = false;
                 }
             }
-            else if (connectedObjects[i].name == "NaturalGasPlant(Clone)")
+            else if (connectedObjects[i].name == "naturalgasplant(Clone)")
             {
                 if (connectedObjects[i].GetComponent<NaturalGasScript>().powered == true)
+                {
+                    powered = true;
+                }
+                else
+                {
+                    powered = false;
+                }
+            }
+            else if (connectedObjects[i].name == "house(Clone)")
+            {
+                if (connectedObjects[i].GetComponent<HomeScript>().powered == true)
                 {
                     powered = true;
                 }
@@ -136,6 +156,44 @@ public class HomeScript : MonoBehaviour
                     connectedObjects[amountOfConnectedObjects] = Helper.GetObjectFromLocation2d(connectedObjectLocation);
                     amountOfConnectedObjects++;
                 }
+            }
+        }
+    }
+
+    void GrabHeldPower()
+    {
+        for (int i = 0; i < amountOfConnectedObjects; i++)
+        {
+            if (connectedObjects[i].name == "smallllines(Clone)" && connectedObjects[i].GetComponent<SmallLineScript>().heldPower > 0)
+            {
+                connectedObjects[i].GetComponent<SmallLineScript>().heldPower--;
+                neededPower++;
+            }
+            else if (connectedObjects[i].name == "solar(Clone)" && connectedObjects[i].GetComponent<SolarScript>().power > 0)
+            {
+                connectedObjects[i].GetComponent<SolarScript>().power--;
+                neededPower++;
+            }
+            else if (connectedObjects[i].name == "turbine(Clone)" && connectedObjects[i].GetComponent<TurbineScript>().power > 0)
+            {
+                Debug.Log("-1");
+                connectedObjects[i].GetComponent<TurbineScript>().power-=1;
+                neededPower++;
+            }
+            else if (connectedObjects[i].name == "coalCoolingTower(Clone)" && connectedObjects[i].GetComponent<CoalScript>().power > 0)
+            {
+                connectedObjects[i].GetComponent<CoalScript>().power--;
+                neededPower++;
+            }
+            else if (connectedObjects[i].name == "naturalgasplant(Clone)" && connectedObjects[i].GetComponent<NaturalGasScript>().power > 0)
+            {
+                connectedObjects[i].GetComponent<NaturalGasScript>().power--;
+                neededPower++;
+            }
+            else if (connectedObjects[i].name == "house(Clone)" && connectedObjects[i].GetComponent<HomeScript>().neededPower > 0)
+            {
+                connectedObjects[i].GetComponent<HomeScript>().neededPower--;
+                neededPower++;
             }
         }
     }

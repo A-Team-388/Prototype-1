@@ -6,12 +6,15 @@ public class CoalScript : MonoBehaviour
 {
     public bool powered = true;
 
-    // Start is called before the first frame update
-    public float pollution;
-    public float power;
+    public int pollution = -10;
 
     public static int cost = 10;
-    public int price;
+
+    //the max amount of providable power
+    public uint maxPower = 20;
+
+    //the amount of providable power
+    public uint power = 20;
 
     public Phase2Manager phase2;
     void Awake()

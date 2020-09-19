@@ -6,12 +6,18 @@ public class NaturalGasScript : MonoBehaviour
 {
     public bool powered = true;
 
-    public float pollution;
-    public float power;
+    public int pollution = -5;
+
     public static int cost = 20;
-    public int price;
 
     public Phase2Manager phase2;
+
+    //the max amount of providable power
+    public uint maxPower = 15;
+
+    //the amount of providable power
+    public uint power = 15;
+
     void Awake()
     {
         phase2 = FindObjectOfType<Phase2Manager>();

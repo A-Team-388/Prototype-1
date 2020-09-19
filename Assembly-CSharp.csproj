@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\GameObjectScripts\NuclearScript.cs" />
      <Compile Include="Assets\Scripts\GameObjectScripts\SmallLineScript.cs" />
      <Compile Include="Assets\Scripts\GameObjectScripts\TreeScript.cs" />
+     <Compile Include="Assets\Scripts\MainMenuHandler.cs" />
      <Compile Include="Assets\Scripts\Build Mode\StartUpScript.cs" />
      <Compile Include="Assets\Scripts\GameObjectScripts\HomeScript.cs" />
      <Compile Include="Assets\Scripts\OldDefunct\TestTransformerScript.cs" />
@@ -77,7 +78,6 @@
      <Compile Include="Assets\Scripts\GameObjectScripts\SolarScript.cs" />
      <Compile Include="Assets\Scripts\GameObjectScripts\CoalScript.cs" />
      <Compile Include="Assets\Scripts\Build Mode\BuildMenuFunctions.cs" />
-     <Compile Include="Assets\Scripts\MainMenuHandler.cs" />
      <Compile Include="Assets\Scripts\Build Mode\MouseScript.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />

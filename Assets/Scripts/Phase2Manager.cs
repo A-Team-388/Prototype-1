@@ -78,6 +78,11 @@ public class Phase2Manager : MonoBehaviour
 
     public float smogSolarEffect = .9f;
     StartUpScript start;
+
+    public int amountOfHousesPowered = 0;
+    public int amountOfHousesUnpowered = 0;
+
+
     private void Start()
     {
         currency = startingCurrency;
@@ -104,7 +109,7 @@ public class Phase2Manager : MonoBehaviour
         RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount); 
     }
 
-    
+    //updates the total power ui element
     public void UpdateUi(int coalAmount, int turbineAmount, int gasAmount, int solarAmount)
     {
         currentPower = 0;
@@ -114,11 +119,9 @@ public class Phase2Manager : MonoBehaviour
         solarTotal = solarAmount * solar.power * solarMultiplier;
         currentPower = coalTotal + windTotal + solarTotal;
         totalPower.text = currentPower.ToString();
-
-
-        //RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount); 
     }
 
+    //updates the total currency amount
     public void UpdateCurrency()
     {
         currencyAmount.text = currency.ToString();

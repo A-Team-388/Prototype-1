@@ -52,7 +52,7 @@ public class MouseScript : MonoBehaviour
             {
                 case (0):
                     sprRend.sprite = electricPole.GetComponent<SpriteRenderer>().sprite;
-                    transform.localScale = new Vector3(1, 1, 1);
+                    transform.localScale = new Vector3(.1f, .1f, 1);
                     break;
                 case (1):
                     sprRend.sprite = solarPanel.GetComponent<SpriteRenderer>().sprite;

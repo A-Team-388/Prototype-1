@@ -85,13 +85,13 @@ public class BuildFunctions : MonoBehaviour
                 RemoverTool();
                 break;
         }
-
+        GameObject.Find("GameManager").GetComponent<Phase2Manager>().UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);
     }
 
     //place object function
     public void PlaceObjectFunction(GameObject selectedObject)
     {
-        //check for input and check for click not on ui                             //might need to check if click is on game window here
+        //check for input, check for click not on ui, and check that mouse in within game window.
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && Helper.IsMouseOnScreen())
         {
 
@@ -111,7 +111,6 @@ public class BuildFunctions : MonoBehaviour
                             solarAmount++;
                             Instantiate(selectedObject, Helper.getMousePositionFromWorld(), transform.rotation);
                             AddGridSpaces(selectedObject);
-                            //Phase2Manager.currency -= SolarScript.cost;
                         }
                         break;
                     case 2:
@@ -120,7 +119,6 @@ public class BuildFunctions : MonoBehaviour
                             turbineAmount++;
                             Instantiate(selectedObject, Helper.getMousePositionFromWorld(), transform.rotation);
                             AddGridSpaces(selectedObject);
-                            //Phase2Manager.currency -= TurbineScript.cost;
                         }
                         break;
                     case 3:
@@ -129,7 +127,6 @@ public class BuildFunctions : MonoBehaviour
                             coalAmount++;
                             Instantiate(selectedObject, Helper.getMousePositionFromWorld(), transform.rotation);
                             AddGridSpaces(selectedObject);
-                            //Phase2Manager.currency -= CoalScript.cost;
                         }
                         break;
                     case 4:
@@ -138,7 +135,6 @@ public class BuildFunctions : MonoBehaviour
                             gasAmount++;
                             Instantiate(selectedObject, Helper.getMousePositionFromWorld(), transform.rotation);
                             AddGridSpaces(selectedObject);
-                            //Phase2Manager.currency -= NaturalGasScript.cost;
                         }
                         break;
                 }

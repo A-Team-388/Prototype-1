@@ -97,6 +97,8 @@ public static class Helper
         }
         return null;
     }
+
+    //returns true if mouse is onscreen
     public static bool IsMouseOnScreen()
     {
         Rect screenRect = new Rect(0, 0, Screen.width, Screen.height);
