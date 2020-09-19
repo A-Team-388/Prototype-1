@@ -32,6 +32,15 @@ public class NaturalGasScript : MonoBehaviour
     void Update()
     {
         checkIfDead();
+
+        if (BuildFunctions.simulationReset)
+        {
+
+        }
+        else
+        {
+            SimulationReset();
+        }
     }
 
     void checkIfDead()
@@ -40,5 +49,9 @@ public class NaturalGasScript : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+    void SimulationReset()
+    {
+        power = maxPower;
     }
 }

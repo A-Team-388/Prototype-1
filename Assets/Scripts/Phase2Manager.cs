@@ -37,7 +37,7 @@ public class Phase2Manager : MonoBehaviour
     [Tooltip("The currentPower")]
     public float currentPower;
     [Tooltip("The amount of excess power needed to grow the population")]
-    [Range(1,100)]
+    [Range(1, 100)]
     public float excessPowerGrowth;
 
     [Tooltip("The amount of power needed for every house")]
@@ -79,12 +79,15 @@ public class Phase2Manager : MonoBehaviour
     public float smogSolarEffect = .9f;
     StartUpScript start;
 
-    public int amountOfHousesPowered = 0;
-    public int amountOfHousesUnpowered = 0;
+
+
+    public static int amountOfHousesPowered = 0;
+    public static int amountOfHousesUnpowered = 0;
 
 
     private void Start()
     {
+        amountOfHousesUnpowered = StartUpScript.houseAmount;
         currency = startingCurrency;
 
         coal = coalReference.GetComponent<CoalScript>();
@@ -103,10 +106,11 @@ public class Phase2Manager : MonoBehaviour
      * Unpowered Houses
      * Start Random Events
      */
-     public void TriggerEvent()
+
+    public void TriggerEvent()
     {
         start = FindObjectOfType<StartUpScript>();
-        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount); 
+        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount);
     }
 
     //updates the total power ui element
@@ -126,10 +130,12 @@ public class Phase2Manager : MonoBehaviour
     {
         currencyAmount.text = currency.ToString();
     }
-    
+
+
 
     public void RunSimulation(int coalAmount, int turbineAmount, int gasAmount, int solarAmount, int houseAmount)
     {
+
         //previousPopulation = population;
         //.text = previousPopulation.ToString();
         //previousPollution = pollutionLevels;
@@ -166,23 +172,24 @@ public class Phase2Manager : MonoBehaviour
         gasPowerPercentage.text = gasPercentage.ToString();
         */
 
+        Debug.Log(amountOfHousesPowered + "houses powered");
+        Debug.Log(amountOfHousesUnpowered + "houses unpowered");
 
 
-        
-        while(currentPower > powerNeeded)
+        while (currentPower > powerNeeded)
         {
             happiness++;
             currentPower -= excessPowerGrowth;
         }
-        
-        
 
-        if(happiness > population)
+
+
+        if (happiness > population)
         {
             population = happiness;
         }
 
-        if(pollutionLevels > pollutionTollerance * pollutionTicks)
+        if (pollutionLevels > pollutionTollerance * pollutionTicks)
         {
             pollutionTicks++;
         }
@@ -199,6 +206,8 @@ public class Phase2Manager : MonoBehaviour
 
         //Random Events   
         SmogEvent();
+
+
     }
 
     public void SmogEvent()

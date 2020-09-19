@@ -45,6 +45,8 @@ public class BuildFunctions : MonoBehaviour
     public static Vector2[] lineLocations = new Vector2[200];
     public static GameObject[] lineObjects = new GameObject[200];
 
+    public static bool simulationReset = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +63,7 @@ public class BuildFunctions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        simulationReset = true;
         switch (menuSelection)
         {
             case 0:
@@ -85,6 +88,7 @@ public class BuildFunctions : MonoBehaviour
                 RemoverTool();
                 break;
         }
+
         GameObject.Find("GameManager").GetComponent<Phase2Manager>().UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);
     }
 
@@ -138,6 +142,9 @@ public class BuildFunctions : MonoBehaviour
                         }
                         break;
                 }
+                simulationReset = false;
+                Phase2Manager.amountOfHousesUnpowered = StartUpScript.houseAmount;
+                Phase2Manager.amountOfHousesPowered = 0;
             }
         }
     }
@@ -459,7 +466,7 @@ public class BuildFunctions : MonoBehaviour
             }
         }
 
-        if(Input.GetMouseButtonDown(1) && position1 != new Vector2(0, 0))
+        if (Input.GetMouseButtonDown(1) && position1 != new Vector2(0, 0))
         {
             position1 = new Vector2(0, 0);
         }

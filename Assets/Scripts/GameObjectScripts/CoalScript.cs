@@ -31,6 +31,15 @@ public class CoalScript : MonoBehaviour
     void Update()
     {
         checkIfDead();
+
+        if (BuildFunctions.simulationReset)
+        {
+
+        }
+        else
+        {
+            SimulationReset();
+        }
     }
 
     void checkIfDead()
@@ -39,5 +48,9 @@ public class CoalScript : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+    void SimulationReset()
+    {
+        power = maxPower;
     }
 }

@@ -17,6 +17,8 @@ public class HomeScript : MonoBehaviour
 
     public uint neededPower = 0;
 
+    public bool toggledPowered = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,18 +33,43 @@ public class HomeScript : MonoBehaviour
     {
         checkIfDead();
 
-
         searchForConnections();
         if (amountOfConnectedObjects != 0)
         {
             determineIfPowered();
         }
-        SimulationUpdate();
+
+        if (BuildFunctions.simulationReset)
+        {
+            if (neededPower < MaxneededPower)
+            {
+                SimulationUpdate();
+                if (neededPower == MaxneededPower && toggledPowered == false)
+                {
+                    Debug.Log("needed power" + neededPower + "MaxneededPower" + MaxneededPower);
+                    Phase2Manager.amountOfHousesPowered++;
+                    Phase2Manager.amountOfHousesUnpowered--;
+                    Debug.Log(Phase2Manager.amountOfHousesPowered + "houses powered");
+                    Debug.Log(Phase2Manager.amountOfHousesUnpowered + "houses unpowered");
+                    toggledPowered = true;
+                }
+                else if (neededPower < MaxneededPower && toggledPowered == true)
+                {
+                    Phase2Manager.amountOfHousesPowered--;
+                    Phase2Manager.amountOfHousesUnpowered++;
+                    toggledPowered = false;
+                }
+            }
+        }
+        else
+        {
+            SimulationReset();
+        }
     }
 
     void SimulationUpdate()
     {
-        if (neededPower < MaxneededPower + 1 && amountOfConnectedObjects != 0)
+        if (neededPower < MaxneededPower && amountOfConnectedObjects != 0)
         {
             GrabHeldPower();
         }
@@ -176,7 +203,6 @@ public class HomeScript : MonoBehaviour
             }
             else if (connectedObjects[i].name == "turbine(Clone)" && connectedObjects[i].GetComponent<TurbineScript>().power > 0)
             {
-                Debug.Log("-1");
                 connectedObjects[i].GetComponent<TurbineScript>().power-=1;
                 neededPower++;
             }
@@ -196,5 +222,10 @@ public class HomeScript : MonoBehaviour
                 neededPower++;
             }
         }
+    }
+
+    void SimulationReset()
+    {
+        neededPower = 0;
     }
 }

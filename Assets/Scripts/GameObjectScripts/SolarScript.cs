@@ -38,6 +38,15 @@ public class SolarScript : MonoBehaviour
     void Update()
     {
         checkIfDead();
+
+        if (BuildFunctions.simulationReset)
+        {
+            
+        }
+        else
+        {
+            SimulationReset();
+        }
     }
 
     //Determine if this object should be deleted
@@ -47,5 +56,10 @@ public class SolarScript : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    void SimulationReset()
+    {
+        power = maxPower;
     }
 }

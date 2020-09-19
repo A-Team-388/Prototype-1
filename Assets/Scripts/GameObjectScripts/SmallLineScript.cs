@@ -36,7 +36,17 @@ public class SmallLineScript : MonoBehaviour
         {
             determineIfPowered();
         }
-        SimulationUpdate();
+
+
+        if (BuildFunctions.simulationReset)
+        {
+            SimulationUpdate();
+        }
+        else
+        {
+            SimulationReset();
+        }
+
     }
 
     void SimulationUpdate()
@@ -103,7 +113,7 @@ public class SmallLineScript : MonoBehaviour
                     powered = false;
                 }
             }
-            else if (connectedObjects[i].name ==  "naturalgasplant(Clone)")
+            else if (connectedObjects[i].name == "naturalgasplant(Clone)")
             {
                 if (connectedObjects[i].GetComponent<NaturalGasScript>().powered == true)
                 {
@@ -131,14 +141,14 @@ public class SmallLineScript : MonoBehaviour
     void searchForConnections()
     {
         amountOfConnectedObjects = 0;
-        Vector2 myLocation = new Vector2(transform.position.x,transform.position.y);
+        Vector2 myLocation = new Vector2(transform.position.x, transform.position.y);
         for (int i = 0; i <= BuildFunctions.lineNumber; i++)
         {
 
             if (myLocation == BuildFunctions.lineLocations[i])
             {
                 //get location of other object
-                if(i%2 == 0)
+                if (i % 2 == 0)
                 {
 
                     connectedObjectLocation = BuildFunctions.lineLocations[i + 1];
@@ -147,7 +157,7 @@ public class SmallLineScript : MonoBehaviour
 
                     amountOfConnectedObjects++;
                 }
-                else if(i%2 != 0)
+                else if (i % 2 != 0)
                 {
 
                     connectedObjectLocation = BuildFunctions.lineLocations[i - 1];
@@ -160,7 +170,8 @@ public class SmallLineScript : MonoBehaviour
         }
     }
 
-    void GrabHeldPower()
+
+    public void GrabHeldPower()
     {
         for (int i = 0; i < amountOfConnectedObjects; i++)
         {
@@ -195,5 +206,10 @@ public class SmallLineScript : MonoBehaviour
                 heldPower++;
             }
         }
+    }
+
+    void SimulationReset()
+    {
+        heldPower = 0;
     }
 }

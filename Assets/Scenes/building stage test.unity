@@ -2278,8 +2278,7 @@ MonoBehaviour:
   previousPopulationText: {fileID: 0}
   currentEvent: 0
   smogSolarEffect: 0.9
-  amountOfHousesPowered: 0
-  amountOfHousesUnpowered: 0
+  simulationButton: {fileID: 0}
 --- !u!1 &1383608968
 GameObject:
   m_ObjectHideFlags: 0
