@@ -175,29 +175,52 @@ public class Phase2Manager : MonoBehaviour
         Debug.Log(amountOfHousesPowered + "houses powered");
         Debug.Log(amountOfHousesUnpowered + "houses unpowered");
 
-
-        while (currentPower > powerNeeded)
+        if (pollutionLevels > pollutionTollerance * pollutionTicks)
         {
-            happiness++;
-            currentPower -= excessPowerGrowth;
+            pollutionTicks++;
         }
 
+        if (amountOfHousesUnpowered > 0)
+        {
+            while (currentPower > powerNeeded)
+            {
+                happiness++;
+                currentPower -= excessPowerGrowth;
+            }
+        }
 
+        happiness -= pollutionTicks;
 
         if (happiness > population)
         {
             population = happiness;
         }
 
-        if (pollutionLevels > pollutionTollerance * pollutionTicks)
+        if (amountOfHousesUnpowered > 3)
         {
-            pollutionTicks++;
+            int totalUnpowered = amountOfHousesUnpowered;
+
+            while(totalUnpowered > 2)
+            {
+                population--;
+                totalUnpowered -= 2;
+            }
+
         }
+
+
+
+
+
 
         //Something involving punishments with pollutionTicks.
 
-        currency += population * currencyPerPerson;
+        currency += amountOfHousesPowered * currencyPerPerson;
         //currency -= coal.coalUpkeep + gasAmount.
+        currency -= CoalScript.upkeep * coalAmount;
+        currency -= NaturalGasScript.upkeep * gasAmount;
+        currency -= SolarScript.upkeep * solarAmount;
+        currency -= TurbineScript.upkeep * turbineAmount;
 
         currencyAmount.text = currency.ToString();
         populationAmount.text = population.ToString();

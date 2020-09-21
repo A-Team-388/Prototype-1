@@ -17,6 +17,8 @@ public class CoalScript : MonoBehaviour
     public uint power = 20;
 
     public Phase2Manager phase2;
+
+    public static int upkeep = 5;
     void Awake()
     {
         phase2 = FindObjectOfType<Phase2Manager>();

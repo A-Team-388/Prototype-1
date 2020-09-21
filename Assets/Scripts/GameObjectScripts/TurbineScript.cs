@@ -19,6 +19,8 @@ public class TurbineScript : MonoBehaviour
     //phase 2 script
     public Phase2Manager phase2;
 
+    public static int upkeep = 5;
+
     void Awake()
     {
         //find the phase 2 manager script

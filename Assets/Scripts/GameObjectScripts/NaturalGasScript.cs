@@ -18,6 +18,7 @@ public class NaturalGasScript : MonoBehaviour
     //the amount of providable power
     public uint power = 15;
 
+    public static int upkeep = 5;
     void Awake()
     {
         phase2 = FindObjectOfType<Phase2Manager>();
