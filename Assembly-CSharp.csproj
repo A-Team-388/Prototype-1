@@ -76,10 +76,11 @@
     <Compile Include="Assets\Scripts\Build Mode\LineCircleScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\SolarScript.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\ToolIconUI.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\CoalScript.cs" />
     <Compile Include="Assets\Scripts\OldDefunct\BuildMenuFunctions.cs" />
     <Compile Include="Assets\Scripts\Build Mode\MouseScript.cs" />
-    <Compile Include="Assets\Scripts\UIScripts\ToolIconUI.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\TopBarScript.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

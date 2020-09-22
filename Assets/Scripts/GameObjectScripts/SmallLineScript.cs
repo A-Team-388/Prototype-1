@@ -64,6 +64,7 @@ public class SmallLineScript : MonoBehaviour
                     if (connectedObjects[i].GetComponent<SmallLineScript>().connectedToPower == true)
                     {
                         connectedToPower = true;
+                        break;
                     }
                     else
                     {
@@ -75,6 +76,7 @@ public class SmallLineScript : MonoBehaviour
                     if (connectedObjects[i].GetComponent<SolarScript>().powered == true)
                     {
                         connectedToPower = true;
+                        break;
                     }
                     else
                     {
@@ -86,6 +88,7 @@ public class SmallLineScript : MonoBehaviour
                     if (connectedObjects[i].GetComponent<TurbineScript>().powered == true)
                     {
                         connectedToPower = true;
+                        break;
                     }
                     else
                     {
@@ -97,6 +100,7 @@ public class SmallLineScript : MonoBehaviour
                     if (connectedObjects[i].GetComponent<CoalScript>().powered == true)
                     {
                         connectedToPower = true;
+                        break;
                     }
                     else
                     {
@@ -108,6 +112,7 @@ public class SmallLineScript : MonoBehaviour
                     if (connectedObjects[i].GetComponent<NaturalGasScript>().powered == true)
                     {
                         connectedToPower = true;
+                        break;
                     }
                     else
                     {
@@ -119,6 +124,7 @@ public class SmallLineScript : MonoBehaviour
                     if (connectedObjects[i].GetComponent<HomeScript>().connectedToPower == true)
                     {
                         connectedToPower = true;
+                        break;
                     }
                     else
                     {
@@ -253,6 +259,6 @@ public class SmallLineScript : MonoBehaviour
         //locations of connected objects
         Array.Clear(connectedObjects, 0, (int)++amountOfConnectedObjects);
         amountOfConnectedObjects = 0;
-        connectedToPower = false;
+        Debug.Log("SIMULATION RESETING");
     }
 }

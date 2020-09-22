@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class Phase2Manager : MonoBehaviour
 {
@@ -72,6 +73,8 @@ public class Phase2Manager : MonoBehaviour
     public TextMeshProUGUI solarPowerPercentage;
     public TextMeshProUGUI previousPollutionText;
     public TextMeshProUGUI previousPopulationText;
+    public TextMeshProUGUI housesPoweredText;
+    public TextMeshProUGUI housesUnpoweredText;
 
     public enum allRandomEvents { smog };
     public allRandomEvents currentEvent;
@@ -95,11 +98,16 @@ public class Phase2Manager : MonoBehaviour
         gas = gasReference.GetComponent<NaturalGasScript>();
         solar = solarReference.GetComponent<SolarScript>();
 
+
+
         TriggerEvent();
         if (excessPowerGrowth < 1)
         {
             excessPowerGrowth = 1;
         }
+
+
+
     }
     /*
      * Powered Houses
@@ -111,6 +119,7 @@ public class Phase2Manager : MonoBehaviour
     {
         start = FindObjectOfType<StartUpScript>();
         RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount);
+
     }
 
     //updates the total power ui element
@@ -121,8 +130,39 @@ public class Phase2Manager : MonoBehaviour
         windTotal = turbineAmount * turbine.power * windMultiplier;
         gasTotal = gasAmount * gas.power * gasMultiplier;
         solarTotal = solarAmount * solar.power * solarMultiplier;
-        currentPower = coalTotal + windTotal + solarTotal;
+        currentPower = coalTotal + windTotal + solarTotal + gasTotal;
         totalPower.text = currentPower.ToString();
+
+        solarPower.text = solarTotal.ToString();
+        coalPower.text = coalTotal.ToString();
+        windPower.text = windTotal.ToString();
+        gasPower.text = gasTotal.ToString();
+
+
+        coalPercentage = coalTotal / currentPower;
+        windPercentage = windTotal / currentPower;
+        solarPercentage = solarTotal / currentPower;
+        gasPercentage = gasTotal / currentPower;
+
+        populationAmount.text = StartUpScript.houseAmount.ToString();
+
+        if (currentPower != 0)
+        {
+            solarPowerPercentage.text = String.Format("{0:0.0%}", solarPercentage);
+            coalPowerPercentage.text = String.Format("{0:0.0%}", coalPercentage);
+            windPowerPercentage.text = String.Format("{0:0.0%}", windPercentage);
+            gasPowerPercentage.text = String.Format("{0:0.0%}", gasPercentage);
+        }
+        else
+        {
+            solarPowerPercentage.text = "0.0%";
+            coalPowerPercentage.text = "0.0%";
+            windPowerPercentage.text = "0.0%";
+            gasPowerPercentage.text = "0.0%";
+        }
+
+        housesPoweredText.text = amountOfHousesPowered.ToString();
+        housesUnpoweredText.text = amountOfHousesUnpowered.ToString();
     }
 
     //updates the total currency amount
@@ -156,21 +196,24 @@ public class Phase2Manager : MonoBehaviour
         solarPercentage = solarTotal / currentPower;
         gasPercentage = gasTotal / currentPower;
 
-        /*
+
         solarPower.text = solarTotal.ToString();
         coalPower.text = coalTotal.ToString();
         windPower.text = windTotal.ToString();
         gasPower.text = gasTotal.ToString();
-        */
+
         totalPower.text = currentPower.ToString();
         /*
         totalPower.text = currentPower.ToString();
         totalPower.text = currentPower.ToString();
-        solarPowerPercentage.text = solarPercentage.ToString();
-        coalPowerPercentage.text = coalPercentage.ToString();
-        windPowerPercentage.text = windPercentage.ToString();
-        gasPowerPercentage.text = gasPercentage.ToString();
         */
+
+        solarPowerPercentage.text = String.Format("{0:0.0%}", solarPercentage);
+        coalPowerPercentage.text = String.Format("{0:0.0%}", coalPercentage);
+        windPowerPercentage.text = String.Format("{0:0.0%}", windPercentage);
+        gasPowerPercentage.text = String.Format("{0:0.0%}", gasPercentage);
+
+
 
         Debug.Log(amountOfHousesPowered + "houses powered");
         Debug.Log(amountOfHousesUnpowered + "houses unpowered");
@@ -200,7 +243,7 @@ public class Phase2Manager : MonoBehaviour
         {
             int totalUnpowered = amountOfHousesUnpowered;
 
-            while(totalUnpowered > 2)
+            while (totalUnpowered > 2)
             {
                 population--;
                 totalUnpowered -= 2;
@@ -211,6 +254,8 @@ public class Phase2Manager : MonoBehaviour
 
 
 
+        housesPoweredText.text = amountOfHousesPowered.ToString();
+        housesUnpoweredText.text = amountOfHousesUnpowered.ToString();
 
 
         //Something involving punishments with pollutionTicks.
@@ -223,7 +268,7 @@ public class Phase2Manager : MonoBehaviour
         currency -= TurbineScript.upkeep * turbineAmount;
 
         currencyAmount.text = currency.ToString();
-        populationAmount.text = population.ToString();
+        populationAmount.text = StartUpScript.houseAmount.ToString();
         environmentThing.text = pollutionLevels.ToString();
         UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);
 

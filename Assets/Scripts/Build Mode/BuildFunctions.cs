@@ -464,7 +464,7 @@ public class BuildFunctions : MonoBehaviour
                     }
                     else
                     {
-                        Helper.DrawLine(position1, position2, Color.white);
+                        Helper.DrawLine(new Vector3(position1.x,position1.y,.25f), new Vector3(position2.x,position2.y,.25f), Color.white);
 
                         position1 = new Vector2(0, 0);
                         position2 = new Vector2(0, 0);
