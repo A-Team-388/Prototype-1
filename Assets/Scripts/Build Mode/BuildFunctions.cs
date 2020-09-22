@@ -10,13 +10,13 @@ public class BuildFunctions : MonoBehaviour
     public static uint menuSelection;
 
     //placeable objects
-    [SerializeField] GameObject electricPole;
-    [SerializeField] GameObject solarPanel;
-    [SerializeField] GameObject windTurbine;
-    [SerializeField] GameObject coalPlant;
-    [SerializeField] GameObject gasPlant;
-    [SerializeField] GameObject house;
-    [SerializeField] GameObject tree;
+    [SerializeField] public GameObject electricPole;
+    [SerializeField] public GameObject solarPanel;
+    [SerializeField] public GameObject windTurbine;
+    [SerializeField] public GameObject coalPlant;
+    [SerializeField] public GameObject gasPlant;
+    [SerializeField] public GameObject house;
+    [SerializeField] public GameObject tree;
 
     //amounts of power
     public static int solarAmount = 0;
@@ -63,6 +63,11 @@ public class BuildFunctions : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (position1 != new Vector2(0,0) && menuSelection != 5)
+        {
+            position1 = new Vector2(0,0);
+        }
+
         simulationReset = true;
         switch (menuSelection)
         {
@@ -343,7 +348,7 @@ public class BuildFunctions : MonoBehaviour
                     RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 2, 0));
                 }
 
-
+                simulationReset = false;
 
             }
         }
@@ -383,6 +388,8 @@ public class BuildFunctions : MonoBehaviour
 
                 ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
                 RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+
+
                 break;
             case 5:
                 //gas
@@ -478,6 +485,16 @@ public class BuildFunctions : MonoBehaviour
         {
             if (new Vector3(pointToCheck.x, pointToCheck.y, 0) == new Vector3(lineLocations[count].x, lineLocations[count].y, 0))
             {
+                if(count % 2 == 0)
+                {
+                    lineLocations[count] = new Vector2();
+                    lineLocations[++count] = new Vector2();
+                }
+                else
+                {
+                    lineLocations[count] = new Vector2();
+                    lineLocations[--count] = new Vector2();
+                }
                 Object.DestroyImmediate(lineObjects[count]);
             }
         }

@@ -15,11 +15,11 @@ public class MouseScript : MonoBehaviour
 
 
     //placeable objects to get sprites from
-    [SerializeField] GameObject electricPole;
-    [SerializeField] GameObject solarPanel;
-    [SerializeField] GameObject windTurbine;
-    [SerializeField] GameObject coalPlant;
-    [SerializeField] GameObject gasPlant;
+    [SerializeField] public GameObject electricPole;
+    [SerializeField] public GameObject solarPanel;
+    [SerializeField] public GameObject windTurbine;
+    [SerializeField] public GameObject coalPlant;
+    [SerializeField] public GameObject gasPlant;
 
 
     // Start is called before the first frame update

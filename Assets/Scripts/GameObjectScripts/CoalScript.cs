@@ -19,6 +19,14 @@ public class CoalScript : MonoBehaviour
     public Phase2Manager phase2;
 
     public static int upkeep = 5;
+
+    //locations of connected objects
+    public GameObject[] connectedObjects = new GameObject[20];
+
+    public uint amountOfConnectedObjects = 0;
+
+    public Vector2 connectedObjectLocation;
+
     void Awake()
     {
         phase2 = FindObjectOfType<Phase2Manager>();
@@ -34,6 +42,8 @@ public class CoalScript : MonoBehaviour
     {
         checkIfDead();
 
+        searchForConnections();
+
         if (BuildFunctions.simulationReset)
         {
 
@@ -42,6 +52,7 @@ public class CoalScript : MonoBehaviour
         {
             SimulationReset();
         }
+
     }
 
     void checkIfDead()
@@ -54,5 +65,119 @@ public class CoalScript : MonoBehaviour
     void SimulationReset()
     {
         power = maxPower;
+    }
+
+    void searchForConnections()
+    {
+        amountOfConnectedObjects = 0;
+        Vector2 myLocation = new Vector2(transform.position.x, transform.position.y);
+        for (int i = 0; i <= BuildFunctions.lineNumber; i++)
+        {
+
+            if (myLocation == BuildFunctions.lineLocations[i])
+            {
+
+
+                //get location of other object
+                if (i % 2 == 0)
+                {
+                    connectedObjectLocation = BuildFunctions.lineLocations[i + 1];
+                    connectedObjects[amountOfConnectedObjects] = Helper.GetObjectFromLocation2d(connectedObjectLocation);
+                    amountOfConnectedObjects++;
+                }
+                else if (i % 2 != 0)
+                {
+                    connectedObjectLocation = BuildFunctions.lineLocations[i - 1];
+
+                    Helper.GetObjectFromLocation2d(connectedObjectLocation);
+                    connectedObjects[amountOfConnectedObjects] = Helper.GetObjectFromLocation2d(connectedObjectLocation);
+                    amountOfConnectedObjects++;
+                }
+            }
+        }
+    }
+
+    public void SearchForPower(GameObject startObject, int stepLimit)
+    {
+        if (stepLimit > 0)
+        {
+            for (int i = 0; i < amountOfConnectedObjects; i++)
+            {
+                if (connectedObjects[i].name == "smallllines(Clone)")
+                {
+                    stepLimit--;
+                    connectedObjects[i].GetComponent<SmallLineScript>().SearchForPower(startObject, stepLimit);
+                }
+                else if (connectedObjects[i].name == "solar(Clone)")
+                {
+                    if (connectedObjects[i].GetComponent<SolarScript>().power <= 0)
+                    {
+                        stepLimit--;
+                        connectedObjects[i].GetComponent<SolarScript>().SearchForPower(startObject, stepLimit);
+                    }
+                    else
+                    {
+                        while (connectedObjects[i].GetComponent<SolarScript>().power > 0 && startObject.GetComponent<HomeScript>().neededPower < (startObject.GetComponent<HomeScript>().MaxneededPower))
+                        {
+                            connectedObjects[i].GetComponent<SolarScript>().power--;
+                            startObject.GetComponent<HomeScript>().neededPower++;
+                        }
+                    }
+                }
+                else if (connectedObjects[i].name == "turbine(Clone)")
+                {
+                    if (connectedObjects[i].GetComponent<TurbineScript>().power <= 0)
+                    {
+                        stepLimit--;
+                        connectedObjects[i].GetComponent<TurbineScript>().SearchForPower(startObject, stepLimit);
+                    }
+                    else
+                    {
+                        while (connectedObjects[i].GetComponent<TurbineScript>().power > 0 && startObject.GetComponent<HomeScript>().neededPower < (startObject.GetComponent<HomeScript>().MaxneededPower))
+                        {
+                            connectedObjects[i].GetComponent<TurbineScript>().power--;
+                            startObject.GetComponent<HomeScript>().neededPower++;
+                        }
+                    }
+                }
+                else if (connectedObjects[i].name == "coalCoolingTower(Clone)")
+                {
+                    if (connectedObjects[i].GetComponent<CoalScript>().power <= 0)
+                    {
+                        stepLimit--;
+                        connectedObjects[i].GetComponent<CoalScript>().SearchForPower(startObject, stepLimit);
+                    }
+                    else
+                    {
+                        while (connectedObjects[i].GetComponent<CoalScript>().power > 0 && startObject.GetComponent<HomeScript>().neededPower < (startObject.GetComponent<HomeScript>().MaxneededPower))
+                        {
+                            connectedObjects[i].GetComponent<CoalScript>().power--;
+                            startObject.GetComponent<HomeScript>().neededPower++;
+                        }
+                    }
+                }
+                else if (connectedObjects[i].name == "naturalgasplant(Clone)")
+                {
+                    if (connectedObjects[i].GetComponent<NaturalGasScript>().power <= 0)
+                    {
+                        stepLimit--;
+                        connectedObjects[i].GetComponent<NaturalGasScript>().SearchForPower(startObject, stepLimit);
+                    }
+                    else
+                    {
+                        while (connectedObjects[i].GetComponent<NaturalGasScript>().power > 0 && startObject.GetComponent<HomeScript>().neededPower < (startObject.GetComponent<HomeScript>().MaxneededPower))
+                        {
+                            connectedObjects[i].GetComponent<NaturalGasScript>().power--;
+                            startObject.GetComponent<HomeScript>().neededPower++;
+                        }
+                    }
+                }
+                else if (connectedObjects[i].name == "house(Clone)")
+                {
+                    stepLimit--;
+                    connectedObjects[i].GetComponent<HomeScript>().SearchForPower(startObject, stepLimit);
+                }
+            }
+        }
     }
 }
