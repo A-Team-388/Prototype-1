@@ -51,21 +51,21 @@ public class BuildFunctions : MonoBehaviour
     void Start()
     {
         //find and set the toolprompt object
-        toolPromptObject = GameObject.Find("ToolPrompt");
+        toolPromptObject = GameObject.Find("ToolText");
 
         //find and set the toolprompt component
         toolPromptText = toolPromptObject.GetComponent<Text>();
 
         //find and set the drop down object
-        dropDown = GameObject.Find("Dropdown").GetComponent<TMPro.TMP_Dropdown>();
+        dropDown = GameObject.Find("ToolMenu").GetComponent<TMPro.TMP_Dropdown>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (position1 != new Vector2(0,0) && menuSelection != 5)
+        if (position1 != new Vector2(0, 0) && menuSelection != 1)
         {
-            position1 = new Vector2(0,0);
+            position1 = new Vector2(0, 0);
         }
 
         simulationReset = true;
@@ -75,24 +75,25 @@ public class BuildFunctions : MonoBehaviour
                 PlaceObjectFunction(electricPole);
                 break;
             case 1:
-                PlaceObjectFunction(solarPanel);
+                RunLinesTool();
                 break;
             case 2:
-                PlaceObjectFunction(windTurbine);
+                PlaceObjectFunction(solarPanel);
                 break;
             case 3:
-                PlaceObjectFunction(coalPlant);
+                PlaceObjectFunction(windTurbine);
                 break;
             case 4:
-                PlaceObjectFunction(gasPlant);
+                PlaceObjectFunction(coalPlant);
                 break;
             case 5:
-                RunLinesTool();
+                PlaceObjectFunction(gasPlant);
                 break;
             case 6:
                 RemoverTool();
                 break;
         }
+
 
         GameObject.Find("GameManager").GetComponent<Phase2Manager>().UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);
     }
@@ -114,7 +115,7 @@ public class BuildFunctions : MonoBehaviour
                         Instantiate(selectedObject, Helper.getMousePositionFromWorld(), transform.rotation);
                         AddGridSpaces(selectedObject);
                         break;
-                    case 1:
+                    case 2:
                         if (Phase2Manager.currency >= SolarScript.cost)
                         {
                             solarAmount++;
@@ -122,7 +123,7 @@ public class BuildFunctions : MonoBehaviour
                             AddGridSpaces(selectedObject);
                         }
                         break;
-                    case 2:
+                    case 3:
                         if (Phase2Manager.currency >= TurbineScript.cost)
                         {
                             turbineAmount++;
@@ -130,7 +131,7 @@ public class BuildFunctions : MonoBehaviour
                             AddGridSpaces(selectedObject);
                         }
                         break;
-                    case 3:
+                    case 4:
                         if (Phase2Manager.currency >= CoalScript.cost)
                         {
                             coalAmount++;
@@ -138,7 +139,7 @@ public class BuildFunctions : MonoBehaviour
                             AddGridSpaces(selectedObject);
                         }
                         break;
-                    case 4:
+                    case 5:
                         if (Phase2Manager.currency >= NaturalGasScript.cost)
                         {
                             gasAmount++;
@@ -161,9 +162,9 @@ public class BuildFunctions : MonoBehaviour
         {
             case 0://power pole, single position to check
                 return IsGridSpaceEmpty(position);
-            case 1://solar panel, single position to check
+            case 2://solar panel, single position to check
                 return IsGridSpaceEmpty(position);
-            case 2://turbine, double vertical position to check
+            case 3://turbine, double vertical position to check
                 if (IsGridSpaceEmpty(position) && IsGridSpaceEmpty(position + new Vector2(0, 1)))
                 {
                     return true;
@@ -172,8 +173,8 @@ public class BuildFunctions : MonoBehaviour
                 {
                     return false;
                 }
-            case 3://coal plant, four positions to check
-                if (IsGridSpaceEmpty(position) && IsGridSpaceEmpty(position + new Vector2(0, 1)) && IsGridSpaceEmpty(position + new Vector2(-1, 1)) && IsGridSpaceEmpty(position + new Vector2(-1, 0)))
+            case 4://coal plant, four positions to check
+                if (IsGridSpaceEmpty(position) && IsGridSpaceEmpty(position + new Vector2(0, 1)) && IsGridSpaceEmpty(position + new Vector2(0, 2)) && IsGridSpaceEmpty(position + new Vector2(-1, 1)) && IsGridSpaceEmpty(position + new Vector2(-1, 0)) && IsGridSpaceEmpty(position + new Vector2(-1, 2)) && IsGridSpaceEmpty(position + new Vector2(-2, 1)) && IsGridSpaceEmpty(position + new Vector2(-2, 2)) && IsGridSpaceEmpty(position + new Vector2(-2, 0)))
                 {
                     return true;
                 }
@@ -181,8 +182,8 @@ public class BuildFunctions : MonoBehaviour
                 {
                     return false;
                 }
-            case 4://natural gas, 9 positions square to check
-                if (IsGridSpaceEmpty(position) && IsGridSpaceEmpty(position + new Vector2(0, 1)) && IsGridSpaceEmpty(position + new Vector2(0, 2)) && IsGridSpaceEmpty(position + new Vector2(-1, 1)) && IsGridSpaceEmpty(position + new Vector2(-1, 0)) && IsGridSpaceEmpty(position + new Vector2(-1, 2)) && IsGridSpaceEmpty(position + new Vector2(-2, 1)) && IsGridSpaceEmpty(position + new Vector2(-2, 2)) && IsGridSpaceEmpty(position + new Vector2(-2, 0)))
+            case 5://natural gas, 9 positions square to check
+                if (IsGridSpaceEmpty(position) && IsGridSpaceEmpty(position + new Vector2(0, 1)) && IsGridSpaceEmpty(position + new Vector2(-1, 1)) && IsGridSpaceEmpty(position + new Vector2(-1, 0)))
                 {
                     return true;
                 }
@@ -210,26 +211,16 @@ public class BuildFunctions : MonoBehaviour
                 //fill grid space with object data
                 SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded());
                 break;
-            case 1:
+            case 2:
                 //fill grid space with object data
                 SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded());
                 break;
-            case 2:
+            case 3:
                 //turbine
                 //fill grid space with object data
                 SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded());
                 //fill grid space above with object data
                 SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 1, 0));
-                break;
-            case 3:
-                //fill grid space with object data
-                SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded());
-                //fill grid space above with object data
-                SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 1, 0));
-                //fill grid space above with object data
-                SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 1, 0));
-                //fill grid space above with object data
-                SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 0, 0));
                 break;
             case 4:
                 //fill grid space with object data
@@ -250,6 +241,16 @@ public class BuildFunctions : MonoBehaviour
                 SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-2, 1, 0));
                 //fill grid space above with object data
                 SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-2, 0, 0));
+                break;
+            case 5:
+                //fill grid space with object data
+                SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded());
+                //fill grid space above with object data
+                SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded() + new Vector3(0, 1, 0));
+                //fill grid space above with object data
+                SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 1, 0));
+                //fill grid space above with object data
+                SetGridSpace(selectedObject, Helper.getMousePositionFromWorldRounded() + new Vector3(-1, 0, 0));
                 break;
         }
     }
@@ -304,21 +305,6 @@ public class BuildFunctions : MonoBehaviour
                 }
                 else if (objectToBeRemoved.name == coalPlant.name + "(Clone)")
                 {
-                    //coal
-                    ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
-                    RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
-
-                    ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
-                    RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
-
-                    ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
-                    RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
-
-                    ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
-                    RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
-                }
-                else if (objectToBeRemoved.name == gasPlant.name + "(Clone)")
-                {
                     //gas
                     ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
                     RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
@@ -347,6 +333,21 @@ public class BuildFunctions : MonoBehaviour
                     ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 2, 0));
                     RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 2, 0));
                 }
+                else if (objectToBeRemoved.name == gasPlant.name + "(Clone)")
+                {
+                    //coal
+                    ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+                    RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+
+                    ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+                    RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+
+                    ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+                    RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+
+                    ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+                    RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+                }
 
                 simulationReset = false;
 
@@ -363,7 +364,7 @@ public class BuildFunctions : MonoBehaviour
                 ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
                 RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
                 break;
-            case 1:
+            case 2:
                 //solar panel
                 ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
                 RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
@@ -376,22 +377,6 @@ public class BuildFunctions : MonoBehaviour
                 RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
                 break;
             case 4:
-                //coal
-                ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
-                RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
-
-                ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
-                RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
-
-                ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
-                RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
-
-                ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
-                RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
-
-
-                break;
-            case 5:
                 //gas
                 ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
                 RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
@@ -419,6 +404,20 @@ public class BuildFunctions : MonoBehaviour
 
                 ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 2, 0));
                 RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 2, 0));
+                break;
+            case 5:
+                //coal
+                ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+                RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+
+                ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+                RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+
+                ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+                RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+
+                ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+                RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
                 break;
         }
 
@@ -464,7 +463,7 @@ public class BuildFunctions : MonoBehaviour
                     }
                     else
                     {
-                        Helper.DrawLine(new Vector3(position1.x,position1.y,.25f), new Vector3(position2.x,position2.y,.25f), Color.white);
+                        Helper.DrawLine(new Vector3(position1.x, position1.y, 5f), new Vector3(position2.x, position2.y, 5f), Color.white);
 
                         position1 = new Vector2(0, 0);
                         position2 = new Vector2(0, 0);
@@ -485,7 +484,7 @@ public class BuildFunctions : MonoBehaviour
         {
             if (new Vector3(pointToCheck.x, pointToCheck.y, 0) == new Vector3(lineLocations[count].x, lineLocations[count].y, 0))
             {
-                if(count % 2 == 0)
+                if (count % 2 == 0)
                 {
                     lineLocations[count] = new Vector2();
                     lineLocations[++count] = new Vector2();
@@ -517,5 +516,106 @@ public class BuildFunctions : MonoBehaviour
             }
         }
         return true;
+    }
+
+
+    //returns true if selected gameObject is next to a tree
+    public bool isObjectNextToTree(GameObject selectedGameObject)
+    {
+        if (selectedGameObject.name == "smallllines(Clone)")
+        {
+            for (int xPos = -1; xPos < 2; xPos++)
+            {
+                for (int yPos = -1; yPos < 2; yPos++)
+                {
+                    if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
+                    {
+                        Debug.Log("pole next to tree" + xPos+ "  "+yPos );
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else if (selectedGameObject.name == "solar(Clone)")
+        {
+            for (int xPos = -1; xPos < 2; xPos++)
+            {
+                for (int yPos = -1; yPos < 2; yPos++)
+                {
+                    if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
+                    {
+                        Debug.Log("solar next to tree" + xPos + "  " + yPos);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else if (selectedGameObject.name == "turbine(Clone)")
+        {
+            for (int xPos = -1; xPos < 2; xPos++)
+            {
+                for (int yPos = -1; yPos < 3; yPos++)
+                {
+                    if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
+                    {
+                        Debug.Log("turbine next to tree" + xPos + "  " + yPos);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else if (selectedGameObject.name == "coalCoolingTower(Clone)")
+        {
+            for (int xPos = -3; xPos < 2; xPos++)
+            {
+                for (int yPos = -1; yPos < 4; yPos++)
+                {
+                    if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
+                    {
+                        Debug.Log("coal next to tree" + xPos + "  " + yPos);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else if (selectedGameObject.name == "naturalgasplant(Clone)")
+        {
+            for (int xPos = -2; xPos < 2; xPos++)
+            {
+                for (int yPos = -1; yPos < 3; yPos++)
+                {
+                    if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
+                    {
+                        Debug.Log("gas next to tree" + xPos + "  " + yPos);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else if (selectedGameObject.name == "house(Clone)")
+        {
+            for (int xPos = -1; xPos < 2; xPos++)
+            {
+                for (int yPos = -1; yPos < 2; yPos++)
+                {
+                    if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
+                    {
+                        Debug.Log("house next to tree" + xPos + "  " + yPos);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else
+        {
+            Debug.Log("Object Not Recognized");
+            return false;
+        }
     }
 }

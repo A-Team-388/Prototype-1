@@ -40,6 +40,7 @@ public class HomeScript : MonoBehaviour
 
         determineIfPowered();
 
+        /*
         //changes object color to represent state
         if (connectedToPower)
         {
@@ -56,7 +57,7 @@ public class HomeScript : MonoBehaviour
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 0, 0, 1);
         }
-
+        */
 
         if (BuildFunctions.simulationReset)
         {

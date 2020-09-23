@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7688663850787778803}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.294, y: -1.68, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.1}
+  m_LocalPosition: {x: -2.39, y: 1.243, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -99,8 +99,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powered: 1
   pollution: 5
+  phase2: {fileID: 0}
+  maxPower: 15
   power: 15
-  price: 100
+  connectedObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  amountOfConnectedObjects: 0
+  connectedObjectLocation: {x: 0, y: 0}
 --- !u!50 &5590570350156441752
 Rigidbody2D:
   serializedVersion: 4
@@ -135,10 +159,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -3.33, y: 3.33}
+  m_Offset: {x: -2.5, y: 2.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.83334, y: 0.1665}
+    pivot: {x: 0.75, y: 0.25}
     oldSize: {x: 10, y: 10}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5

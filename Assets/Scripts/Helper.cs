@@ -7,7 +7,7 @@ public static class Helper
     //Snap object to grid
     public static void SnapToGrid(Transform transform)
     {
-        transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), 0);
+        transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.y)*.1f);
     }
 
     //gets the mouse position from the world and returns it rounded
@@ -104,4 +104,17 @@ public static class Helper
         return (screenRect.Contains(Input.mousePosition));
     }
 
+    public static GameObject getObjectFromMousePosition()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+        RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+        if (hit.collider != null)
+        {
+            return hit.collider.gameObject;
+
+        }
+        return null;
+    }
 }

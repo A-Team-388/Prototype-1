@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\OldDefunct\BuildMenuFunctions.cs" />
     <Compile Include="Assets\Scripts\Build Mode\MouseScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\TopBarScript.cs" />
+    <Compile Include="Assets\Scripts\GameObjectScripts\HomeIconScript.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

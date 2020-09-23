@@ -54,21 +54,21 @@ public class MouseScript : MonoBehaviour
                     sprRend.sprite = electricPole.GetComponent<SpriteRenderer>().sprite;
                     transform.localScale = new Vector3(.1f, .1f, 1);
                     break;
-                case (1):
+                case (2):
                     sprRend.sprite = solarPanel.GetComponent<SpriteRenderer>().sprite;
                     transform.localScale = new Vector3(.1f, .1f, .1f);
                     break;
-                case (2):
+                case (3):
                     sprRend.sprite = windTurbine.GetComponent<SpriteRenderer>().sprite;
                     transform.localScale = new Vector3(.3f, .3f, .1f);
                     break;
-                case (3):
-                    sprRend.sprite = coalPlant.GetComponent<SpriteRenderer>().sprite;
-                    transform.localScale = new Vector3(.2f, .2f, .1f);
-                    break;
                 case (4):
-                    sprRend.sprite = gasPlant.GetComponent<SpriteRenderer>().sprite;
+                    sprRend.sprite = coalPlant.GetComponent<SpriteRenderer>().sprite;
                     transform.localScale = new Vector3(.3f, .3f, .1f);
+                    break;
+                case (5):
+                    sprRend.sprite = gasPlant.GetComponent<SpriteRenderer>().sprite;
+                    transform.localScale = new Vector3(.2f, .2f, .1f);
                     break;
                 default:
                     sprRend.sprite = null;

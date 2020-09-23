@@ -29,19 +29,19 @@ public class ToolIconUI : MonoBehaviour
                 iconImage.sprite = electricPoleIcon;
                 break;
             case 1:
-                iconImage.sprite = solarPanelIcon;
+                iconImage.sprite = lineToolIcon;               
                 break;
             case 2:
-                iconImage.sprite = windTurbineIcon;
+                iconImage.sprite = solarPanelIcon;
                 break;
             case 3:
-                iconImage.sprite = coalPlantIcon;
+                iconImage.sprite = windTurbineIcon;               
                 break;
             case 4:
-                iconImage.sprite = gasPlantIcon;
+                iconImage.sprite = coalPlantIcon;              
                 break;
             case 5:
-                iconImage.sprite = lineToolIcon;
+                iconImage.sprite = gasPlantIcon;
                 break;
             case 6:
                 iconImage.sprite = removeToolIcon;
