@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Phase2Manager : MonoBehaviour
 {
@@ -76,16 +75,29 @@ public class Phase2Manager : MonoBehaviour
     public TextMeshProUGUI housesPoweredText;
     public TextMeshProUGUI housesUnpoweredText;
 
-    public enum allRandomEvents { smog };
+    public enum allRandomEvents { smog, treesFall, unhealthyAir, windmillBreaks, protests, gasLeak, cloudyDay };
     public allRandomEvents currentEvent;
 
     public float smogSolarEffect = .9f;
+    public float smogThreshold;
+    public float unhealthyAirThreshold;
+    public float unhealthyAirMultiplier = 0f;
+    public float cloudsMultiplier = .5f;
     StartUpScript start;
 
-
+    BuildFunctions build;
 
     public static int amountOfHousesPowered = 0;
     public static int amountOfHousesUnpowered = 0;
+
+    [Range(0, 1)]
+    public float solarDeviationMin;
+    [Range(0, 1)]
+    public float solarDeviationMax;
+    [Range(0, 1)]
+    public float windDeviationMin;
+    [Range(0, 1)]
+    public float windDeviationMax;
 
 
     private void Start()
@@ -93,6 +105,7 @@ public class Phase2Manager : MonoBehaviour
         amountOfHousesUnpowered = StartUpScript.houseAmount;
         currency = startingCurrency;
 
+        build = FindObjectOfType<BuildFunctions>();
         coal = coalReference.GetComponent<CoalScript>();
         turbine = turbineReference.GetComponent<TurbineScript>();
         gas = gasReference.GetComponent<NaturalGasScript>();
@@ -125,11 +138,13 @@ public class Phase2Manager : MonoBehaviour
     //updates the total power ui element
     public void UpdateUi(int coalAmount, int turbineAmount, int gasAmount, int solarAmount)
     {
+
         currentPower = 0;
         coalTotal = coalAmount * coal.power * coalMultiplier;
         windTotal = turbineAmount * turbine.power * windMultiplier;
         gasTotal = gasAmount * gas.power * gasMultiplier;
         solarTotal = solarAmount * solar.power * solarMultiplier;
+
         currentPower = coalTotal + windTotal + solarTotal + gasTotal;
         totalPower.text = currentPower.ToString();
 
@@ -148,10 +163,10 @@ public class Phase2Manager : MonoBehaviour
 
         if (currentPower != 0)
         {
-            solarPowerPercentage.text = String.Format("{0:0.0%}", solarPercentage);
-            coalPowerPercentage.text = String.Format("{0:0.0%}", coalPercentage);
-            windPowerPercentage.text = String.Format("{0:0.0%}", windPercentage);
-            gasPowerPercentage.text = String.Format("{0:0.0%}", gasPercentage);
+            solarPowerPercentage.text = System.String.Format("{0:0.0%}", solarPercentage);
+            coalPowerPercentage.text = System.String.Format("{0:0.0%}", coalPercentage);
+            windPowerPercentage.text = System.String.Format("{0:0.0%}", windPercentage);
+            gasPowerPercentage.text = System.String.Format("{0:0.0%}", gasPercentage);
         }
         else
         {
@@ -175,7 +190,28 @@ public class Phase2Manager : MonoBehaviour
 
     public void RunSimulation(int coalAmount, int turbineAmount, int gasAmount, int solarAmount, int houseAmount)
     {
-
+        if (brokeWindmill)
+        {
+            turbineAmount -= 1;
+            brokeWindmill = false;
+        }
+        if (gasLeak)
+        {
+            turnCount++;
+            if (turnCount <= 2)
+            {
+                gasAmount--;
+            }
+            else
+            {
+                turnCount = 0;
+                gasLeak = false;
+            }
+        }
+        if(protest)
+        {
+            gasAmount--;
+        }
         //previousPopulation = population;
         //.text = previousPopulation.ToString();
         //previousPollution = pollutionLevels;
@@ -208,10 +244,10 @@ public class Phase2Manager : MonoBehaviour
         totalPower.text = currentPower.ToString();
         */
 
-        solarPowerPercentage.text = String.Format("{0:0.0%}", solarPercentage);
-        coalPowerPercentage.text = String.Format("{0:0.0%}", coalPercentage);
-        windPowerPercentage.text = String.Format("{0:0.0%}", windPercentage);
-        gasPowerPercentage.text = String.Format("{0:0.0%}", gasPercentage);
+        solarPowerPercentage.text = System.String.Format("{0:0.0%}", solarPercentage);
+        coalPowerPercentage.text = System.String.Format("{0:0.0%}", coalPercentage);
+        windPowerPercentage.text = System.String.Format("{0:0.0%}", windPercentage);
+        gasPowerPercentage.text = System.String.Format("{0:0.0%}", gasPercentage);
 
 
 
@@ -272,15 +308,115 @@ public class Phase2Manager : MonoBehaviour
         environmentThing.text = pollutionLevels.ToString();
         UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);
 
-        //Random Events   
-        SmogEvent();
+        coalMultiplier = 1f;
+        gasMultiplier = 1f;
+        solarMultiplier = Random.Range(solarDeviationMin, solarDeviationMax);
+        windMultiplier = Random.Range(windDeviationMin, windDeviationMax);
+        RollRandom();
+    }
 
+    public void RollRandom()
+    {
+        int RandomValue;
+        int totalRandom = 5;
 
+        if (pollutionLevels > smogThreshold)
+        {
+            totalRandom++;
+        }
+        if (pollutionLevels > unhealthyAirThreshold)
+        {
+            totalRandom++;
+        }
+
+        RandomValue = Random.Range(0, totalRandom);
+
+        switch(RandomValue)
+        {
+            case 0:
+                TreesFall();
+                break;
+            case 1:
+                WindmillBreak();
+                break;
+            case 2:
+                GasLeak();
+                break;
+            case 3:
+                Protest();
+                break;
+            case 4:
+                break;
+            case 5:
+                SmogEvent();
+                break;
+            case 6:
+                UnheathlyAir();
+                break;
+        }
     }
 
     public void SmogEvent()
     {
         currentEvent = allRandomEvents.smog;
         solarMultiplier = smogSolarEffect;
+    }
+
+    public void TreesFall()
+    {
+        GameObject[] allPower = GameObject.FindGameObjectsWithTag("Power");
+        List<GameObject> nextToTrees = new List<GameObject>();
+        for (int i = 0; i < allPower.Length; i++)
+        {
+            if(build.isObjectNextToTree(allPower[i]))
+            {
+                nextToTrees.Add(allPower[i]);
+            }
+        }
+
+        if(nextToTrees == null)
+        {
+            return;
+        }
+
+        int rollRandom = Random.Range(0, nextToTrees.Count);
+        GameObject[] toArray = nextToTrees.ToArray();
+        Destroy(toArray[rollRandom]);
+        currentEvent = allRandomEvents.treesFall;
+    }
+
+    public void UnheathlyAir()
+    {
+        coalMultiplier = unhealthyAirMultiplier;
+        gasMultiplier = unhealthyAirMultiplier;
+        currentEvent = allRandomEvents.unhealthyAir;
+    }
+    bool brokeWindmill;
+    public void WindmillBreak()
+    {
+        brokeWindmill = true;
+        currentEvent = allRandomEvents.windmillBreaks;
+    }
+
+    bool gasLeak;
+    int turnCount;
+    public void GasLeak()
+    {
+        gasLeak = true;
+        currentEvent = allRandomEvents.gasLeak;
+    }
+
+    bool protest;
+    public void Protest()
+    {
+        protest = true;
+        currency -= NaturalGasScript.cost;
+        currentEvent = allRandomEvents.protests;
+    }
+
+    public void Clouds()
+    {
+        solarMultiplier = cloudsMultiplier;
+        currentEvent = allRandomEvents.cloudyDay;
     }
 }

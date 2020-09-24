@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5273392812354398686}
   m_Layer: 0
   m_Name: turbine
-  m_TagString: Untagged
+  m_TagString: Power
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +101,29 @@ MonoBehaviour:
   maxPower: 20
   power: 20
   phase2: {fileID: 0}
+  connectedObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  amountOfConnectedObjects: 0
+  connectedObjectLocation: {x: 0, y: 0}
 --- !u!50 &-3355489100102054576
 Rigidbody2D:
   serializedVersion: 4
