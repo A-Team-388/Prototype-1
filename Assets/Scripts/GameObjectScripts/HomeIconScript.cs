@@ -46,6 +46,7 @@ public class HomeIconScript : MonoBehaviour
         {
             if (parentScript.neededPower != parentScript.MaxneededPower)
             {
+
                 sprRend.sprite = noPowerSprite;
                 if (toggleDirection == true)
                 {
@@ -68,11 +69,30 @@ public class HomeIconScript : MonoBehaviour
             else
             {
                 sprRend.sprite = null;
+
             }
         }
         else
         {
+
             sprRend.sprite = noConnectionSprite;
+            if (toggleDirection == true)
+            {
+                transform.localPosition += new Vector3(0, .01f, 0);
+                if (transform.localPosition.y >= 8.5f)
+                {
+                    toggleDirection = false;
+                }
+            }
+            else
+            {
+                transform.localPosition += new Vector3(0, -.01f, 0);
+                if (transform.localPosition.y <= 7)
+                {
+                    toggleDirection = true;
+                }
+
+            }
         }
 
     }

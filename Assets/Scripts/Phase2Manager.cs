@@ -131,14 +131,13 @@ public class Phase2Manager : MonoBehaviour
     public void TriggerEvent()
     {
         start = FindObjectOfType<StartUpScript>();
-        RunSimulation(BuildMenuFunctions.coalAmount, BuildMenuFunctions.turbineAmount, BuildMenuFunctions.gasAmount, BuildMenuFunctions.solarAmount, StartUpScript.houseAmount);
+        RunSimulation(BuildFunctions.coalAmount, BuildFunctions.turbineAmount, BuildFunctions.gasAmount, BuildFunctions.solarAmount, StartUpScript.houseAmount);
 
     }
 
     //updates the total power ui element
     public void UpdateUi(int coalAmount, int turbineAmount, int gasAmount, int solarAmount)
     {
-        Debug.Log(happiness + "happiness");
         currentPower = 0;
         coalTotal = coalAmount * coal.power * coalMultiplier;
         windTotal = turbineAmount * turbine.power * windMultiplier;

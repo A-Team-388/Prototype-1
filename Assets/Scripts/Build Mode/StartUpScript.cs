@@ -57,7 +57,7 @@ public class StartUpScript : MonoBehaviour
         objectSpawnRate = (uint)((startingHeight * startingWidth) / 30);
 
         //determine the amount of trees and houses to create
-        startingNumberOfHouses = startingNumberOfHouses * objectSpawnRate;
+        startingNumberOfHouses = GameObject.Find("GameManager").GetComponent<Phase2Manager>().population;
         startingNumberOfTrees = startingNumberOfTrees * objectSpawnRate;
 
         //spawn houses
@@ -80,7 +80,7 @@ public class StartUpScript : MonoBehaviour
             xPos = Random.Range(offsetDistance + 2, (int)startingWidth + 1);
 
             //assign y position a random number for spawn
-            yPos = Random.Range(offsetDistance + 3, (int)startingHeight);
+            yPos = Random.Range(offsetDistance + 3, (int)startingHeight-1);
 
             //determine if generated position is empty
             if (BuildFunctions.IsGridSpaceEmpty(new Vector3(xPos, yPos, 0)))

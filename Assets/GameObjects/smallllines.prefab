@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1968521706754183187}
   m_Layer: 0
   m_Name: smallllines
-  m_TagString: Untagged
+  m_TagString: Power
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
   - {fileID: 0}
   amountOfConnectedObjects: 0
   connectedObjectLocation: {x: 0, y: 0}
-  powered: 0
+  connectedToPower: 0
 --- !u!50 &1431917477511940950
 Rigidbody2D:
   serializedVersion: 4
