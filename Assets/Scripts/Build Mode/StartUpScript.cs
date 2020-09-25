@@ -21,6 +21,9 @@ public class StartUpScript : MonoBehaviour
     private float startingHeight;
     private float startingWidth;
 
+    private float currentWidth;
+    private float currentHeight;
+
     //value used to offset spawning objects from side of grid
     public int offsetDistance = 1;
 
@@ -43,8 +46,8 @@ public class StartUpScript : MonoBehaviour
     void briefPause()
     {
         //determine the starting amount of gridspaces
-        startingWidth = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, 0)).x-.5f;
-        startingHeight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, 0)).y-.5f;
+        startingWidth = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, 0)).x - .5f;
+        startingHeight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, 0)).y - .5f;
 
         //round down
         startingHeight = Mathf.Floor(startingHeight);
@@ -74,7 +77,7 @@ public class StartUpScript : MonoBehaviour
             Random.InitState((int)System.DateTime.Now.Ticks);
 
             //assign x position a random number for spawn
-            xPos = Random.Range(offsetDistance + 2, (int)startingWidth +1);
+            xPos = Random.Range(offsetDistance + 2, (int)startingWidth + 1);
 
             //assign y position a random number for spawn
             yPos = Random.Range(offsetDistance + 3, (int)startingHeight);
@@ -130,5 +133,87 @@ public class StartUpScript : MonoBehaviour
 
             }
         }
+    }
+
+
+
+    public void spawnMoreHouses(int housesToBeAdded)
+    {
+        int limiter = 50;
+
+        while (housesToBeAdded > 0)
+        {
+            //determine the amount of usable gridspaces
+            currentWidth = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, 0)).x - .5f;
+            currentHeight = mainCamera.ScreenToWorldPoint(new Vector3(mainCamera.pixelWidth, mainCamera.pixelHeight, 0)).y - .5f;
+
+
+
+            //assign x position a random number for spawn
+            xPos = Random.Range(offsetDistance + 2, (int)currentWidth + 1);
+
+            //assign y position a random number for spawn
+            yPos = Random.Range(offsetDistance + 3, (int)currentHeight);
+
+            //determine if generated position is empty
+            if (BuildFunctions.IsGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
+            {
+                //determine if position already has an instance next to it
+                if (BuildFunctions.CheckSurroundingGridSpaces(new Vector3(xPos, yPos, 0), house))
+                {
+                    //create instance
+                    Instantiate(house, new Vector3(xPos, yPos, 0), transform.rotation);
+
+                    //set space in grid
+                    BuildFunctions.SetGridSpace(house, new Vector3(xPos, yPos, 0));
+
+                    houseAmount++;
+                    housesToBeAdded--;
+                }
+            }
+
+            limiter--;
+            if(limiter <= 0)
+            {
+                break;
+            }
+        }
+    }
+
+
+    public void removeHouses(int housesToBeRemoved)
+    {
+        int limiter = 50;
+        while (housesToBeRemoved > 0)
+        {
+            var objects = GameObject.FindGameObjectsWithTag("house");
+            var objectCount = objects.Length;
+            for(int i = 0;i< objectCount ;i++)
+            {
+                if (objects[i].GetComponent<HomeScript>().neededPower != objects[i].GetComponent<HomeScript>().MaxneededPower)
+                {
+                    //house
+                    BuildFunctions.ClearGridSpace(new Vector3(objects[i].transform.position.x, objects[i].transform.position.y, 0));
+                    BuildFunctions.RemoveLines(new Vector3(objects[i].transform.position.x, objects[i].transform.position.y, 0));
+                    Debug.Log("house removal occured");
+                    houseAmount--;
+                    housesToBeRemoved--;
+                }
+
+                if(housesToBeRemoved <= 0)
+                {
+                    break;
+                }
+            }
+
+
+            limiter--;
+            if (limiter <= 0)
+            {
+                break;
+            }
+
+        }
+
     }
 }

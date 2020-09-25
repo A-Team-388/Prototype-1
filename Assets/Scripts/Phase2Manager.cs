@@ -138,7 +138,7 @@ public class Phase2Manager : MonoBehaviour
     //updates the total power ui element
     public void UpdateUi(int coalAmount, int turbineAmount, int gasAmount, int solarAmount)
     {
-
+        Debug.Log(happiness + "happiness");
         currentPower = 0;
         coalTotal = coalAmount * coal.power * coalMultiplier;
         windTotal = turbineAmount * turbine.power * windMultiplier;
@@ -250,10 +250,6 @@ public class Phase2Manager : MonoBehaviour
         gasPowerPercentage.text = System.String.Format("{0:0.0%}", gasPercentage);
 
 
-
-        Debug.Log(amountOfHousesPowered + "houses powered");
-        Debug.Log(amountOfHousesUnpowered + "houses unpowered");
-
         if (pollutionLevels > pollutionTollerance * pollutionTicks)
         {
             pollutionTicks++;
@@ -284,9 +280,8 @@ public class Phase2Manager : MonoBehaviour
                 population--;
                 totalUnpowered -= 2;
             }
-
+            
         }
-
 
 
 
@@ -381,7 +376,9 @@ public class Phase2Manager : MonoBehaviour
 
         int rollRandom = Random.Range(0, nextToTrees.Count);
         GameObject[] toArray = nextToTrees.ToArray();
-        Destroy(toArray[rollRandom]);
+
+        //Following function removes gameobject next to tree //previously this was the destroy function
+        GameObject.Find("GameManager").GetComponent<BuildFunctions>().RemoveObjectFunction(toArray[rollRandom]);
         currentEvent = allRandomEvents.treesFall;
     }
 
@@ -418,5 +415,38 @@ public class Phase2Manager : MonoBehaviour
     {
         solarMultiplier = cloudsMultiplier;
         currentEvent = allRandomEvents.cloudyDay;
+    }
+
+    public void AdjustPopulation()
+    {
+
+
+        if((int)population < StartUpScript.houseAmount)
+        {
+            //amount of houses to remove
+            int housesToRemove = (StartUpScript.houseAmount - (int)population);
+
+            //removes houses
+            GameObject.Find("GameManager").GetComponent<StartUpScript>().removeHouses(housesToRemove);
+
+        }
+        else if((int)population > StartUpScript.houseAmount)
+        {
+            //amount of houses to add
+            int housesToAdd = (int)population - StartUpScript.houseAmount;
+
+            //adds houses
+            GameObject.Find("GameManager").GetComponent<StartUpScript>().spawnMoreHouses(housesToAdd);
+        }
+
+
+        /*
+        var gos : GameObject[];
+        gos = GameObject.FindGameObjectsWithTag("Enemy");
+        if (gos.length > 20)
+        {
+            // Do Something
+        }
+        */
     }
 }

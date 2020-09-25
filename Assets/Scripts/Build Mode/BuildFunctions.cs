@@ -94,6 +94,10 @@ public class BuildFunctions : MonoBehaviour
                 break;
         }
 
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            GameObject.Find("GameManager").GetComponent<StartUpScript>().removeHouses(3);
+        }
 
         GameObject.Find("GameManager").GetComponent<Phase2Manager>().UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);
     }
@@ -146,6 +150,9 @@ public class BuildFunctions : MonoBehaviour
                             Instantiate(selectedObject, Helper.getMousePositionFromWorld(), transform.rotation);
                             AddGridSpaces(selectedObject);
                         }
+                        break;
+                    case 6:
+                        RepairTool();
                         break;
                 }
                 simulationReset = false;
@@ -530,7 +537,6 @@ public class BuildFunctions : MonoBehaviour
                 {
                     if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
                     {
-                        Debug.Log("pole next to tree" + xPos+ "  "+yPos );
                         return true;
                     }
                 }
@@ -545,7 +551,6 @@ public class BuildFunctions : MonoBehaviour
                 {
                     if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
                     {
-                        Debug.Log("solar next to tree" + xPos + "  " + yPos);
                         return true;
                     }
                 }
@@ -560,7 +565,6 @@ public class BuildFunctions : MonoBehaviour
                 {
                     if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
                     {
-                        Debug.Log("turbine next to tree" + xPos + "  " + yPos);
                         return true;
                     }
                 }
@@ -575,7 +579,6 @@ public class BuildFunctions : MonoBehaviour
                 {
                     if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
                     {
-                        Debug.Log("coal next to tree" + xPos + "  " + yPos);
                         return true;
                     }
                 }
@@ -590,7 +593,6 @@ public class BuildFunctions : MonoBehaviour
                 {
                     if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
                     {
-                        Debug.Log("gas next to tree" + xPos + "  " + yPos);
                         return true;
                     }
                 }
@@ -605,7 +607,6 @@ public class BuildFunctions : MonoBehaviour
                 {
                     if (IsGridSpaceMatching(tree, new Vector3(selectedGameObject.transform.position.x + xPos, selectedGameObject.transform.position.y + yPos, 0)))
                     {
-                        Debug.Log("house next to tree" + xPos + "  " + yPos);
                         return true;
                     }
                 }
@@ -614,8 +615,91 @@ public class BuildFunctions : MonoBehaviour
         }
         else
         {
-            Debug.Log("Object Not Recognized");
             return false;
         }
+    }
+
+
+    public void RemoveObjectFunction(GameObject objectToBeRemoved)
+    {
+
+        if (objectToBeRemoved.name == electricPole.name + "(Clone)")
+        {
+
+            //power pole
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+        }
+        else if (objectToBeRemoved.name == solarPanel.name + "(Clone)")
+        {
+            //solar panel
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+        }
+        else if (objectToBeRemoved.name == windTurbine.name + "(Clone)")
+        {
+            //turbine
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+        }
+        else if (objectToBeRemoved.name == coalPlant.name + "(Clone)")
+        {
+            //gas
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 2, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 2, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 2, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 2, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 1, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 0, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 0, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 2, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-2, 2, 0));
+        }
+        else if (objectToBeRemoved.name == gasPlant.name + "(Clone)")
+        {
+            //coal
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(0, 1, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 1, 0));
+
+            ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+            RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+        }
+
+
+        
+
+        simulationReset = false;
+
+    }
+
+
+    public void RepairTool()
+    {
+        Helper.getObjectFromMousePosition();
     }
 }

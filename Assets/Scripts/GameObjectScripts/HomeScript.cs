@@ -25,6 +25,8 @@ public class HomeScript : MonoBehaviour
     {
         //snap to match grid
         Helper.SnapToGrid(this.transform);
+
+        MaxneededPower = (uint)GameObject.Find("GameManager").GetComponent<Phase2Manager>().powerNeededPerPerson;
     }
 
     // Update is called once per frame

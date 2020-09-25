@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8346072645257851449}
   m_Layer: 0
   m_Name: house
-  m_TagString: Untagged
+  m_TagString: house
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -268,3 +268,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noPowerSprite: {fileID: 21300000, guid: 4518aacb065b26445a27d9ab73a359a2, type: 3}
+  noConnectionSprite: {fileID: 21300000, guid: d07a64a7bc1d51245888bdb21af91669, type: 3}
