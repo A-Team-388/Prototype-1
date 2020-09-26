@@ -8,7 +8,7 @@ public class CoalScript : MonoBehaviour
 
     public int pollution = -10;
 
-    public static int cost = 10;
+    public static int cost = 40;
 
     //the max amount of providable power
     public uint maxPower = 20;
@@ -18,7 +18,7 @@ public class CoalScript : MonoBehaviour
 
     public Phase2Manager phase2;
 
-    public static int upkeep = 5;
+    public static int upkeep = 10;
 
     //locations of connected objects
     public GameObject[] connectedObjects = new GameObject[20];
@@ -59,6 +59,12 @@ public class CoalScript : MonoBehaviour
     {
         if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
+            //return some cost of this item from the total currency
+            Phase2Manager.currency += cost;
+            //update the currency ui element
+            phase2.UpdateCurrency();
+
+
             Destroy(this.gameObject);
         }
     }
@@ -180,4 +186,7 @@ public class CoalScript : MonoBehaviour
             }
         }
     }
+
+
+    
 }

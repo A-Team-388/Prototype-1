@@ -8,7 +8,7 @@ public class NaturalGasScript : MonoBehaviour
 
     public int pollution = -5;
 
-    public static int cost = 20;
+    public static int cost = 30;
 
     public Phase2Manager phase2;
 
@@ -58,6 +58,11 @@ public class NaturalGasScript : MonoBehaviour
     {
         if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
+
+            //return some cost of this item from the total currency
+            Phase2Manager.currency += cost;
+            //update the currency ui element
+            phase2.UpdateCurrency();
             Destroy(this.gameObject);
         }
     }
@@ -179,4 +184,5 @@ public class NaturalGasScript : MonoBehaviour
             }
         }
     }
+
 }

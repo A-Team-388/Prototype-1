@@ -8,13 +8,13 @@ public class TurbineScript : MonoBehaviour
     public bool powered = true;
 
     //the cost of this item
-    public static int cost = 15;
+    public static int cost = 20;
 
     //the max amount of providable power
-    public uint maxPower = 20;
+    public uint maxPower = 10;
 
     //the amount of providable power
-    public uint power = 20;
+    public uint power = 10;
 
     //phase 2 script
     public Phase2Manager phase2;
@@ -65,6 +65,11 @@ public class TurbineScript : MonoBehaviour
     {
         if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
+
+            //return some cost of this item from the total currency
+            Phase2Manager.currency += cost;
+            //update the currency ui element
+            phase2.UpdateCurrency();
             Destroy(this.gameObject);
         }
     }
@@ -187,4 +192,6 @@ public class TurbineScript : MonoBehaviour
             }
         }
     }
+
+
 }

@@ -8,13 +8,13 @@ public class SolarScript : MonoBehaviour
     public bool powered = true;
 
     //the cost of this item
-    public static int cost = 20;
+    public static int cost = 10;
 
     //the max amount of providable power
-    public uint maxPower = 10;
+    public uint maxPower = 20;
 
     //the current amount of providable power
-    public uint power = 10;
+    public uint power = 5;
 
     //phase 2 script
     public Phase2Manager phase2;
@@ -65,6 +65,11 @@ public class SolarScript : MonoBehaviour
     {
         if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
+
+            //return some cost of this item from the total currency
+            Phase2Manager.currency += cost;
+            //update the currency ui element
+            phase2.UpdateCurrency();
             Destroy(this.gameObject);
         }
     }
@@ -187,4 +192,5 @@ public class SolarScript : MonoBehaviour
             }
         }
     }
+
 }

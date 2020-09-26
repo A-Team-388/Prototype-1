@@ -2791,7 +2791,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.2
+  orthographic size: 5.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5772,12 +5772,12 @@ MonoBehaviour:
   pollutionTollerance: 0
   pollutionTicks: 0
   startingCurrency: 100
-  population: 15
+  population: 5
   currencyPerPerson: 20
   powerNeeded: 0
   currentPower: 0
   excessPowerGrowth: 1
-  powerNeededPerPerson: 1
+  powerNeededPerPerson: 5
   coalMultiplier: 1
   gasMultiplier: 1
   windMultiplier: 1

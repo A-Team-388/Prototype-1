@@ -96,7 +96,8 @@ public class BuildFunctions : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            GameObject.Find("GameManager").GetComponent<StartUpScript>().removeHouses(3);
+            GameObject.Find("GameManager").GetComponent<Phase2Manager>().UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);
+
         }
 
         GameObject.Find("GameManager").GetComponent<Phase2Manager>().UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);

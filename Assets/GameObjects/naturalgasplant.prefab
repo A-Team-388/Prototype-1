@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 69276696096411414}
   m_Layer: 0
   m_Name: naturalgasplant
-  m_TagString: Power
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

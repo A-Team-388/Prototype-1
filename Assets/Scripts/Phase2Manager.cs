@@ -199,7 +199,10 @@ public class Phase2Manager : MonoBehaviour
             turnCount++;
             if (turnCount <= 2)
             {
-                gasAmount--;
+                if(gasAmount >= 1)
+                {
+                    gasAmount--;
+                }
             }
             else
             {
@@ -209,7 +212,10 @@ public class Phase2Manager : MonoBehaviour
         }
         if(protest)
         {
-            gasAmount--;
+            if (gasAmount >= 1)
+            {
+                gasAmount--;
+            }
         }
         //previousPopulation = population;
         //.text = previousPopulation.ToString();
@@ -219,6 +225,7 @@ public class Phase2Manager : MonoBehaviour
         powerNeeded = population * powerNeededPerPerson;
         pollutionLevels += coal.pollution * coalAmount;
         pollutionLevels += gas.pollution * gasAmount;
+
 
         currentPower = 0;
         coalTotal = coalAmount * coal.power * coalMultiplier;
