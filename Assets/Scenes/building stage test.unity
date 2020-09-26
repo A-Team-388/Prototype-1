@@ -2112,7 +2112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3633663177104990410, guid: 25612fa18f90c374b9ca0e735451aaa4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3633663177104990420, guid: 25612fa18f90c374b9ca0e735451aaa4, type: 3}
       propertyPath: m_Volume

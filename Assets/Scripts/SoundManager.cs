@@ -10,7 +10,6 @@ public class SoundManager : MonoBehaviour
     void Start()
     {
         deleted = Resources.Load<AudioClip>("Audio/Deleted");
-        Debug.Log(deleted);
         gamePlayBackground = Resources.Load<AudioClip>("Audio/Gameplay_backgrounds");
         manuNav = Resources.Load<AudioClip>("Audio/Menu Nav_01");
         placed1 = Resources.Load<AudioClip>("Audio/Placed");

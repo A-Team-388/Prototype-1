@@ -21,7 +21,6 @@ public class LineCircleScript : MonoBehaviour
         {
             transform.position = new Vector3(Helper.getMousePositionFromWorld().x, Helper.getMousePositionFromWorld().y, .5f);
             Helper.SnapToGrid(transform);
-            Debug.Log("asdf");
         }
         else
         {
