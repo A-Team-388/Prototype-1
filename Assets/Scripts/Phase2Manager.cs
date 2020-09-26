@@ -75,6 +75,22 @@ public class Phase2Manager : MonoBehaviour
     public TextMeshProUGUI housesPoweredText;
     public TextMeshProUGUI housesUnpoweredText;
 
+    //summary screen components
+    public TextMeshProUGUI summaryGas;
+    public TextMeshProUGUI summaryCoal;
+    public TextMeshProUGUI summarySolar;
+    public TextMeshProUGUI summaryTurbine;
+    public TextMeshProUGUI summarySpent;
+    public TextMeshProUGUI summaryGained;
+    public TextMeshProUGUI summaryPreviousEnviroment;
+    public TextMeshProUGUI summaryPresentEnviroment;
+    public TextMeshProUGUI summaryPreviousPopulation;
+    public TextMeshProUGUI summaryPresentPopulation;
+    public TextMeshProUGUI summaryRandomEvent;
+
+    public bool firstTime = true;
+    public GameObject simulationSummaryPanel;
+
     public enum allRandomEvents { smog, treesFall, unhealthyAir, windmillBreaks, protests, gasLeak, cloudyDay };
     public allRandomEvents currentEvent;
 
@@ -133,6 +149,13 @@ public class Phase2Manager : MonoBehaviour
         start = FindObjectOfType<StartUpScript>();
         RunSimulation(BuildFunctions.coalAmount, BuildFunctions.turbineAmount, BuildFunctions.gasAmount, BuildFunctions.solarAmount, StartUpScript.houseAmount);
 
+        if (!firstTime)
+        {
+            simulationSummaryPanel.SetActive(true);
+
+
+        }
+        firstTime = false;
     }
 
     //updates the total power ui element
@@ -189,6 +212,7 @@ public class Phase2Manager : MonoBehaviour
 
     public void RunSimulation(int coalAmount, int turbineAmount, int gasAmount, int solarAmount, int houseAmount)
     {
+
         if (brokeWindmill)
         {
             turbineAmount -= 1;
@@ -217,7 +241,7 @@ public class Phase2Manager : MonoBehaviour
                 gasAmount--;
             }
         }
-        //previousPopulation = population;
+        previousPopulation = population;
         //.text = previousPopulation.ToString();
         //previousPollution = pollutionLevels;
         //previousPollutionText.text = previousPollution.ToString();
@@ -287,6 +311,8 @@ public class Phase2Manager : MonoBehaviour
                 totalUnpowered -= 2;
             }
             
+
+
         }
 
 
@@ -314,6 +340,8 @@ public class Phase2Manager : MonoBehaviour
         solarMultiplier = Random.Range(solarDeviationMin, solarDeviationMax);
         windMultiplier = Random.Range(windDeviationMin, windDeviationMax);
         RollRandom();
+
+        updateSimulationSummary();
     }
 
     public void RollRandom()
@@ -444,15 +472,27 @@ public class Phase2Manager : MonoBehaviour
             //adds houses
             GameObject.Find("GameManager").GetComponent<StartUpScript>().spawnMoreHouses(housesToAdd);
         }
+    }
 
+    public void updateSimulationSummary()
+    {
+        summaryCoal.text = coalTotal.ToString();
+        summarySolar.text = solarTotal.ToString();
+        summaryTurbine.text = windTotal.ToString();
+        summaryGas.text = gasTotal.ToString();
 
         /*
-        var gos : GameObject[];
-        gos = GameObject.FindGameObjectsWithTag("Enemy");
-        if (gos.length > 20)
-        {
-            // Do Something
-        }
+        summarySpent.text =;
+        summaryGained.text =;
+
+        summaryPreviousEnviroment.text = ;
+        summaryPresentEnviroment.text = ;
+
+        summaryPreviousPopulation.text = ;
+        summaryPresentPopulation.text = ;
+
+        summaryRandomEvent.text = ;
         */
+
     }
 }

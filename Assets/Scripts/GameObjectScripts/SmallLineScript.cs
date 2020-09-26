@@ -22,6 +22,7 @@ public class SmallLineScript : MonoBehaviour
     {
         //snap to match grid
         Helper.SnapToGrid(this.transform);
+        SoundManager.PlaySound("place1");
     }
 
     // Update is called once per frame
@@ -49,6 +50,7 @@ public class SmallLineScript : MonoBehaviour
     {
         if (null == BuildFunctions.playArea[(int)transform.position.x, (int)transform.position.y])
         {
+            SoundManager.PlaySound("delete");
             Destroy(this.gameObject);
         }
     }

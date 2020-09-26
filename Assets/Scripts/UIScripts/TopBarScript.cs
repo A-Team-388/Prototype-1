@@ -9,11 +9,13 @@ public class TopBarScript : MonoBehaviour
 
     public void PowerButtonFunction()
     {
+        SoundManager.PlaySound("menu");
         powerPanel.SetActive(!powerPanel.activeSelf);
     }
 
     public void PopulationButtonFunction()
     {
+        SoundManager.PlaySound("menu");
         populationPanel.SetActive(!populationPanel.activeSelf);
     }
 }

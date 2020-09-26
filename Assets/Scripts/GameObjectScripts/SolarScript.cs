@@ -41,6 +41,8 @@ public class SolarScript : MonoBehaviour
 
         //update the currency ui element
         phase2.UpdateCurrency();
+
+        SoundManager.PlaySound("place1");
     }
 
     // Update is called once per frame
@@ -70,6 +72,8 @@ public class SolarScript : MonoBehaviour
             Phase2Manager.currency += cost;
             //update the currency ui element
             phase2.UpdateCurrency();
+
+            SoundManager.PlaySound("delete");
             Destroy(this.gameObject);
         }
     }

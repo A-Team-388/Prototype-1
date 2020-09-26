@@ -47,6 +47,8 @@ public class BuildFunctions : MonoBehaviour
 
     public static bool simulationReset = false;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -92,11 +94,14 @@ public class BuildFunctions : MonoBehaviour
             case 6:
                 RemoverTool();
                 break;
+            case 7:
+                RepairTool();
+                break;
         }
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            GameObject.Find("GameManager").GetComponent<Phase2Manager>().UpdateUi(coalAmount, turbineAmount, gasAmount, solarAmount);
+
 
         }
 
@@ -151,9 +156,6 @@ public class BuildFunctions : MonoBehaviour
                             Instantiate(selectedObject, Helper.getMousePositionFromWorld(), transform.rotation);
                             AddGridSpaces(selectedObject);
                         }
-                        break;
-                    case 6:
-                        RepairTool();
                         break;
                 }
                 simulationReset = false;
@@ -278,6 +280,7 @@ public class BuildFunctions : MonoBehaviour
     //convert menu selection to usable
     public void DropDownMenuHandler(int selection)
     {
+        SoundManager.PlaySound("menu");
         menuSelection = (uint)selection;
     }
 
@@ -355,6 +358,7 @@ public class BuildFunctions : MonoBehaviour
 
                     ClearGridSpace(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
                     RemoveLines(new Vector3(objectToBeRemoved.transform.position.x, objectToBeRemoved.transform.position.y, 0) + new Vector3(-1, 0, 0));
+
                 }
 
                 simulationReset = false;
@@ -701,6 +705,10 @@ public class BuildFunctions : MonoBehaviour
 
     public void RepairTool()
     {
-        Helper.getObjectFromMousePosition();
+        //check for input, check for click not on ui, and check that mouse in within game window.
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && Helper.IsMouseOnScreen())
+        {
+            Debug.Log(Helper.getObjectFromMousePosition());
+        }
     }
 }

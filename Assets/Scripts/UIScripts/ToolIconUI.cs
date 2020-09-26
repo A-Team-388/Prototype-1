@@ -13,6 +13,7 @@ public class ToolIconUI : MonoBehaviour
     [SerializeField] public Sprite windTurbineIcon;
     [SerializeField] public Sprite coalPlantIcon;
     [SerializeField] public Sprite gasPlantIcon;
+    [SerializeField] public Sprite repairToolIcon;
 
     Image iconImage;
 
@@ -45,6 +46,9 @@ public class ToolIconUI : MonoBehaviour
                 break;
             case 6:
                 iconImage.sprite = removeToolIcon;
+                break;
+            case 7:
+                iconImage.sprite = repairToolIcon;
                 break;
             default:
                 iconImage.sprite = null;

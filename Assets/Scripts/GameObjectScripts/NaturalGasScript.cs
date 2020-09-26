@@ -35,6 +35,8 @@ public class NaturalGasScript : MonoBehaviour
         //cost = price;
         Phase2Manager.currency -= cost;
         phase2.UpdateCurrency();
+
+        SoundManager.PlaySound("place2");
     }
 
     // Update is called once per frame
@@ -63,6 +65,8 @@ public class NaturalGasScript : MonoBehaviour
             Phase2Manager.currency += cost;
             //update the currency ui element
             phase2.UpdateCurrency();
+
+            SoundManager.PlaySound("delete");
             Destroy(this.gameObject);
         }
     }
