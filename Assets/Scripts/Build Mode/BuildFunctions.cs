@@ -25,7 +25,7 @@ public class BuildFunctions : MonoBehaviour
     public static int gasAmount = 0;
 
     //this is a 2d grid used to store locations of objects on the game board
-    public static GameObject[,] playArea = new GameObject[101, 101];
+    public static GameObject[,] playArea = new GameObject[70, 70];
 
     //text that appears on bottom of the screen to tell player how to stop placeing object/using tool
     public GameObject toolPromptObject;
@@ -70,7 +70,8 @@ public class BuildFunctions : MonoBehaviour
             position1 = new Vector2(0, 0);
         }
 
-        simulationReset = true;
+        
+        Invoke("delayedSimulationReset", .02f);
         switch (menuSelection)
         {
             case 0:
@@ -99,9 +100,9 @@ public class BuildFunctions : MonoBehaviour
                 break;
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-
+            Application.Quit();
 
         }
 
@@ -708,7 +709,27 @@ public class BuildFunctions : MonoBehaviour
         //check for input, check for click not on ui, and check that mouse in within game window.
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && Helper.IsMouseOnScreen())
         {
-            Debug.Log(Helper.getObjectFromMousePosition());
+            GameObject objectToRepair = Helper.getObjectFromMousePosition();
+            if (objectToRepair.name == (windTurbine.name + "(Clone)") && objectToRepair.GetComponent<TurbineScript>().broken && Phase2Manager.currency >= (.5 * TurbineScript.cost))
+            {
+                objectToRepair.GetComponent<TurbineScript>().broken = false;
+                Phase2Manager.currency -= (.5f * TurbineScript.cost);
+                simulationReset = false;
+            }else if (objectToRepair.name == (gasPlant.name + "(Clone)") && objectToRepair.GetComponent<NaturalGasScript>().broken && Phase2Manager.currency >= (.5 * NaturalGasScript.cost))
+            {
+                objectToRepair.GetComponent<NaturalGasScript>().broken = false;
+                Phase2Manager.currency -= (.5f * NaturalGasScript.cost);
+                simulationReset = false;
+            }
         }
+
+    }
+
+    public void delayedSimulationReset() => BuildFunctions.simulationReset = true;
+
+    public static GameObject getObjectFromGridPosition(Vector2 location)
+    {
+        //this is to stop a bug
+        return playArea[(int)location.x, (int)location.y];
     }
 }

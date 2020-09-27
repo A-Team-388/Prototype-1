@@ -18,6 +18,9 @@ public class CornerObjectUI : MonoBehaviour
     [SerializeField] public GameObject removeTitle;
     [SerializeField] public GameObject repairTitle;
 
+    public GameObject SimulationUpdateObject;
+    public GameObject EventPanelObject;
+
     private void Start()
     {
         cornerObject.SetActive(false);
@@ -43,7 +46,7 @@ public class CornerObjectUI : MonoBehaviour
         removeTitle.SetActive(false);
         repairTitle.SetActive(false);
 
-        if (Input.mousePosition.x < Screen.width * .65)
+        if (Input.mousePosition.x < Screen.width * .65 && !SimulationUpdateObject.activeInHierarchy && !EventPanelObject.activeInHierarchy)
         {
             cornerObject.SetActive(true);
             switch (BuildFunctions.menuSelection)

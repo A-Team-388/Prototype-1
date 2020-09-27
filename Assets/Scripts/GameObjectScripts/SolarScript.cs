@@ -11,7 +11,7 @@ public class SolarScript : MonoBehaviour
     public static int cost = 10;
 
     //the max amount of providable power
-    public uint maxPower = 20;
+    public uint maxPower = 5;
 
     //the current amount of providable power
     public uint power = 5;
@@ -27,6 +27,8 @@ public class SolarScript : MonoBehaviour
     public uint amountOfConnectedObjects = 0;
 
     public Vector2 connectedObjectLocation;
+
+    public uint daysToBeBroken = 0;
 
     void Awake()
     {
@@ -110,7 +112,14 @@ public class SolarScript : MonoBehaviour
 
     void SimulationReset()
     {
-        power = maxPower;
+        if (daysToBeBroken == 0)
+        {
+            power = maxPower;
+        }
+        else
+        {
+            power = maxPower/2;
+        }
     }
 
     public void SearchForPower(GameObject startObject, int stepLimit)

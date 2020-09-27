@@ -6,7 +6,7 @@ public class CoalScript : MonoBehaviour
 {
     public bool powered = true;
 
-    public int pollution = -10;
+    public int pollution = 10;
 
     public static int cost = 40;
 
@@ -26,6 +26,8 @@ public class CoalScript : MonoBehaviour
     public uint amountOfConnectedObjects = 0;
 
     public Vector2 connectedObjectLocation;
+
+    public uint daysToBeBroken = 0;
 
     void Awake()
     {
@@ -72,7 +74,14 @@ public class CoalScript : MonoBehaviour
     }
     void SimulationReset()
     {
-        power = maxPower;
+        if (daysToBeBroken == 0)
+        {
+            power = maxPower;
+        }
+        else
+        {
+            power = 0;
+        }
     }
 
     void searchForConnections()

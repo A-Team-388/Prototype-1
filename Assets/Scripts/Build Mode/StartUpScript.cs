@@ -16,6 +16,7 @@ public class StartUpScript : MonoBehaviour
 
     //rate of spawn for startup
     private uint objectSpawnRate;
+    private uint treeSpawnRate;
 
     //starting height and width of the array
     private float startingHeight;
@@ -30,6 +31,9 @@ public class StartUpScript : MonoBehaviour
     //gameobjects to be created on startup
     [SerializeField] public GameObject house;
     [SerializeField] public GameObject tree;
+
+    public int maxHeight = 28;
+    public int maxWidth = 48;
 
     //variables used to determine where to place random objects
     private int xPos = 0;
@@ -55,10 +59,12 @@ public class StartUpScript : MonoBehaviour
 
         //calculate the spawn rate using height width and a good number 16 is thick, 24 is medium, 30 is bare
         objectSpawnRate = (uint)((startingHeight * startingWidth) / 30);
+        treeSpawnRate = (uint)((maxHeight * maxWidth) / 30);
+
 
         //determine the amount of trees and houses to create
         startingNumberOfHouses = GameObject.Find("GameManager").GetComponent<Phase2Manager>().population;
-        startingNumberOfTrees = startingNumberOfTrees * objectSpawnRate;
+        startingNumberOfTrees = startingNumberOfTrees * treeSpawnRate;
 
         //spawn houses
         spawnHouses();
@@ -110,10 +116,10 @@ public class StartUpScript : MonoBehaviour
         while (startingNumberOfTrees > 0)
         {
             //assign x position a random number for spawn
-            xPos = Random.Range(offsetDistance + 2, (int)startingWidth + 1);
+            xPos = Random.Range(offsetDistance + 2, maxWidth);
 
             //assign y position a random number for spawn
-            yPos = Random.Range(offsetDistance + 3, (int)startingHeight);
+            yPos = Random.Range(offsetDistance + 3, maxHeight);
 
             //determine if generated position is empty
             if (BuildFunctions.IsGridSpaceEmpty(new Vector3(xPos, yPos, 0)))
@@ -178,11 +184,13 @@ public class StartUpScript : MonoBehaviour
                 break;
             }
         }
+
     }
 
 
     public void removeHouses(int housesToBeRemoved)
     {
+
         int limiter = 50;
         while (housesToBeRemoved > 0)
         {
@@ -195,7 +203,7 @@ public class StartUpScript : MonoBehaviour
                     //house
                     BuildFunctions.ClearGridSpace(new Vector3(objects[i].transform.position.x, objects[i].transform.position.y, 0));
                     BuildFunctions.RemoveLines(new Vector3(objects[i].transform.position.x, objects[i].transform.position.y, 0));
-                    Debug.Log("house removal occured");
+   
                     houseAmount--;
                     housesToBeRemoved--;
                 }
@@ -214,6 +222,39 @@ public class StartUpScript : MonoBehaviour
             }
 
         }
+
+        if(housesToBeRemoved > 0)
+        {
+            while (housesToBeRemoved > 0)
+            {
+                var objects = GameObject.FindGameObjectsWithTag("house");
+                var objectCount = objects.Length;
+                for (int i = 0; i < objectCount; i++)
+                {
+
+                        //house
+                        BuildFunctions.ClearGridSpace(new Vector3(objects[i].transform.position.x, objects[i].transform.position.y, 0));
+                        BuildFunctions.RemoveLines(new Vector3(objects[i].transform.position.x, objects[i].transform.position.y, 0));
+                        houseAmount--;
+                        housesToBeRemoved--;
+                    
+
+                    if (housesToBeRemoved <= 0)
+                    {
+                        break;
+                    }
+                }
+
+
+                limiter--;
+                if (limiter <= 0)
+                {
+                    break;
+                }
+
+            }
+        }
+        BuildFunctions.simulationReset = false;
 
     }
 }

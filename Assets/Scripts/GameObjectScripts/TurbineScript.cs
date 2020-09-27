@@ -28,6 +28,10 @@ public class TurbineScript : MonoBehaviour
 
     public Vector2 connectedObjectLocation;
 
+    public bool broken = false;
+
+    public uint daysToBeBroken = 0;
+
     void Awake()
     {
         //find the phase 2 manager script
@@ -78,7 +82,7 @@ public class TurbineScript : MonoBehaviour
         }
     }
 
-    void searchForConnections()
+    public void searchForConnections()
     {
         amountOfConnectedObjects = 0;
         Vector2 myLocation = new Vector2(transform.position.x, transform.position.y);
@@ -110,7 +114,19 @@ public class TurbineScript : MonoBehaviour
 
     void SimulationReset()
     {
-        power = maxPower;
+        if (broken)
+        {
+            power = 0;
+        }
+        else if(daysToBeBroken == 0)
+        {
+            power = maxPower;
+        }
+        else
+        {
+            power = 0;
+        }
+
     }
 
     public void SearchForPower(GameObject startObject, int stepLimit)

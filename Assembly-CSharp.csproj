@@ -61,6 +61,7 @@
     <Compile Include="Assets\Scripts\GameObjectScripts\LargeLineScript.cs" />
     <Compile Include="Assets\Scripts\OldDefunct\TestPowerLineScript.cs" />
     <Compile Include="Assets\Scripts\Phase2Manager.cs" />
+    <Compile Include="Assets\Scripts\UIScripts\simulationUpdateScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\NaturalGasScript.cs" />
     <Compile Include="Assets\Scripts\OldDefunct\TestPowerPlantScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\NuclearScript.cs" />
@@ -78,14 +79,17 @@
     <Compile Include="Assets\Scripts\Build Mode\LineCircleScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\SolarScript.cs" />
+    <Compile Include="Assets\Scripts\audio\BackGroundMusicScript.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\HomeIconScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\ToolIconUI.cs" />
     <Compile Include="Assets\Scripts\GameObjectScripts\CoalScript.cs" />
     <Compile Include="Assets\Scripts\OldDefunct\BuildMenuFunctions.cs" />
-    <Compile Include="Assets\Scripts\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\audio\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Build Mode\MouseScript.cs" />
     <Compile Include="Assets\Scripts\UIScripts\TopBarScript.cs" />
-    <Compile Include="Assets\Scripts\simulationUpdateScript.cs" />
+    <Compile Include="Assets\Scripts\GameObjectScripts\TurbineBrokenIcon.cs" />
+    <Compile Include="Assets\Scripts\GameObjectScripts\gasBrokenIconScript.cs" />
+    <Compile Include="Assets\Scripts\GameObjectScripts\SolarScriptBrokenIcon.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

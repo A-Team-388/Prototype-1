@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Power
   - house
+  - turbine
+  - gasPlant
+  - solar
+  - coal
   layers:
   - Default
   - TransparentFX

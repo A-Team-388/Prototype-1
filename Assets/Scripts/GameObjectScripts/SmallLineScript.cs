@@ -261,6 +261,5 @@ public class SmallLineScript : MonoBehaviour
         //locations of connected objects
         Array.Clear(connectedObjects, 0, (int)++amountOfConnectedObjects);
         amountOfConnectedObjects = 0;
-        Debug.Log("SIMULATION RESETING");
     }
 }

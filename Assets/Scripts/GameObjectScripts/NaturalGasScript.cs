@@ -6,7 +6,7 @@ public class NaturalGasScript : MonoBehaviour
 {
     public bool powered = true;
 
-    public int pollution = -5;
+    public int pollution = 5;
 
     public static int cost = 30;
 
@@ -26,6 +26,10 @@ public class NaturalGasScript : MonoBehaviour
     public uint amountOfConnectedObjects = 0;
 
     public Vector2 connectedObjectLocation;
+
+    public bool broken = false;
+
+    public uint daysToBeBroken = 0;
 
     void Awake()
     {
@@ -72,7 +76,18 @@ public class NaturalGasScript : MonoBehaviour
     }
     void SimulationReset()
     {
-        power = maxPower;
+        if (broken)
+        {
+            power = 0;
+        }
+        else if (daysToBeBroken == 0)
+        {
+            power = maxPower;
+        }
+        else
+        {
+            power = 0;
+        }
     }
 
     void searchForConnections()

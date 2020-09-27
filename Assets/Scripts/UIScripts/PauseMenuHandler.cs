@@ -10,7 +10,7 @@ public class PauseMenuHandler : MonoBehaviour
     public void HamburgerMenuButton()
     {
         SoundManager.PlaySound("menu");
-        pauseMenuCurtain.SetActive(true);
+        pauseMenuCurtain.SetActive(!pauseMenuCurtain.activeSelf);
     }
 
     public void ResumeGame()
