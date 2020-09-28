@@ -600,7 +600,11 @@ public class Phase2Manager : MonoBehaviour
         GameObject[] toArray = nextToTrees.ToArray();
 
         //Following function removes gameobject next to tree //previously this was the destroy function
-        GameObject.Find("GameManager").GetComponent<BuildFunctions>().RemoveObjectFunction(toArray[rollRandom]);
+        if(rollRandom < nextToTrees.Count && toArray[rollRandom] != null)
+        {
+            GameObject.Find("GameManager").GetComponent<BuildFunctions>().RemoveObjectFunction(toArray[rollRandom]);
+        }
+
 
         currentEvent = allRandomEvents.treesFall;
 
