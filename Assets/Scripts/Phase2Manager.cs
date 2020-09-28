@@ -520,11 +520,26 @@ public class Phase2Manager : MonoBehaviour
 
         RandomValue = Random.Range(0, totalRandom);
 
+        if (RandomValue == 1)
+        {
+            if (GameObject.Find("turbine(Clone)") == null)
+            {
+                RandomValue = 0;
+            }
+        }
+        else if (RandomValue == 2 || RandomValue == 3)
+        {
+            if(GameObject.Find("naturalgasplant(Clone)") == null)
+            {
+                RandomValue = 4;
+            }
+        }
+
         switch (RandomValue)
         {
             case 0:
                 TreesFall();
-                eventPanelText.text = "A tree has fallen within your city and has destroyed a powerpole.";
+                eventPanelText.text = "A tree has fallen within your city and possibly destroyed a powerpole.";
                 break;
             case 1:
                 WindmillBreak();
